@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "ReportReceived";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thống kê</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Thống kê nhập hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    @*<div class="card-header text-right" >
+
+                        </div>*@
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label for="exampleInputEmail1">Chọn thời gian  </label>
+                                        <input style="width:100%;min-width:100%" style="cursor:pointer;" type="text" class="form-control" id="daterange" name="daterange" value="01/01/2018 - 01/15/2018" />
+                                        @*<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label for="User name">Chọn User</label>
+                                        @if (ViewBag.ListUser != null)
+                                        {
+                                            <select onchange="changeUser()" class="form-control" id="slUser" style="width:100%;min-width:100%">
+                                                @foreach (var item in ViewBag.ListUser)
+                                                {
+                                                    <option value="@item.UserID">
+                                                        @item.UserName
+                                                    </option>
+                                                }
+                                            </select>
+                                        }
+                                    </div>
+                                    <div class="col-sm-2 text-right">
+                                        <a style="margin-top:35px;" onclick="reportReceived()" class="btn btn-sm btn-danger"><i class="fas fa-filter"></i> Lọc</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                STT
+                                            </th>
+                                            <th>
+                                                Hình thức
+                                            </th>
+                                            <th>
+                                                Thời gian 
+                                            </th>
+                                            <th>
+                                                Sản phẩm
+                                            </th>
+                                            <th>
+                                                Số lượng
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        
+                                    </tbody>
+                                </table>
+                              
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<script>
+    function reportReceived() {
+        var date_range = $("#daterange").val();
+        var dates = date_range.split(" - ");
+        var currentTime = new Date();
+        var start = dates[0];
+        var end = dates[1];
+        var param = {
+            "fromDate": start,
+            "toDate": end,
+            "UserID": $("#slUser").val() 
+        }
+        $.ajax({
+            url: '/Report/LoadReceivedData',
+            dataType: 'html',
+            type: 'POST',
+            data: param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                $("#tbody").html(data); 
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>

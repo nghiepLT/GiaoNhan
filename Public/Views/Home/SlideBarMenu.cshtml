@@ -1,0 +1,51 @@
+﻿
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        @if (ViewBag.ListMenu != null)
+        {
+            foreach (var item in ViewBag.ListMenu)
+            {
+                <li class="nav-item">
+                    <a href="@item.MenuURL" class="nav-link">
+                        <i class="nav-icon @item.Icon "></i>
+                        <p>
+                            @item.MenuName
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+        @*<li class="nav-item">
+            <a href="/import-excel" class="nav-link">
+                <i class="nav-icon fas fa-th-list "></i>
+                <p>
+                    Import Excel
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/lich-su" class="nav-link">
+                <i class="nav-icon fas fa-th-list "></i>
+                <p>
+                    Lịch sử
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/thong-ke" class="nav-link">
+                <i class="nav-icon fas fa-th-list "></i>
+                <p>
+                    Thống kê
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/Tracking" class="nav-link">
+                <i class="nav-icon fas fa-th-list "></i>
+                <p>
+                    Tracking
+                </p>
+            </a>
+        </li>*@
+    </ul>
+</nav>

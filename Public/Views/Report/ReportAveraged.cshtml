@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "ReportByDay";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thống kê</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Thống kê</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    @*<div class="card-header text-right" >
+
+                        </div>*@
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="exampleInputEmail1">Chọn thời gian  </label>
+                                        <input style="cursor:pointer;" type="text" class="form-control" id="daterange" name="daterange" value="01/01/2018 - 01/15/2018" />
+                                        @*<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="User name">Chọn User</label>
+                                        @if (Model != null)
+                                        {
+                                            <select  onchange="changeUser()" class="form-control" id="slUser">
+                                                @foreach (var item in Model)
+                                                {
+                                                    <option value="@item.UserID">
+                                                        @item.UserName
+                                                    </option>
+                                                }
+                                            </select>
+                                        }
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div id="slTai">
+                                            <label for="User name">Chọn tài</label>
+                                            @if (ViewBag.ListDriver != null)
+                                            {
+                                                <select class="form-control" id="slDriver">
+                                                    <option value="0">Tất cả</option>
+                                                    @foreach (var item in ViewBag.ListDriver)
+                                                    {
+                                                        <option value="@item.Code">
+                                                            @item.Code
+                                                        </option>
+                                                    }
+                                                </select>
+                                            }
+                                        </div> 
+                                    </div>
+                                    <div class="col-sm-2 text-right">
+                                        <a style="margin-top:35px;" onclick="reportDataTracking()" class="btn btn-sm btn-danger"><i class="fas fa-filter"></i> Lọc</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                               <div id="tbody">
+
+                               </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<script>
+    //$("#slTai").hide();
+</script>

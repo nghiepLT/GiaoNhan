@@ -1,0 +1,261 @@
+﻿
+@{
+    ViewBag.Title = "LoadReceivedDataList";
+}
+<div style="margin:10px 0px;font-size:18px;margin-top:30px;">
+    Kết quả thống kê từ <strong style="color:#ff0000;margin:0px 10px;">@ViewBag.FromDate</strong> đến ngày <strong style="color:#ff0000;margin:0px 10px;"> @ViewBag.ToDate</strong>
+</div>
+<table class="table table-striped text-center" id="tbHistoryDetail1">
+    <thead>
+        <tr>
+            <th>
+                <i class="fas fa-sticky-note d-none d-md-inline-flex d-lg-inline-block" style=" font-size: 15px;margin-right: 5px;color: #858585;"></i>    Tổng số đơn
+            </th>
+            @if (ViewBag.Type == null)
+            {
+                <th>
+                    <i class="fas fa-bars d-none d-md-inline-flex d-lg-inline-block" style=" font-size: 15px;margin-right: 5px;color: #858585;"></i>    Tổng số lượng
+                </th>
+            }
+
+            <th>
+                <i class="fas fa-clock d-none d-md-inline-flex d-lg-inline-block" style="font-size: 15px;margin-right: 5px;color: #858585;"></i>  Tổng thời gian
+            </th>
+            <th>
+                <i class="fas fa-bookmark d-none d-md-inline-flex d-lg-inline-block" style="font-size: 15px;margin-right: 5px;color: #858585;"></i>  Tổng KPI
+            </th>
+            <th>
+                <i class="fas fa-tag d-none d-md-inline-flex d-lg-inline-block" style="font-size: 15px;margin-right: 5px;color: #858585;"></i> Kết quả
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                @ViewBag.Total.TotalRow
+            </td>
+            @if (ViewBag.Type == null)
+            {
+                <td>
+                    @ViewBag.Total.Totals
+                </td>
+            }
+
+            <td>
+                @ViewBag.Total.TimesResult
+            </td>
+            <td>
+                @if (ViewBag.Total.KPI > 0)
+                {
+
+                    <strong class="text-primary">@ViewBag.Total.KPI</strong>
+                }
+                else
+                {
+                    <strong class="text-danger">@ViewBag.Total.KPI</strong>
+                }
+            </td>
+            <td>
+                @if (ViewBag.Total.KPI > 0)
+                {
+
+                    <strong class="text-primary">Đạt</strong>
+                }
+                else
+                {
+                    <strong class="text-danger">Chưa đạt KPI</strong>
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div style="font-size:18px;margin-top:30px;">
+    <strong class="thongkect_title">
+        Thống kê chi tiết
+    </strong>
+</div>
+<table class="table table-striped text-center" id="tbHistoryDetail">
+    <thead>
+        <tr>
+            <th data-sort='YYYYMMDD'>
+                Ngày
+            </th>
+            <th>
+                Tổng số đơn
+            </th>
+            @if (ViewBag.Type == null)
+            {
+                <th>
+                    Tổng số lượng
+                </th>
+            }
+
+            <th>
+                Tổng thời gian
+            </th>
+            <th>
+                KPI
+            </th>
+            <th>
+                Kết quả
+            </th>
+            <th style="width:15%;text-align:center">
+                Xem chi tiết
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            var i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="col-sm-2" data-order="@item.DateCreate.ToString("MMddyyyy")">
+                        @item.DateCreate.ToShortDateString()
+
+                    </td>
+                    <td>
+                        @item.TotalRow
+                    </td>
+                    @if (ViewBag.Type == null)
+                    {
+                        <td>
+                            @item.Totals
+                        </td>
+                    }
+
+                    <th>
+                        @item.TimesResult
+                    </th>
+                    <td>
+                        @if (item.KPI > 0)
+                        {
+
+                            <span class="text-primary">@item.KPI</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">@item.KPI</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.KPI > 0)
+                        {
+
+                            <span class="text-primary">Đạt</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Chưa đạt KPI</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <a onclick="modal('@item.DateCreate.ToShortDateString()')" style="cursor:pointer">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                i++;
+
+            }
+        }
+    </tbody>
+</table>
+
+<div class="shadow" onclick="shadowclick()" style="cursor:pointer;">
+    @if (Model != null)
+    {
+        <div id="reportDetail">
+
+        </div>
+    }
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="contents">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".shadow").hide();
+    var content = '';
+    function modal(date) {
+        $(".tbchung").hide();
+        $(".shadow").show();
+
+        var param = {
+            "Date": date,
+            "UserID": $("#slUser").val(),
+            "Code": $("#slDelivery option:selected").text()
+        }
+        $.ajax({
+            url: '/Report/ReportTrackingDetail',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                $("#reportDetail").html(data)
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function shadowclick() {
+        // $(".shadow").hide();
+    }
+</script>
+<style>
+    .tbchung {
+        position: fixed;
+        width: 70%;
+        background-color: white;
+        left: 24%;
+        top: 25%;
+        padding: 15px 15px;
+    }
+
+    .shadow {
+        background-color: #1010105c;
+        width: 102%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999999;
+        left: 0px;
+        top: 0px;
+    }
+</style>
+<script>
+    $('#tbHistoryDetail1').DataTable({
+        "responsive": false, "lengthChange": false, "autoWidth": true,
+        "searching": true,
+        //"buttons": ["excel", "pdf", "colvis"]
+        "buttons": ["excel", "pdf"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#tbHistoryDetail').DataTable({
+        "responsive": false, "lengthChange": false, "autoWidth": true,
+        "searching": true,
+        //"buttons": ["excel", "pdf", "colvis"]
+        "buttons": ["excel", "pdf"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+
+
+</script>

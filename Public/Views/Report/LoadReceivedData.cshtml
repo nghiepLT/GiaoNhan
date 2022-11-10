@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "LoadReceivedData";
+}
+ <table class="table table-striped" id="tbHistory">
+    <thead>
+        <tr class="noExl">
+            <th>
+                STT
+            </th>
+            <th>
+                Hình thức
+            </th>
+            <th>
+                Thời gian
+            </th>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                Số lượng
+            </th>
+            <th>
+                Kết quả
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.STT
+                    </td>
+                    <td >
+                        @if (item.Type == 1)
+                        {
+                            <span>Nhập</span>
+                        }
+                        @if (item.Type == 2)
+                        {
+                            <span>Kiểm tra</span>
+                        }
+                        @if (item.Type == 3)
+                        {
+                            <span>Trung chuyển</span>
+                        }
+                        @if (item.Type == 4)
+                        {
+                            <span>Xếp hàng</span>
+                        }
+                    </td>
+                    <td>
+                        <div>
+                            @item.DateStart
+                        </div>
+                        <div>
+                            @if (item.DateEnd != null)
+                    {
+                                @item.DateEnd
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @item.ProductDescription
+                    </td>
+                    <td class="">
+                        @item.ToTals
+                    </td>
+                    <td>
+                        @if (item.KPI == "Đạt")
+                        {
+                            <span class="text-primary">@item.KPI</span>
+
+                        }
+                        else
+                        {
+                            <strong class="text-danger">@item.KPI</strong> 
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

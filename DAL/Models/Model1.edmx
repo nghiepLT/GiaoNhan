@@ -1,0 +1,546 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KpiManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbConfig">
+          <Key>
+            <PropertyRef Name="ConfigID" />
+          </Key>
+          <Property Name="ConfigID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TG40" Type="int" />
+          <Property Name="TG80" Type="int" />
+          <Property Name="TimeTracking" Type="float" />
+          <Property Name="TimeDelivery" Type="int" />
+          <Property Name="TimeAccountant" Type="int" />
+          <Property Name="ApiUrl" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbDriver">
+          <Key>
+            <PropertyRef Name="DriverID" />
+          </Key>
+          <Property Name="DriverID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="200" />
+          <Property Name="PermissionID" Type="int" />
+        </EntityType>
+        <EntityType Name="tbMenu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuName" Type="nvarchar" MaxLength="200" />
+          <Property Name="MenuURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="200" />
+          <Property Name="Action" Type="nvarchar" MaxLength="200" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbNCC">
+          <Key>
+            <PropertyRef Name="NCCID" />
+          </Key>
+          <Property Name="NCCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NCCName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbPermission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermissionName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbPermission_Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermissionID" Type="int" Nullable="false" />
+          <Property Name="MenuID" Type="int" Nullable="false" />
+          <Property Name="STT" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbProducts">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbReceived">
+          <Key>
+            <PropertyRef Name="ReceivedID" />
+          </Key>
+          <Property Name="ReceivedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STT" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="NCCID" Type="int" />
+          <Property Name="DateStart" Type="datetime" Nullable="false" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Kpi" Type="int" />
+        </EntityType>
+        <EntityType Name="tbReceivedDetail">
+          <Key>
+            <PropertyRef Name="ReceivedDetailID" />
+          </Key>
+          <Property Name="ReceivedDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="ReceivedID" Type="int" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Type" Type="int" />
+        </EntityType>
+        <EntityType Name="tbTheTai">
+          <Key>
+            <PropertyRef Name="ThetaiID" />
+          </Key>
+          <Property Name="ThetaiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaThe" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaPhieu" Type="nvarchar" MaxLength="500" />
+          <Property Name="DateCreate" Type="datetime" />
+          <Property Name="DateStart" Type="datetime" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="Count" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="KPI" Type="int" />
+        </EntityType>
+        <EntityType Name="tbTheTaiChiTiet">
+          <Key>
+            <PropertyRef Name="TheTaiChiTietID" />
+          </Key>
+          <Property Name="TheTaiChiTietID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ThetaiID" Type="int" />
+          <Property Name="MaPhieu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="MaThe" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateEnd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbTracking">
+          <Key>
+            <PropertyRef Name="TrackingID" />
+          </Key>
+          <Property Name="TrackingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrackingCode" Type="nvarchar" MaxLength="200" />
+          <Property Name="TrackingDate" Type="datetime" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DateStart" Type="datetime" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="DateCreate" Type="datetime" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="KPI" Type="int" />
+          <Property Name="CountStep" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbUSer">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="PermissionID" Type="int" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Code" Type="nvarchar" MaxLength="200" />
+          <Property Name="DepartmentID" Type="int" />
+        </EntityType>
+        <EntityContainer Name="KpiManagerModelStoreContainer">
+          <EntitySet Name="tbConfig" EntityType="Self.tbConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbDepartment" EntityType="Self.tbDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbDriver" EntityType="Self.tbDriver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbEmployee" EntityType="Self.tbEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbMenu" EntityType="Self.tbMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbNCC" EntityType="Self.tbNCC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPermission" EntityType="Self.tbPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPermission_Menu" EntityType="Self.tbPermission_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbProducts" EntityType="Self.tbProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbReceived" EntityType="Self.tbReceived" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbReceivedDetail" EntityType="Self.tbReceivedDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTheTai" EntityType="Self.tbTheTai" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTheTaiChiTiet" EntityType="Self.tbTheTaiChiTiet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTracking" EntityType="Self.tbTracking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbUSer" EntityType="Self.tbUSer" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KpiManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbConfig">
+          <Key>
+            <PropertyRef Name="ConfigID" />
+          </Key>
+          <Property Name="ConfigID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TG40" Type="Int32" />
+          <Property Name="TG80" Type="Int32" />
+          <Property Name="TimeTracking" Type="Double" />
+          <Property Name="TimeDelivery" Type="Int32" />
+          <Property Name="TimeAccountant" Type="Int32" />
+          <Property Name="ApiUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbDriver">
+          <Key>
+            <PropertyRef Name="DriverID" />
+          </Key>
+          <Property Name="DriverID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PermissionID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbMenu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MenuURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Controller" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Icon" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbNCC">
+          <Key>
+            <PropertyRef Name="NCCID" />
+          </Key>
+          <Property Name="NCCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NCCName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbPermission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermissionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbPermission_Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermissionID" Type="Int32" Nullable="false" />
+          <Property Name="MenuID" Type="Int32" Nullable="false" />
+          <Property Name="STT" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbProduct">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbReceived">
+          <Key>
+            <PropertyRef Name="ReceivedID" />
+          </Key>
+          <Property Name="ReceivedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STT" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="NCCID" Type="Int32" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Kpi" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbReceivedDetail">
+          <Key>
+            <PropertyRef Name="ReceivedDetailID" />
+          </Key>
+          <Property Name="ReceivedDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="ReceivedID" Type="Int32" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Type" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbUSer">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PermissionID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentID" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="KpiManagerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbConfigs" EntityType="Self.tbConfig" />
+          <EntitySet Name="tbDepartments" EntityType="Self.tbDepartment" />
+          <EntitySet Name="tbDrivers" EntityType="Self.tbDriver" />
+          <EntitySet Name="tbEmployees" EntityType="Self.tbEmployee" />
+          <EntitySet Name="tbMenus" EntityType="Self.tbMenu" />
+          <EntitySet Name="tbNCCs" EntityType="Self.tbNCC" />
+          <EntitySet Name="tbPermissions" EntityType="Self.tbPermission" />
+          <EntitySet Name="tbPermission_Menu" EntityType="Self.tbPermission_Menu" />
+          <EntitySet Name="tbProducts" EntityType="Self.tbProduct" />
+          <EntitySet Name="tbReceiveds" EntityType="Self.tbReceived" />
+          <EntitySet Name="tbReceivedDetails" EntityType="Self.tbReceivedDetail" />
+          <EntitySet Name="tbUSers" EntityType="Self.tbUSer" />
+          <EntitySet Name="tbTheTais" EntityType="KpiManagerModel.tbTheTai" />
+          <EntitySet Name="tbTheTaiChiTiets" EntityType="KpiManagerModel.tbTheTaiChiTiet" />
+          <EntitySet Name="tbTrackings" EntityType="KpiManagerModel.tbTracking" />
+        </EntityContainer>
+        <EntityType Name="tbTheTai">
+          <Key>
+            <PropertyRef Name="ThetaiID" />
+          </Key>
+          <Property Name="ThetaiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaThe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaPhieu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="DateStart" Type="DateTime" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="KPI" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbTheTaiChiTiet">
+          <Key>
+            <PropertyRef Name="TheTaiChiTietID" />
+          </Key>
+          <Property Name="TheTaiChiTietID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ThetaiID" Type="Int32" />
+          <Property Name="MaPhieu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="MaThe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbTracking">
+          <Key>
+            <PropertyRef Name="TrackingID" />
+          </Key>
+          <Property Name="TrackingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrackingCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TrackingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DateStart" Type="DateTime" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="KPI" Type="Int32" />
+          <Property Name="CountStep" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KpiManagerModelStoreContainer" CdmEntityContainer="KpiManagerEntities">
+          <EntitySetMapping Name="tbConfigs">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbConfig">
+              <MappingFragment StoreEntitySet="tbConfig">
+                <ScalarProperty Name="ApiUrl" ColumnName="ApiUrl" />
+                <ScalarProperty Name="ConfigID" ColumnName="ConfigID" />
+                <ScalarProperty Name="TG40" ColumnName="TG40" />
+                <ScalarProperty Name="TG80" ColumnName="TG80" />
+                <ScalarProperty Name="TimeTracking" ColumnName="TimeTracking" />
+                <ScalarProperty Name="TimeDelivery" ColumnName="TimeDelivery" />
+                <ScalarProperty Name="TimeAccountant" ColumnName="TimeAccountant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbDepartments">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbDepartment">
+              <MappingFragment StoreEntitySet="tbDepartment">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbDrivers">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbDriver">
+              <MappingFragment StoreEntitySet="tbDriver">
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbEmployees">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbEmployee">
+              <MappingFragment StoreEntitySet="tbEmployee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbMenus">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbMenu">
+              <MappingFragment StoreEntitySet="tbMenu">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="MenuURL" ColumnName="MenuURL" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbNCCs">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbNCC">
+              <MappingFragment StoreEntitySet="tbNCC">
+                <ScalarProperty Name="NCCID" ColumnName="NCCID" />
+                <ScalarProperty Name="NCCName" ColumnName="NCCName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbPermissions">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbPermission">
+              <MappingFragment StoreEntitySet="tbPermission">
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="PermissionName" ColumnName="PermissionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbPermission_Menu">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbPermission_Menu">
+              <MappingFragment StoreEntitySet="tbPermission_Menu">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbProducts">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbProduct">
+              <MappingFragment StoreEntitySet="tbProducts">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbReceiveds">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbReceived">
+              <MappingFragment StoreEntitySet="tbReceived">
+                <ScalarProperty Name="ReceivedID" ColumnName="ReceivedID" />
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NCCID" ColumnName="NCCID" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Kpi" ColumnName="Kpi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbReceivedDetails">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbReceivedDetail">
+              <MappingFragment StoreEntitySet="tbReceivedDetail">
+                <ScalarProperty Name="ReceivedDetailID" ColumnName="ReceivedDetailID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ReceivedID" ColumnName="ReceivedID" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbUSers">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbUSer">
+              <MappingFragment StoreEntitySet="tbUSer">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTheTais">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbTheTai">
+              <MappingFragment StoreEntitySet="tbTheTai">
+                <ScalarProperty Name="KPI" ColumnName="KPI" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="MaPhieu" ColumnName="MaPhieu" />
+                <ScalarProperty Name="MaThe" ColumnName="MaThe" />
+                <ScalarProperty Name="ThetaiID" ColumnName="ThetaiID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTheTaiChiTiets">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbTheTaiChiTiet">
+              <MappingFragment StoreEntitySet="tbTheTaiChiTiet">
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="MaThe" ColumnName="MaThe" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MaPhieu" ColumnName="MaPhieu" />
+                <ScalarProperty Name="ThetaiID" ColumnName="ThetaiID" />
+                <ScalarProperty Name="TheTaiChiTietID" ColumnName="TheTaiChiTietID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTrackings">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbTracking">
+              <MappingFragment StoreEntitySet="tbTracking">
+                <ScalarProperty Name="CountStep" ColumnName="CountStep" />
+                <ScalarProperty Name="KPI" ColumnName="KPI" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TrackingDate" ColumnName="TrackingDate" />
+                <ScalarProperty Name="TrackingCode" ColumnName="TrackingCode" />
+                <ScalarProperty Name="TrackingID" ColumnName="TrackingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

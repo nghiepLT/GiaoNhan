@@ -1,0 +1,185 @@
+﻿body {
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+div#currentTime {
+    display: inline-block;
+    float: right;
+    background-color: #3f6791;
+    color: white;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: 17px;
+    border-radius: 5px;
+}
+
+#loading {
+    z-index: 99999999;
+    position: fixed;
+    left: 50%;
+    top: 30%;
+}
+
+.w100 {
+    min-width: 100%;
+}
+
+input.form-control.form-control-sm {
+    min-width: auto;
+}
+
+.reportDetail {
+    background-color: white;
+    width: 85%;
+    margin: 0px auto;
+    margin-top: 5%;
+    position: relative;
+    padding: 25px 30px;
+}
+
+.reportDetailTitle {
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.reportclose {
+    display: inline-block;
+    position: absolute;
+    right: 14px;
+    top: 15px;
+}
+
+    .reportclose a {
+        background-color: #212529;
+        padding: 5px 10px;
+        color: white;
+    }
+
+    .reportclose i {
+        color: white;
+    }
+
+.shadow {
+    overflow-y: scroll;
+}
+
+.thongkect_title {
+    display: block;
+    background-color: #262626;
+    color: white;
+    padding: 5px 15px;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.columnDisplay {
+    display: revert;
+}
+
+.table_margin {
+    margin-top: 30px;
+}
+
+.btn_taodon {
+    margin-top: 38px;
+}
+
+.label_title {
+}
+
+.mapx {
+    position: relative;
+    top: 7px;
+}
+
+.trackingcode {
+    color: #177823;
+    font-weight: bold;
+}
+
+
+
+.txtPhieu {
+    color: #177823;
+}
+
+.tootip_box {
+    background-color: #333;
+    padding: 3px 12px;
+    font-size: 13px;
+    position: absolute;
+    top: -20px;
+}
+#lstRad span{
+
+}
+@media only screen and (max-width: 640px) {
+    .trangthaigiao{
+        font-size:12px;
+        width: 50px;
+        display: inline-block;
+    }
+    .kethucphieu{
+        font-size:12px;
+    }
+    .mapx {
+    }
+
+    .label_title {
+        margin-top: 10px;
+    }
+
+    .table_margin {
+        margin-top: 10px;
+    }
+
+    .btn_taodon {
+        margin-top: 20px;
+    }
+
+    .content-header {
+        visibility: hidden;
+        height: 0px;
+    }
+
+    .content {
+        margin-top: 0px;
+    }
+
+    .columnDisplay {
+        display: none;
+    }
+
+    #tbHistory th {
+        font-size: 12px;
+    }
+
+    #tbHistory td {
+        font-size: 12px;
+    }
+
+    .mb-mg-20 {
+        margin-bottom: 10px;
+    }
+}

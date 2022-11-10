@@ -1,0 +1,267 @@
+﻿@using Tool;
+@{
+    ViewBag.Title = "BookingList";
+}
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Booking date
+            </th>
+            <th>
+                Numbers
+            </th>
+        </tr>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.BookID
+                        </td>
+                        <td>
+                            @item.BookingDateStart
+                        </td>
+                        <td>
+                            @item.Numbers
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>*@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý nhân viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý nhân viên</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DANH SÁCH NHÂN VIÊN</h3>
+                        <div class="text-right">
+                            <a class="btn btn-success" onclick="InsertAccount()">
+                                Thêm
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>
+                                    Tên nhân viên
+                                </th>
+                                <th>
+                                    Bộ phận
+                                </th> 
+                                <th>
+                                    Chức năng
+                                </th>
+                            </tr>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.EmployeeName
+                                            </td>
+                                            <td>
+                                                @item.PermissionName
+                                            </td> 
+
+                                            <td>
+                                                <a style="margin-right:10px;cursor:pointer;" onclick="editAccount('@item.EmployeeID')"><i class="nav-icon fas fa-edit"></i></a>
+                                                <a style="cursor:pointer;" onclick="deleteAccount('@item.EmployeeID')"><i class="nav-icon fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    @*<div class="card-footer clearfix">
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                <li class="page-item"><a class="page-link" href="#">«</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">»</a></li>
+                            </ul>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="mdAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lbltitle">Thêm mới nhân viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="User name">Họ và tên</label>
+                            <input type="text" class="form-control" id="txtEmployeeName" placeholder="Họ và tên">
+                            <input type="hidden" id="txtEmployeeID" value="0" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="User name">Bộ phận</label>
+                            @if (ViewBag.ListPermission != null)
+                            {
+                                <select class="form-control" id="slPermission">
+                                    @foreach (var item in ViewBag.ListPermission)
+                                    {
+                                        <option value="@item.PermissionID">
+                                            @item.PermissionName
+                                        </option>
+                                    }
+                                </select>
+
+                            }
+                        </div>
+                      
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateEmployee()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>  
+
+<script>
+    function resetValue() {
+        $("#txtEmployeeName").val('');
+        $("#txtEmployeeID").val(0);
+
+    }
+    function InsertAccount() {
+        $("#mdAccount").modal("toggle");
+        $("#lbltitle").html("Thêm mới nhân viên");
+        resetValue();
+    }
+    function UpdateEmployee() {
+        var param = {
+            "EmployeeID": $("#txtEmployeeID").val(),
+            "EmployeeName": $("#txtEmployeeName").val(),
+            "PermissionID": $("#slPermission").val()
+        }
+        $.ajax({
+            url: '/Employee/EmployeeUpdate',
+            data: param,
+            type:'POST',
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function editAccount(id) {
+        $("#mdAccount").modal("toggle");
+        $("#lbltitle").html("Cập nhật nhân viên");
+        getInfoEmployee(id);
+    }
+
+    function getInfoEmployee(id) {
+        var param = {
+            "EmployeeID": id
+        }
+        $.ajax({
+            url: '/Employee/GetInfoEmployee',
+            dataType: 'json',
+            data: param,
+            success: function (data, status, xhr) {
+                $("#txtEmployeeID").val(data.EmployeeID);
+                $("#txtEmployeeName").val(data.EmployeeName);
+                $("#slPermission").val(data.PermissionID).change();
+                //$("#txtUsername").val(data.AccountUser);
+                //$("#txtPassword").val(data.AccountPassword);
+                //$("#slRole").val(data.RoleID).change();
+                //$("#slEmployee").val(data.EmployeeID).change();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+
+   
+    function deleteAccount(id) {
+
+        swal({
+            title: "Xóa nhân viên?",
+            text: "Bạn có muốn xóa nhân viên này!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    .then((willDelete) => {
+        if (willDelete) {
+            var param = {
+                "AccountID": id
+            }
+            $.ajax({
+                url: '/Acount/Delete',
+                dataType: 'html',
+                type: 'POST',
+                data: param,
+                success: function (data, status, xhr) {
+                    swal({
+                        title: "Xóa nhân viên", text: "Xóa nhân viên thành công", type:
+             "success"
+                    }).then(function () {
+                        location.reload();
+                    }
+      );
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            });
+        } else {
+        }
+    });
+    }
+</script>
+<style>
+    input, select{
+        min-width:100%;
+    }
+</style>

@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "ReportByDay";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="~/Scripts/jquery.table2excel.js"></script>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                @if (ViewBag.Permission != null)
+                {
+                    <h1>@ViewBag.Permission.PermissionName</h1>
+                }
+            </div>
+            <div class="col-sm-6">  
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    @if (ViewBag.Permission != null)
+                    {
+                        <li class="breadcrumb-item active">@ViewBag.Permission.PermissionName</li>
+                    }
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    @*<div class="card-header text-right" >
+
+                        </div>*@
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label for="exampleInputEmail1">Thời gian</label>
+                                        <input disabled id="txtTime" type="text" class="form-control" style="width: 100%;max-width: 100%;" />
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label for="User name" class="label_title">Nhân viên</label>
+                                        <input data-id="@ViewBag.UserId" disabled id="txtUser" value="@ViewBag.userName" type="text" class="form-control" style="width: 100%;max-width: 100%;" />
+                                    </div>
+                                    <div class="col-sm-2 text-right">
+                                        <a  onclick="startReceived()" class="btn btn-sm btn-danger btn_taodon"><i class="fas fa-list-alt" style="margin-right:5px;font-size:12px;"></i>Tạo đơn </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group table-responsive table_margin" >
+                                <table class="table table-striped " id="tbHistory">
+                                    <thead>
+                                        <tr class="noExl">
+                                            <th>
+                                                STT
+                                            </th> 
+                                            <th>Thời gian </th>
+                                            <th>
+                                                Sản phẩm
+                                            </th>
+                                            <th class="columnDisplay">
+                                                Tổng số lượng
+                                            </th>
+                                            <th class="columnDisplay">Kpi</th>
+                                            <th class="columnDisplay">
+                                                Kết quả
+                                            </th>
+                                            <th>
+                                                Trạng thái
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<script>
+    $(document).ready(function () {
+        getDatenow();
+        LoadData();
+    });
+    function getDatenow() {
+        var today = new Date();
+        var date = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + " | " + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        $("#txtTime").val(date);
+        setInterval(function () { getDatenow() }, 1000);
+    }
+
+    function startReceived() {
+        var getUserid = $("#txtUser").attr("data-id");
+        var param = {
+            "UserID": getUserid
+        }
+        $.ajax({
+            url: '/Received/Insert',
+            type: 'POST',
+            dataType: 'html',
+            data: { "data": JSON.stringify(param) },
+            success: function (data, status, xhr) {
+                LoadData();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+
+    function LoadData() {
+        var getUserid = $("#txtUser").attr("data-id");
+        var param = {
+            "UserID": getUserid
+        }
+        $.ajax({
+            url: '/Received/LoadData',
+            data: param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                $("#tbody").html(data); 
+                //$('#tbHistory').DataTable({
+                //    "responsive": false, "lengthChange": false, "autoWidth": true,
+                //    "searching": true,
+                //    //"buttons": ["excel", "pdf", "colvis"]
+                //    "buttons": ["excel", "pdf"]
+                //}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+
+    function DeleteRecived(id) {
+
+        swal({
+            title: "Xóa đơn?",
+            text: "Bạn có muốn xóa đơn này!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+.then((willDelete) => {
+    if (willDelete) {
+        var param = {
+            "ReceivedID": id
+        }
+        $.ajax({
+            url: '/Received/DeleteRecived',
+            data: param,
+            type: "POST",
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                LoadData();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    } else {
+    }
+});
+    }
+
+
+  
+</script>

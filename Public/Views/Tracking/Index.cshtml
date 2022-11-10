@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewBag.Title = "Index"; 
+}
+
+
+
+@{
+    ViewBag.Title = "UpdateEmployee";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>
+                    @if (ViewBag.Type == 1)
+                    {
+                        <span>Giao nhận</span>
+                    }
+                    else
+                    {
+                        <span>Xuất kho</span>
+                    }
+
+
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    @if (ViewBag.Type == 1)
+                    {
+                        <li class="breadcrumb-item active">Giao nhận</li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item active">Xuất kho</li> 
+                    }
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    @*<div class="card-header text-right" >
+                        
+                    </div>*@
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                               <div class="row">
+                                   <div class="col-1">
+                                       <label class="mapx" for="exampleInputEmail1">Mã</label>
+                                   </div>
+                                   <div class="col-10 col-md-4 col-lg-4">
+                                       <input onchange="ScanNext()" type="text" class="form-control" id="txtScan" style="display:inline-block;margin-left:20px;" />
+                                   </div>
+                                   <div class="col-7 text-right">
+                                       <div id="currentTime" class="d-none d-lg-block d-md-block">
+
+                                       </div>
+                                   </div>
+                               </div>
+                             </div>
+                          
+                            <div class="form-group table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                           
+                                            @if (ViewBag.Type == 1)
+                                            {
+                                                <th>
+                                                    Quét thẻ tài
+                                                </th>
+                                              
+                                            }
+                                            else
+                                            {
+                                                <th>
+                                                    Quét số phiếu xuất
+                                                </th>
+                                            }
+
+                                            <th >
+                                                Thời gian 
+                                            </th> 
+                                            <th class="columnDisplay">
+                                                Tổng thời gian
+                                            </th>
+                                            @if (ViewBag.Type == 2)
+                                            {
+                                                <th>
+                                                    Số lượng
+                                                </th>
+                                            }
+                                            <th class="columnDisplay">
+                                                KPI
+                                            </th>
+                                            <th class="columnDisplay">
+                                                Kết quả
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                       
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<script> 
+    $(document).ready(function () {
+        getDatenow();
+        loadTracking();
+        $("#txtScan").focus();  
+    });
+    function getDatenow() {
+        var today = new Date();
+        var date =today.getHours()+"-"+ today.getMinutes()+"-"+today.getSeconds()+ " | "+ today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        $("#currentTime").html('<i style=\"margin-right:10px;\" class=\"fas fa-clock\"></i>'+"    "+date);
+        setInterval(function () { getDatenow() }, 1000);
+    } 
+    function ScanNext() { 
+        InsertData();
+        $("#txtScan").focus();
+    }
+    $("#txtScan").focusout(function(){
+         $("#txtScan").focus();
+    });
+
+    function loadTracking() {
+        $.ajax({
+            url: '/Tracking/LoadTracking',
+            type: 'POST',
+            dataType: 'html', 
+            success: function (data, status, xhr) {
+                $("#tbody").html(data);
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function InsertData() {
+        var param = {
+            "TrackingCode": $("#txtScan").val()
+        }
+        $.ajax({
+            url: '/Tracking/Insert',
+            type: 'POST',
+            dataType: 'html',
+            data: { "data": JSON.stringify(param)},
+            success: function (data, status, xhr) {
+                if (data == 'False') {
+                    swal({
+                        title: "Quét mã", text: "Mã không tồn tại trong hệ thống!", type:
+             "success"
+                    }).then(function () {
+                    }
+);
+                }
+                else {
+                    loadTracking();
+                }
+                $("#txtScan").val('');
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>

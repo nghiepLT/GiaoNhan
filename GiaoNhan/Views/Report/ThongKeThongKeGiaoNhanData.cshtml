@@ -1,0 +1,82 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ngày
+            </th>
+            <th>
+                Thẻ tài
+            </th>
+          
+            <th>
+                Tổng số lượng
+            </th>
+            <th>
+                Thời gian bắt đầu
+            </th>
+            <th>Thời gian kết thúc</th>
+          
+            <th>
+                Tổng thời gian
+            </th>
+            <th>
+                Danh sách phiếu
+            </th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        @if (Model != null)
+        {
+            foreach(var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.DateStart.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @item.MaThe
+                    </td>
+                   
+                    <td>
+                        @item.Count
+                    </td>
+                    <td>
+                        @item.DateStart.ToString("hh:mm:ss")
+                    </td>
+                    <td>
+                        @if (item.DateEnd != null)
+                        {
+                            @item.DateEnd.ToString("hh:mm:ss")
+
+                        }
+                    </td>
+                  
+                    <td>
+                        @item.TongThoigian
+                    </td>
+                    <td>
+                        @if (item.lstTheTaiChiTiet != null)
+                        {
+                            foreach (var it in item.lstTheTaiChiTiet)
+                            {
+                                if (it.DateEnd != null)
+                                {
+                                    <div>
+                                       <strong class="txtPhieu">@it.MaPhieu</strong> <span> <span> Kết thúc: </span> <strong class="text-danger">@it.DateEnd.ToString("hh:mm:ss")</strong> </span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <strong class="txtPhieu">@it.MaPhieu</strong>
+                                    </div>
+                                }
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

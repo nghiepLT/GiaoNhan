@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản lý KPI</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="shortcut icon" href="~/Images/favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Templates/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/Templates/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Templates/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Hệ thống <strong>KPI</strong> Nguyên Kim - Chính Nhân</b></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg" style="font-size:30px">ĐĂNG NHẬP </p>
+
+                <form action="../../index3.html" method="post">
+                    <div class="input-group mb-3">
+                        <input style="height:40px;font-size:20px;" type="email" class="form-control" id="username" placeholder="User">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input style="height:40px;font-size:20px;" id="password" type="password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember" style="font-size:15px;">
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="button" onclick="Login()" class="btn btn-primary btn-block" style="font-size:17px;">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+
+                    </div>
+                    <div class="row">
+                        <div style="font-size:15px;margin-top: 20px;"><a target="_blank" href="/app-debug.apk">Dowload App for android</a></div>
+                    </div>
+                </form>
+
+
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/Templates/plugins/jquery/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Templates/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Templates/dist/js/adminlte.min.js"></script>
+</body>
+</html>
+
+<script src="~/Scripts/main.js"></script>
+
+
+<script>
+    $('#username').on('keypress', function (e) {
+         if(e.which === 13){
+             Login();
+         }
+    });
+    $('#password').on('keypress', function (e) {
+        if (e.which === 13) {
+            Login();
+        }
+    });
+</script>

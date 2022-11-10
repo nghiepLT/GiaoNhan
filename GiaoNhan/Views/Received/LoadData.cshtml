@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "LoadData";
+}
+ @if(Model!=null)
+ {
+     foreach(var item in Model)
+     {
+         <tr class="trdb" data-value="@item.ReceivedID">
+             <td>
+                 <strong>@item.STT</strong> -@if (item.Type == 1)
+                 {
+                    <span>Nhập</span>
+                 }
+                @if (item.Type == 2)
+                {
+                    <span>Kiểm tra</span>
+                }
+                @if (item.Type == 3)
+                {
+                    <span>Trung chuyển</span>
+                }
+                @if (item.Type == 4)
+                {
+                    <span>Xếp hàng</span>
+                } 
+             </td>
+             <td data-order="@item.DateStart.ToString("MMddyyyy")">
+                <div>
+                   <strong>@item.DateStart.ToString("HH:mm:ss")</strong>
+                </div>
+                <div>
+                    @if (item.DateEnd != null)
+                    {
+                        <strong style="color:#ff0000">@item.DateEnd.ToString("HH:mm:ss") </strong>
+                    }
+                </div>
+             </td> 
+             <td>
+                 @item.ProductDescription
+             </td>
+             <td class="columnDisplay">
+                 @item.ToTals
+             </td>
+             <td class="columnDisplay">
+                 @if(item.KPI>0){
+                     <span class="text-primary">@item.KPI</span>
+                 }
+                 else
+                 {
+                    <span class="text-danger">@item.KPI</span>
+                 }
+             </td>
+             <td class="columnDisplay">
+                 @if (item.KPI < 0)
+                 {
+                     <strong class="text-primary">Chưa đạt KPI</strong>
+                 }
+                @if (item.KPI > 0)
+                {
+                    <strong class="text-danger">Đạt KPI</strong>
+                 }
+                @if (item.KPI == 0)
+                {
+                    <strong></strong>
+                }
+             </td>
+             <td>
+                 @if (item.Type == null)
+                 {
+                    <a style="margin-bottom:5px;width:60px;" class="btn  btn-xs btn-sm btn-primary" href="/Received/edit?ReceivedID=@item.ReceivedID">Kết thúc</a>
+                    <a  style="margin-bottom:5px;width:60px;" onclick="DeleteRecived(@item.ReceivedID)" class="btn btn-xs btn-sm btn-danger">Xóa</a>
+                 }
+                 else
+                 {
+                     <strong class="text-success">Hoàn tất</strong>
+                 } 
+             </td>
+         </tr>
+     }
+ }
+
+<script> 
+    $(".trdb").dblclick(function () { 
+        var getId=$(this).attr("data-value");
+        var param={
+            ReceivedID:getId
+        }
+        $.ajax({
+            url: '/Received/GetPopupInfo',
+            type: 'POST',
+            data:param,
+            dataType: 'json', 
+            success: function (data, status, xhr) {
+                $(".shadow").show();
+                $("#STT").html(data.STT); 
+                if(data.Type==1) {
+
+                    $("#Type").html('Nhập');
+                }
+                else{
+                    $("#Type").html('Kiểm tra');
+                }
+                $("#TimesResult").html(data.TimesResult);
+                $("#KPI").html(data.KPI);
+                if(data.KPI>0){
+                    $("#Result").html('<strong style=\"color:red\">Đạt</strong>');
+                }
+                else{
+                    $("#Result").html('<strong style=\"color:red\">Chưa Đạt KPI</strong>');
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    });
+</script>
+
+

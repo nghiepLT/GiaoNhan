@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "LoadTracking";
+}
+
+
+@if (Model != null)
+{
+    var i = 0;
+    foreach (var item in Model)
+    {
+        if (i == 0)
+        {
+            
+            <tr style="background-color:#ff0000;color:white">
+                @*<td data-order="@item.TrackingID">@item.TrackingID</td>*@
+                <td class="">@item.MaThe</td>
+                <td class="">
+                    @if (item.MaPhieu != null)
+                    {
+                        var strList = item.MaPhieu.Split(',');
+                        foreach (var it in strList)
+                        {
+                            <div>@it</div>
+                        }
+                    }
+                   
+                </td>
+
+                <td>@item.Count</td>
+                <td>
+                    @item.DateStart.ToString("HH:mm:ss")
+                </td>
+                <td>
+                    @if (item.DateEnd != null)
+                        {
+                        @item.DateEnd.ToString("HH:mm:ss")
+                    }
+                </td>
+                <th class="columnDisplay">
+                    @item.TimesResult
+                </th>
+                @if (ViewBag.Type == 2)
+                {
+                    <td>
+                        @item.Count
+                    </td>
+                }
+
+
+            </tr>
+        }
+        else
+        {
+            <tr>
+                @*<td data-order="@item.TrackingID">@item.TrackingID</td>*@
+                <td class="trackingcode">@item.MaThe</td>
+                <td class="">
+                    @if (item.MaPhieu != null)
+                    {
+                        var strList = item.MaPhieu.Split(',');
+                        foreach (var it in strList)
+                        {
+                            <div>@it</div>
+                        }
+                    }
+
+                </td>
+                <td>@item.Count</td>
+                <td>
+                    @item.DateStart.ToString("HH:mm:ss")
+                </td>
+                <td>
+                    @if (item.DateEnd != null)
+                        {
+                        @item.DateEnd.ToString("HH:mm:ss")
+                    }
+                </td>
+                <th class="columnDisplay">
+                    @item.TimesResult
+                </th>
+                @if (ViewBag.Type == 2)
+                {
+                    <td>
+                        @item.Count
+                    </td>
+                }
+                
+            </tr>
+        }
+        i++;
+    }
+}

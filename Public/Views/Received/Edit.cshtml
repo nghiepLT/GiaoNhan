@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewBag.Title = "UpdateEmployee";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Kết thúc đơn hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Kết thúc đơn hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form>
+                        <div class="card-body">
+                            @*<div class="form-group">
+                                <label for="exampleInputEmail1">Họ tên nhân viên</label>
+                                <input id="txtEmployeeName" type="text" class="form-control" placeholder="Nhập họ tên" />
+                                <input type="hidden" id="txtEmployeeID" value="0" />
+                            </div>*@ 
+                            <div class="form-group">
+                                <input id="txtReceivedID" type="hidden" value="@ViewBag.ReceivedID" />
+                                <label for="User name">Nhà cung cấp</label>
+                                @if (ViewBag.ListNCC != null)
+                                {
+                                    <select class="form-control" id="slNCC" style="width:100%;max-width:100%">
+                                        @foreach (var item in ViewBag.ListNCC)
+                                        {
+                                            <option value="@item.NCCID">
+                                                @item.NCCName
+                                            </option>
+                                        }
+                                    </select>
+
+                                }
+                            </div>
+                            @if (ViewBag.Permission.PermissionID == 2)
+                            {
+                                <div class="form-group">
+                                    <label for="User name">Hình thức  (Nhập | Kiểm tra)</label>
+                                    <select class="form-control" id="slType" style="width:100%;max-width:100%">
+                                        <option value="1">Nhập</option>
+                                        <option value="2">Kiểm tra</option>
+                                    </select>
+                                </div>
+                            }
+                            @if (ViewBag.Permission.PermissionID == 5)
+                            {
+                                <div class="form-group d-none">
+                                    <label for="User name">Hình thức</label>
+                                    <select class="form-control" id="slType" style="width:100%;max-width:100%">
+                                        <option value="3">Nhập</option> 
+                                    </select>
+                                </div>
+                            }
+                            @if (ViewBag.Permission.PermissionID == 6)
+                            {
+                                <div class="form-group d-none">
+                                    <label for="User name">Hình thức</label>
+                                    <select class="form-control" id="slType" style="width:100%;max-width:100%">
+                                        <option value="4">Nhập</option>
+                                    </select>
+                                </div>
+                            }
+                            <div class="form-group">
+                                <label for="User name">Loại Hàng</label>
+                                <table class="table table-striped">
+                                    @if (ViewBag.ListProduct != null)
+                                    {
+                                        foreach (var item in ViewBag.ListProduct)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.ProductName
+                                                </td>
+                                                <td>
+                                                    <input style="transform: scale(1.5);position: relative;top: 6px;"  type="checkbox" onchange="toggleSl('@item.ProductID')" />
+                                                </td>
+                                                <td>
+                                                    <input id="ip_@item.ProductID"  data-value="@item.ProductID"   disabled type="number" class="form-control ipchung" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+ 
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer text-right">
+                            <button type="button" onclick="Back()" class="btn btn-primary">Quay lại</button>
+                            <button type="button" onclick="UpDate()" class="btn btn-danger">Kết thúc</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<script>
+    function Back() {
+        window.location.href = "/nhap-hang";
+    }
+    function toggleSl(id) {
+        var getAttr = $("#ip_" + id).attr("disabled");
+          
+        if (getAttr=="disabled")
+        {
+            $("#ip_" + id).removeAttr("disabled"); 
+        }
+        else {
+            $("#ip_" + id).attr("disabled", "disabled");
+            $("#ip_" + id).val('');
+        }
+    }
+
+
+    var lstProduct = [];
+    function UpDate() {
+
+        $(".ipchung").each(function () { 
+            var chkNumber = $(this).val();
+            if (chkNumber > 0) {
+                var obj = {
+                    "ProductID": $(this).attr("data-value"),
+                    "Count": chkNumber
+                }
+                lstProduct.push(obj);
+            }
+        }); 
+        var param = {
+            "ReceivedID": $("#txtReceivedID").val(),
+            "NCCID": $("#slNCC").val(),
+            "Type": $("#slType").val(),
+            "list": lstProduct
+        } 
+        $.ajax({
+            url: '/Received/Update',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                window.location.href = "/nhap-hang";
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>

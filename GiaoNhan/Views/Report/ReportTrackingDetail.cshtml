@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "ReportTrackingDetail";
+}
+
+<div class="reportDetail" onmousemove="childMove()" onmouseout="childOut()">
+    <div class="reportDetailTitle">
+        Thống kê ngày @ViewBag.StartDate.ToShortDateString()
+    </div>
+    <div class="reportclose">
+        <a onclick="closeModal()"><i class="fas fa-times"></i></a>
+    </div>
+    <table class="table" style="background-color:white" id="tbHistoryDetail2">
+        <thead>
+            <tr>
+                <th>
+                    Mã Phiếu
+                </th>
+                <th>
+                    Thời gian bắt đầu
+                </th>
+                <th>
+                    Thời gian kết thúc
+                </th>
+                <th>
+                    Tổng thời gian
+                </th>
+                @if (ViewBag.Type == null)
+                {
+                    <th>
+                        Số lượng
+                    </th>
+                }
+
+                <th>
+                    KPI
+                </th>
+                <th>
+                    Kết quả
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item2 in Model)
+            {
+
+                <tr>
+                    <td>
+                        @item2.TrackingCode
+                    </td>
+                    <td>
+                        @item2.DateStart.ToString("HH:mm:ss")
+                    </td>
+                    <td>
+                        @if (item2.DateEnd != null)
+                        {
+                            @item2.DateEnd.ToString("HH:mm:ss") 
+                        }
+                    </td>
+                    <td>
+                        @item2.TimesResult
+                    </td>
+                    @if (ViewBag.Type == null)
+                    {
+                        <td>
+                            @item2.ToTals
+                        </td>
+                    }
+
+                    <td>
+                        @if (item2.KPI > 0)
+                        {
+                            <span class="text-primary">
+                                @item2.KPI
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">
+                                @item2.KPI
+                            </span>
+                        }
+                    </td>
+                    <td>
+                        @if (item2.KPI > 0)
+                        {
+                            <span class="text-primary">
+                                Đạt
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">
+                                Chưa đạt KPI
+                            </span>
+                        }
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+
+    </table>
+</div>
+
+<script>
+
+    $('#tbHistoryDetail2').DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": true,
+        "searching": true,
+        //"buttons": ["excel", "pdf", "colvis"]
+        "buttons": ["excel", "pdf"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    function closeModal() {
+        $(".shadow").hide();
+    }
+
+    function closeModal() {
+        $(".shadow").hide();
+    }
+
+    function shadowclick() {
+        if (childEnter == false) {
+            $(".shadow").hide();
+        }
+    }
+    var childEnter = false;
+    function childMove() {
+        childEnter = true;
+    }
+    function childOut() {
+        childEnter = false;
+    }
+</script>

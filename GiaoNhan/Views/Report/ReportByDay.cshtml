@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewBag.Title = "ReportByDay";
+}
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="~/Scripts/jquery.table2excel.js"></script>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thống kê</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Thống kê</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    @*<div class="card-header text-right" >
+
+                        </div>*@
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                               <div class="row">
+                                   <div class="col-sm-3">
+                                       <label for="exampleInputEmail1">Chọn thời gian  </label>
+                                       <input style="cursor:pointer;max-width:100%;padding-left: 39px;" type="text" class="form-control mb-mg-20" id="daterange" name="daterange" value="01/01/2018 - 01/15/2018" />
+                                       <i class="fas fa-calendar" style="    position: absolute;
+    left: 17px;
+    top: 43px;"></i>
+                                       @*<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+                                   </div>
+                                   <div class="col-sm-2">
+                                       <label for="User name">Chọn bộ phận</label>
+                                       @if (ViewBag.Permission != null)
+                                       {
+                                           if (ViewBag.PermissionID == 1)
+                                           {
+                                            <select class="form-control mb-mg-20" id="slPermission" style="max-width:100%;    padding-left: 35px;" onchange="changePermission()">
+                                                @foreach (var item in ViewBag.Permission)
+                                                {
+                                                    <option value="@item.PermissionID">
+                                                        @item.PermissionName
+                                                    </option>
+                                                }
+                                            </select>
+                                            <i class="fas fa-user-friends" style="    position: absolute;
+    left: 17px;
+    top: 43px;"></i>
+                                           }
+                                           else
+                                           {
+                                            <select disabled class="form-control mb-mg-20" id="slPermission" style="max-width:100%;padding-left: 35px;" onchange="changePermission()">
+                                                @foreach (var item in ViewBag.Permission)
+                                                {
+                                                    <option value="@item.PermissionID">
+                                                        @item.PermissionName
+                                                    </option>
+                                                }
+                                            </select>
+                                            <i class="fas fa-user-friends" style="    position: absolute;
+    left: 17px;
+    top: 43px;"></i>
+                                           }
+
+                                       }
+                                   </div>
+                                   <div class="col-sm-2">
+                                       <label for="User name">Chọn User</label>
+                                       @if (Model != null)
+                                       {
+                                           if (ViewBag.PermissionID == 1)
+                                           {
+                                            <select class="form-control" id="slUser" style="max-width:100%;padding-left: 30px;"></select>
+                                           }
+                                           else
+                                           {
+                                            <select disabled class="form-control" id="slUser" style="max-width:100%;padding-left: 30px;"></select>
+
+                                           }
+                                        <i class="fas fa-user" style="    position: absolute;
+    left: 17px;
+    top: 43px;"></i>
+                                       }
+                                   </div>
+                                   <div class="col-sm-2" >
+                                       <div id="slTheTai">
+                                           <label for="User name">Chọn tài</label>
+                                           @if (ViewBag.ListDelivery != null)
+                                           {
+                                               <select class="form-control" id="slDelivery" style="max-width:100%">
+                                                   <option value="0">Chọn thẻ tài</option>
+                                                   @foreach (var item in ViewBag.ListDelivery)
+                                                   {
+                                                       <option value="@item.UserID">@item.Code</option>
+                                                   }
+                                               </select>
+
+                                           }
+                                       </div>
+                                       
+                                   </div>
+                                 <div class="col-sm-3 text-left"> 
+                                     <a style="margin-top:35px;" onclick="reportData()" class="btn btn-sm btn-danger"><i class="fas fa-filter"></i> Lọc</a>
+                                     @*<a id="exportToExcel" style="margin-top:35px;" onclick="ExportExcel()"   class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Export Excel</a>*@
+                                 </div>
+                               </div>
+                            </div> 
+                            <div class="form-group table-responsive" id="contents">
+                               
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section> 
+    <script>
+        var fistLoad = true;
+        var intLoad = 0;
+        var typeSL = 0;
+        $(document).ready(function () {
+
+            $("#slTheTai").hide();
+
+
+            changePermission();
+            if ('@ViewBag.PermissionID' != 1) {
+                $("#slPermission").val('@ViewBag.PermissionID').change(); 
+            } 
+        });
+        function changePermission() {
+            $("#slDelivery").val(0);
+            var getId = $("#slPermission").val();
+            if (getId == 4) {
+                $("#slTheTai").show();
+                typeSL = 1;
+            }
+            else {
+                $("#slTheTai").hide();
+                typeSL = 0;
+            }
+            var param = {
+                "PermissionID": $("#slPermission").val()
+            }
+            $.ajax({
+                url: '/Report/LoadUserByPermission',
+                dataType: 'html',
+                type: 'POST',
+                data: param,
+                dataType: 'html',
+                success: function (data, status, xhr) {
+                    $("#slUser").html(data);
+                    if ('@ViewBag.PermissionID' != 1) {
+                        $("#slUser").val('@ViewBag.UserID').change();
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            });
+        }
+       
+    </script>

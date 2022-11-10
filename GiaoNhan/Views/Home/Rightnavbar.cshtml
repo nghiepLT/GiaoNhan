@@ -1,0 +1,171 @@
+﻿
+<ul class="navbar-nav ml-auto">
+    <!-- Navbar Search -->
+    <li class="nav-item">
+
+        <div class="navbar-search-block">
+            <form class="form-inline">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </li>
+    <!-- Messages Dropdown Menu -->
+    <li class="nav-item dropdown">
+
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                    <img src="~/Templates/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                    <div class="media-body">
+                        <h3 class="dropdown-item-title">
+                            Brad Diesel
+                            <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                        </h3>
+                        <p class="text-sm">Call me whenever you can...</p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                    </div>
+                </div>
+                <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                    <img src="~/Templates/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                    <div class="media-body">
+                        <h3 class="dropdown-item-title">
+                            John Pierce
+                            <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                        </h3>
+                        <p class="text-sm">I got your message bro</p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                    </div>
+                </div>
+                <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                    <img src="~/Templates/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                    <div class="media-body">
+                        <h3 class="dropdown-item-title">
+                            Nora Silvester
+                            <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                        </h3>
+                        <p class="text-sm">The subject goes here</p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                    </div>
+                </div>
+                <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+        </div>
+    </li>
+    <!-- Notifications Dropdown Menu -->
+    <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="dropdown">
+            <i class="fas fa-users"></i> <span>@ViewBag.AccountUser</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-divider"></div>
+            <a href="#" onclick="changepass()" class="dropdown-item text-center">
+                <i class="fas fa-user-lock mr-2"></i> Đổi mật khẩu
+            </a>
+            <a href="#" onclick="logout()" class="dropdown-item text-center">
+                <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
+            </a>
+
+        </div>
+    </li>
+</ul>
+<div class="modal fade" id="mdChangePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document" style="z-index:9999999999">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                 <div>
+                     <div class="form-group">
+                         <label for="User name">Mật khẩu cũ</label>
+                         <input id="txtOldPassword" type="password"  class="form-control" placeholder="Nhập mật khẩu cũ" style="min-width:100%"  /> 
+                     </div>
+                     <div class="form-group">
+                         <label for="User name">Mật khẩu mới</label>
+                         <input id="txtNewpassword" type="password" class="form-control" placeholder="Nhập mật khẩu mới" style="min-width:100%" />
+                     </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="Update()" type="button" class="btn btn-primary">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#spAdmin").html('@ViewBag.AccountUser');
+    });
+    function changepass() {
+        $("#mdChangePassword").modal();
+    }
+    function Update() {
+        var param = {
+            "UserName": '@ViewBag.AccountUser',
+            "oldPassword": $("#txtOldPassword").val(),
+            "newPassword": $("#txtNewpassword").val()
+        }
+        $.ajax({
+            url: '/Login/ChangePassword',
+            data: param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                if (data == 1) {
+                    swal({
+                        title: "Thông báo", text: "Đổi mật khẩu thành công!", type:
+             "success"
+                    }).then(function () {
+                        window.location.href = "/login"
+
+                    }
+      );
+                }
+                if (data == 2) {
+                    swal({
+                        title: "Cảnh báo", text: "Mật khẩu cũ không đúng!", type:
+             "error"
+                    }).then(function () {
+                    }
+ );
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+
+</script>
+<style>
+    .modal-backdrop.show {
+    z-index: 1;
+    opacity: .5;
+}
+</style>

@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "UpdateEmployee";
+}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+<link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+
+<link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thiết lập</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Thiết lập</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thiết lập</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Thời gian cho 1 lần nhập (s)</label>
+                                        <input type="hidden"  value="@Model.ConfigID" id="txtConfigID"/>
+                                        <input type="number" placeholder="" class="form-control w100" id="txtTG40" value="@Model.TG40" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Thời gian cho 1 lần kiểm tra (s)</label>
+                                        <input type="number" placeholder="" class="form-control w100" id="txtTG80" value="@Model.TG80" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Thời gian cho 1 lần xuất (s)</label>
+                                        <input type="number" placeholder="" class="form-control w100" id="txtTimeTracking" value="@Model.TimeTracking" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Thời gian cho 1 lần giao nhận (s)</label>
+                                        <input type="number" placeholder="" class="form-control w100" id="txtTimeDelivery" value="@Model.TimeDelivery" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer text-right">
+                            <button type="button" onclick="SaveConfig()" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section> 
+
+
+<script>
+    function SaveConfig() {
+
+        var chkStatus = $("#txtAccountID").val();
+        var param = {
+            "ConfigID": $("#txtConfigID").val(),
+            "TG40": $("#txtTG40").val(),
+            "TG80": $("#txtTG80").val(),
+            "TimeTracking": $("#txtTimeTracking").val(),
+            "TimeDelivery": $("#txtTimeDelivery").val()
+        }
+        $.ajax({
+            url: '/Config/UpdateConfig',
+            type: 'POST',
+            dataType: 'html',
+            data: { "data": JSON.stringify(param) },
+            success: function (data, status, xhr) {
+                swal({
+                    title: "Thiết lập", text: "Cập nhật thành công", type:
+         "success"
+                }).then(function () {
+                    location.reload();
+                }
+    );
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+     
+</script>

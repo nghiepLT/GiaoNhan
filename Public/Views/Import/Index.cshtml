@@ -1,0 +1,256 @@
+﻿
+@{
+    ViewBag.Title = "UpdateEmployee";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Import Data</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Import Data</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Import Data</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="exampleInputEmail1">Chọn file</label>
+                                        <div>
+                                            <input type="file" class="btn-group btn btn-info btn-xs upload" id="myUploadedFileExcel" accept="xlsx,xls" /><br />
+                                            <input type="hidden" id="txtEmployeeAvatar" />
+                                            <div class="myUploadedAvatar" style="margin-top: 20px;display:none;">
+                                                <img id="myUploadedAvatar" alt="Photo" style="width: 110px;  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="User name">Chọn bộ phận</label>
+                                        @if (ViewBag.Permission != null)
+                                        {
+                                            <select class="form-control" id="slPermission" style="max-width:100%" onchange="changePermission()">
+                                                @foreach (var item in ViewBag.Permission)
+                                                {
+                                                    <option value="@item.PermissionID">
+                                                        @item.PermissionName
+                                                    </option>
+                                                }
+                                            </select>
+                                        }
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="User name">Chọn User</label>
+                                        @if (Model != null)
+                                        {
+                                            <select class="form-control" id="slUser">
+                                                @foreach (var item in Model)
+                                                {
+                                                    <option value="@item.UserID">
+                                                        @item.UserName
+                                                    </option>
+                                                }
+                                            </select>
+
+                                        }
+                                    </div>
+                                    <div class="col-sm-3 text-right">
+                                        <button style="margin-top:30px;" type="button" onclick="AsynData()" class="btn btn-primary">Đồng bộ</button>
+                                    </div>
+                                </div>
+                                @*<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+
+
+                            </div>
+                            <div class="form-group">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                ID
+                                            </th>
+                                            <th>
+                                                Quét thẻ tài
+                                            </th>
+                                            <th>
+                                                Thời gian nhập
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                       
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<script>
+
+    var _URL = window.URL || window.webkitURL;
+    $("#myUploadedFileExcel").on('change', function () {
+        var file, img;
+        if ((file = this.files[0])) {
+            sendFile(file);
+        }
+    });
+    function sendFile(file) {
+        var formData = new FormData();
+        formData.append('file', $('#myUploadedFileExcel')[0].files[0]);
+        $.ajax({
+            url: "../ImportExcel.ashx",
+            type: "POST",
+            data: formData,
+            success: function (status) {
+                if (status != 'error') {
+                    ImportData(status);
+                }
+            },
+            processData: false,
+            contentType: false,
+            error: function () {
+                alert("Whoops something went wrong!");
+            }
+        });
+    }
+
+
+    var html = "";
+    function parseJsonDate(jsonDate) {
+        var offset = new Date().getTimezoneOffset() * 60000;
+        var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+        if (parts[2] == undefined) parts[2] = 0;
+        if (parts[3] == undefined) parts[3] = 0;
+        return new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+    }
+    var listAsyn = [];
+    function ImportData(filename) {
+        $("#loading").show();
+        var param = {
+            "Filename": filename
+        }
+        $.ajax({
+            url: '/Import/Import',
+            dataType: 'json',
+            data: param,
+            type:'POST',
+            success: function (data, status, xhr) {
+                for (i = 0; i < data.length; i++) {
+                    //data[i].Code
+                    html = "<tr>";
+                    html += "<td>" + data[i].ID + "</td>";
+                    if (data[i].Status == 1) {
+                        html += "<td>" + data[i].Code + "</td>";
+                    }
+                    else {
+                        html += "<td style=\"color:red\">" + data[i].Code + "</td>";
+                    }
+                    var num1 = data[i].DateGiaoNhan.match(/\d+/g);
+                    var date = new Date(parseFloat(num1));
+                    var fromdate = (date.getDate() + 1 + "-" + date.getMonth() + '-' + date.getFullYear()) + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                    html += "<td>" + fromdate + "</td>";
+                    html += "</tr>";
+                    var obj = {
+                        "ID":data.ID,
+                        "Code": data[i].Code,
+                        "DateGiaoNhan":fromdate
+                    }
+                    listAsyn.push(obj);
+                    $("#tbody").append(html);
+                    $("#loading").hide()
+                }
+               
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function AsynData() {
+          
+        var param = {
+            "listAsyn": listAsyn,
+            "UserID": $("#slUser").val()
+        }
+        $.ajax({
+            url: '/Import/AsynData',
+            dataType: 'html',
+            data: param,
+            type: 'POST',
+            success: function (data, status, xhr) {
+                swal({
+                    title: "Import Excel", text: "Import thành công!", type:
+         "success"
+                }).then(function () {
+                    location.href = "/";
+                }
+);
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>
+<div id="loading">
+    <img src="~/Images/loading.gif" />
+</div>
+<script>
+    $("#loading").hide();
+    $(document).ready(function () {
+        changePermission();
+    });
+    function changePermission() {
+        var param = {
+            "PermissionID": $("#slPermission").val()
+        }
+        $.ajax({
+            url: '/Report/LoadUserByPermission',
+            dataType: 'html',
+            type: 'POST',
+            data: param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                $("#slUser").html(data);
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>
+<style>
+    th{
+        background-color:#1F7246;
+        color:#ffffff;
+        font-weight:300;
+    }
+</style>

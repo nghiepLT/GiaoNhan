@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "LoadTrackingData";
+}
+
+<table class="table table-striped" id="tbHistory">
+    <thead>
+        <tr class="noExl">
+            <th>
+                ID
+            </th>
+            <th>Mã</th>
+            <th>
+                Thời gian nhập
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.TrackingID
+                    </td>
+                    <td>
+                        @item.TrackingCode
+                    </td>
+                    <td>
+                        @item.TrackingDate
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table> 
+ 

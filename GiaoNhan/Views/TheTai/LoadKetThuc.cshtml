@@ -1,0 +1,40 @@
+﻿@if (Model != null)
+{
+    foreach(var item in Model)
+    {
+        <tr>
+            <td><strong style="color:#435a39" class="kethucphieu">@item.MaPhieu</strong></td>
+            @if (item.Status == 0)
+            {
+                <td ><button class="btn btn-sm btn-danger"  style="margin-right:5px;cursor:pointer;color:#ffffff"  onclick="updateStatus('@item.TheTaiChiTietID')"   /> <span class="text-white text-primary trangthaigiao">Kết thúc</span></td>
+            }
+            else
+            {
+                <td><button class="btn btn-sm btn-primary"  style="margin-right:5px;cursor:pointer;color:#ffffff" disabled  checked/> <span  class="text-danger text-white trangthaigiao">Đã giao</span> </td>
+            }
+            <td>
+                @item.DateEnd
+            </td>
+        </tr>
+    }
+}
+
+<script>
+    function updateStatus(id) {
+        var param = {
+            "TheTaiChiTietID": id
+        }
+        $.ajax({
+            url: '/TheTai/updateStatus',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>

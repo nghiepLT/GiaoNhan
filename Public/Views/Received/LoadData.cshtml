@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "LoadData";
+}
+ @if(Model!=null)
+ {
+     foreach(var item in Model)
+     {
+         <tr>
+             <td>
+                 <strong>@item.STT</strong> -@if (item.Type == 1)
+                 {
+                    <span>Nhập</span>
+                 }
+                @if (item.Type == 2)
+                {
+                    <span>Kiểm tra</span>
+                }
+                @if (item.Type == 3)
+                {
+                    <span>Trung chuyển</span>
+                }
+                @if (item.Type == 4)
+                {
+                    <span>Xếp hàng</span>
+                } 
+             </td>
+             <td data-order="@item.DateStart.ToString("MMddyyyy")">
+                <div>
+                   <strong>@item.DateStart.ToString("HH:mm:ss")</strong>
+                </div>
+                <div>
+                    @if (item.DateEnd != null)
+                    {
+                        <strong style="color:#ff0000">@item.DateEnd.ToString("HH:mm:ss") </strong>
+                    }
+                </div>
+             </td> 
+             <td>
+                 @item.ProductDescription
+             </td>
+             <td class="columnDisplay">
+                 @item.ToTals
+             </td>
+             <td class="columnDisplay">
+                 @if(item.KPI>0){
+                     <span class="text-primary">@item.KPI</span>
+                 }
+                 else
+                 {
+                    <span class="text-danger">@item.KPI</span>
+                 }
+             </td>
+             <td class="columnDisplay">
+                 @if (item.KPI < 0)
+                 {
+                     <strong class="text-primary">Chưa đạt KPI</strong>
+                 }
+                @if (item.KPI > 0)
+                {
+                    <strong class="text-danger">Đạt KPI</strong>
+                 }
+                @if (item.KPI == 0)
+                {
+                    <strong></strong>
+                }
+             </td>
+             <td>
+                 @if (item.Type == null)
+                 {
+                    <a style="margin-bottom:5px;width:60px;" class="btn  btn-xs btn-sm btn-primary" href="/Received/edit?ReceivedID=@item.ReceivedID">Kết thúc</a>
+                    <a  style="margin-bottom:5px;width:60px;" onclick="DeleteRecived(@item.ReceivedID)" class="btn btn-xs btn-sm btn-danger">Xóa</a>
+                 }
+                 else
+                 {
+                     <strong class="text-success">Hoàn tất</strong>
+                 } 
+             </td>
+         </tr>
+     }
+ }

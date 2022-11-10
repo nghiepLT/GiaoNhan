@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "KetThucGiaoNhan";
+}
+ 
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Kết thúc phiếu</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div>
+                        <div class="card-body">
+                            @*<div class="form-group">
+                                <label>Chọn Thẻ Tài</label>
+                                <select id="slKetThucGiaoNhan" class="form-control" onchange="slChange()">
+                                    @if (Model != null)
+                                    {
+                                        foreach(var item in Model)
+                                        {
+                                            <option value="@item.Code">@item.Code</option>
+                                        }
+                                    }
+                                </select>
+                            </div>*@
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:40%">
+                                                Mã phiếu
+                                            </th>
+                                            <th width="40%">
+                                                Trạng thái
+                                            </th>
+                                            <th>
+                                                Thời gian
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<script>
+    $(document).ready(function () {
+        loaddata();
+    });
+    function loaddata() {
+        var param = {
+            "MaThe": '@ViewBag.accountID'
+        }
+        $.ajax({
+            url: '/TheTai/LoadKetThuc',
+            type: 'POST',
+            dataType: 'html',
+            data:param,
+            success: function (data, status, xhr) {
+                $("#tbody").html(data);
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function slChange() {
+        loaddata();
+    }
+</script>

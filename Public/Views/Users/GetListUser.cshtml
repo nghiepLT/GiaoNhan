@@ -1,0 +1,369 @@
+﻿@using Tool;
+@{
+    ViewBag.Title = "BookingList";
+}
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Booking date
+            </th>
+            <th>
+                Numbers
+            </th>
+        </tr>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.BookID
+                        </td>
+                        <td>
+                            @item.BookingDateStart
+                        </td>
+                        <td>
+                            @item.Numbers
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>*@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý user</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý user</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DANH SÁCH USER</h3>
+                       
+                        <div class="text-right">
+                            <a class="btn btn-success" onclick="InsertAccount()">
+                                Thêm
+                            </a>
+                        </div>
+                        <div style="display:inline-block">
+                            <label>Bộ phận</label>
+                            @if (ViewBag.ListPermission != null)
+                            {
+                                <select class="form-control" id="slPermissionData" onchange="slChangeData()" style="display:inline-block;width:auto;min-width: auto;margin-left:15px;">
+                                    <option value="0">--Chọn bộ phận--</option>
+                                    @foreach (var item in ViewBag.ListPermission)
+                                    {
+                                        <option value="@item.PermissionID">@item.PermissionName</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body" id="tbody">
+                       
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="mdAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lbltitle">Thêm mới nhân viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="User name">Họ và tên</label>
+                            <input type="text" class="form-control" id="txtEmployeeName" placeholder="họ và tên">
+                            <input type="hidden" id="txtUserID" value="0" /> 
+                        </div>
+                        <div class="form-group" id="qlnv">
+                            <label for="User name">Bộ phận</label>
+                            @if (ViewBag.ListPermission != null)
+                            {
+                                <select class="form-control" id="slPermission" onchange="slChange()">
+                                    @foreach (var item in ViewBag.ListPermission)
+                                    {
+                                        <option value="@item.PermissionID">@item.PermissionName</option>
+                                    }
+                                </select> 
+                            }
+                        </div>
+                        <div class="form-group" id="MaTai">
+                            <label for="User name">Mã tài</label>
+                            <input type="text" class="form-control" id="txtCode" placeholder="Mã tài">
+                        </div>
+                        <div class="form-group" id="MaKeToan">
+                            <label for="User name">Mã kế toán</label>
+                            <input type="text" class="form-control" id="txtCodeKT" placeholder="Mã kế toán">
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">User name</label>
+                            <input type="text" class="form-control" id="txtUserName" placeholder="User name">
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Password</label>
+                            <input type="password" class="form-control" id="txtPassword" placeholder="Password">
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateEmployee()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<script>
+
+    $(document).ready(function () {
+        $("#MaTai").hide();
+        $("#MaKeToan").hide();
+        loadata(0);
+    });
+   
+    function loadata(id) {
+        var param = {
+            "PermissionID":id
+        }
+        $.ajax({
+            url: '/Users/GetListUserData',
+            data: param, 
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                $("#tbody").html(data);
+               
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function slChangeData() {
+        var slect = $("#slPermissionData").val();
+        loadata(slect)
+    }
+    function slChange() {
+        $("#txtCode").val('');
+        $("#txtCodeKT").val('');
+
+        var slect = $("#slPermission option:selected").text();
+        if (slect == "Giao nhận") {
+            $("#MaTai").show();
+            $("#MaKeToan").hide();
+        }
+        if (slect == "Kế toán") {
+            $("#MaKeToan").show();
+            $("#MaTai").hide();
+        }
+        if (slect != "Giao nhận" && slect != "Kế toán") {
+            $("#MaTai").hide();
+            $("#MaKeToan").hide();
+        }
+    }
+
+    function resetValue() {
+        $("#txtUserName").val('');
+        $("#txtUserID").val(0);
+
+    }
+    function InsertAccount() {
+        $("#txtCode").val('');
+        $("#txtCodeKT").val('');
+
+
+        $("#mdAccount").modal("toggle");
+        $("#lbltitle").html("Thêm mới user"); 
+        resetValue();
+    }
+
+    var isValid = true;
+    function CheckValidate() {
+        if ($("#txtEmployeeName").val() == '') {
+            swal('Vui lòng nhập họ tên');
+            isValid = false; 
+        }
+    }
+    function UpdateEmployee() {
+        isValid = true;
+        CheckValidate();
+        if (isValid == false)
+            return;
+        var code = "";
+        var codeGiannhan = $("#txtCode").val();
+        var codeKeToan = $("#txtCodeKT").val();
+        var code = codeGiannhan + codeKeToan;
+
+        var param = {
+            "UserID": $("#txtUserID").val(),
+            "EmployeeName": $("#txtEmployeeName").val(),
+            "UserName": $("#txtUserName").val(),
+            "UserPassword": $("#txtPassword").val(),
+            "PermissionID": $("#slPermission").val(),
+            "Code": code
+        }
+        $.ajax({
+            url: '/Users/UserUpdate',
+            data: { "data": JSON.stringify(param)},
+            type:'POST',
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                if (data == 1) {
+                    location.reload(); 
+                }
+                if (data == 2) {
+                    swal("Username đã tồn tại, vui lòng nhập username khác!");
+                    return;
+                }
+                if (data == -1) {
+                    swal("Có lỗi, vui lòng thử lại!");
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function editAccount(id) {
+        var slect = $("#slPermission").val(); 
+        if (slect == 4) {
+            $("#MaTai").show();
+        }
+        else {
+            $("#MaTai").hide();
+        }
+        //
+        $("#mdAccount").modal("toggle");
+        $("#lbltitle").html("Cập nhật user"); 
+        getInfoEmployee(id);
+    }
+
+    function getInfoEmployee(id) {
+        var param = {
+            "UserID": id
+        }
+        $.ajax({
+            url: '/Users/GetInfoUser',
+            dataType: 'json',
+            data: param,
+            success: function (data, status, xhr) {
+                $("#txtUserID").val(data.UserID);
+                $("#slPermission").val(data.PermissionID).change();
+                $("#txtUserName").val(data.UserName); 
+                $("#txtEmployeeName").val(data.EmployeeName);
+                $("#txtPassword").val(data.UserPassword);
+                if (data.Code.includes("GN")) {
+                    $("#txtCode").val(data.Code);
+                }
+                if (data.Code.includes("KT")) {
+                    $("#txtCodeKT").val(data.Code);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+
+
+    function deleteAccount(id) {
+
+        swal({
+            title: "Xóa nhân viên?",
+            text: "Bạn có muốn xóa nhân viên này!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    .then((willDelete) => {
+        if (willDelete) {
+            var param = {
+                "UserID": id
+            }
+            $.ajax({
+                url: '/Users/DeleteUser',
+                dataType: 'html',
+                type: 'POST',
+                data: param,
+                success: function (data, status, xhr) {
+                    swal({
+                        title: "Xóa nhân viên", text: "Xóa nhân viên thành công", type:
+             "success"
+                    }).then(function () {
+                        location.reload();
+                    }
+      );
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            });
+        } else {
+        }
+    });
+    }
+</script>
+<style>
+    input, select {
+        min-width: 100%;
+    }
+</style>
+
+
+
+
+ 
+<script>
+     $(function () {
+    $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": true,
+        "searching": true,
+        //"buttons": ["excel", "pdf", "colvis"]
+        "buttons": ["excel", "pdf"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>

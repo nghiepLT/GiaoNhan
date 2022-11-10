@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "LoadTracking";
+}
+
+
+@if (Model != null)
+{
+    var i = 0;
+    foreach (var item in Model)
+    {
+        if (i == 0)
+        {
+            <tr style="background-color:#ff0000;color:white">
+                @*<td data-order="@item.TrackingID">@item.TrackingID</td>*@
+                <td class="">@item.TrackingCode</td>
+                <td>
+                    <div>
+                        @item.DateStart.ToString("HH:mm:ss")
+                    </div>
+                    <div>
+                        @if (item.DateEnd != null)
+                        {
+                            @item.DateEnd.ToString("HH:mm:ss")
+                        }
+                    </div>
+                </td>
+                <th class="columnDisplay">
+                    @item.TimesResult
+                </th>
+                @if (ViewBag.Type == 2)
+                {
+                    <td>
+                        @item.ToTals
+                    </td>
+                }
+
+                <td class="columnDisplay">
+                    @item.KPI
+                </td>
+                <td class="columnDisplay">
+                    @if (item.KPI > 0)
+                        {
+                        <span class="text-white">
+                            Đạt
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-white">
+                            Chưa đạt KPI
+                        </span>
+                    }
+                </td>
+
+            </tr>
+        }
+        else
+        {
+            <tr>
+                @*<td data-order="@item.TrackingID">@item.TrackingID</td>*@
+                <td class="trackingcode">@item.TrackingCode</td>
+                <td>
+                    <div>
+                        @item.DateStart.ToString("HH:mm:ss")
+                    </div>
+                    <div>
+                        @item.DateEnd.ToString("HH:mm:ss")
+                    </div>
+                </td>
+                <th class="columnDisplay">
+                    @item.TimesResult
+                </th>
+                <td>
+                    @item.ToTals
+                </td>
+                <td class="columnDisplay">
+                    @item.KPI
+                </td>
+                <td class="columnDisplay">
+                    @if (item.KPI > 0)
+                        {
+                        <strong class="text-primary">
+                            Đạt
+                        </strong>
+                    }
+                    else
+                    {
+                        <strong class="text-danger">
+                            Chưa đạt KPI
+                        </strong>
+                    }
+                </td>
+            </tr>
+        }
+        i++;
+    }
+}

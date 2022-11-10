@@ -1,0 +1,55 @@
+﻿@if (Model != null)
+{ <table class="table table-bordered table-striped" id="example1">
+        <thead>
+            <tr>
+                <th>
+                    Tên nhân viên
+                </th>
+                <th>
+                    User name
+                </th>
+                <th>
+                    Bộ phận
+                </th>
+                <th>
+                    Chức năng
+                </th>
+            </tr>
+        </thead>
+        <tbody >
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.EmployeeName
+                    @if (item.Code != null && item.Code!="")
+                    {
+                        <strong style="color:#ff0000">-@item.Code</strong>
+                    }
+                </td>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    @item.PermissionName
+                </td>
+
+                <td>
+                    <a style="margin-right:10px;cursor:pointer;" onclick="editAccount('@item.UserID')"><i class="nav-icon fas fa-edit"></i></a>
+                    <a style="cursor:pointer;" onclick="deleteAccount('@item.UserID')"><i class="nav-icon fas fa-trash"></i></a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    
+}
+<script> 
+    var table = $('#example1').DataTable();
+    table.DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": true,
+        "searching": true,
+        //"buttons": ["excel", "pdf", "colvis"]
+        "buttons": ["excel", "pdf"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+</script>

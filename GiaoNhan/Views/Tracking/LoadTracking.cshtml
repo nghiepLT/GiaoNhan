@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "LoadTracking";
+}
+
+
+@if (Model != null)
+{
+    var i = 0;
+    foreach (var item in Model)
+    {
+        if (i == 0)
+        {
+            <tr style="background-color:#ff0000;color:white">
+                @*<td data-order="@item.TrackingID">@item.TrackingID</td>*@
+                <td class="">@item.TrackingCode</td>
+                <td>
+                    <div>
+                        @item.DateStart.ToString("HH:mm:ss")
+                    </div>
+                    <div>
+                        @if (item.DateEnd != null)
+                        {
+                            @item.DateEnd.ToString("HH:mm:ss")
+                        }
+                    </div>
+                </td>
+                <th class="columnDisplay">
+                    @item.TimesResult
+                </th>
+                <td>
+                    @item.ToTals
+                </td>
+                <td style="position:relative;">
+                    @if (item.DateEnd == null)
+                    {
+                        <input data-toggle="tooltip" data-placement="top" title="Tooltip on top" data-code="@item.TrackingCode" id="txtCountStep" data-id="@item.TrackingID" type="number" class="form-control" value="@item.CountStep" min="1" data-max="@item.CountStep" data-old="@item.ToTals" onchange="changesl(this)" onmouseover="mousemove(this,'@item.TrackingID')" onmouseout="mouseout('@item.TrackingID')" />
+                    }
+                    else
+                    {
+                        <input disabled data-toggle="tooltip" data-placement="top" title="Tooltip on top" data-code="@item.TrackingCode" id="txtCountStep" data-id="@item.TrackingID" type="number" class="form-control" value="@item.CountStep" min="1" data-max="@item.CountStep" data-old="@item.ToTals" onchange="changesl(this)" onmouseover="mousemove(this)" onmouseout="mouseout()" />
+                    }
+                     <div id="tg_@item.TrackingID" class="tootip_box">
+                        sdsda
+                    </div>
+                </td>
+                <td class="columnDisplay">
+                    @item.KPI
+                </td>
+                <td class="columnDisplay">
+                    @if (item.KPI > 0)
+                        {
+                        <span class="text-white">
+                            Đạt
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-white">
+                            Chưa đạt KPI
+                        </span>
+                    }
+                </td>
+
+            </tr>
+        }
+        else
+        {
+            <tr>
+                @*<td data-order="@item.TrackingID">@item.TrackingID</td>*@
+                <td class="trackingcode">@item.TrackingCode</td>
+                <td>
+                    <div>
+                        @item.DateStart.ToString("HH:mm:ss")
+                    </div>
+                    <div>
+                        @if (item.DateEnd != null)
+                        {
+                            @item.DateEnd.ToString("HH:mm:ss")
+
+                        }
+                    </div>
+                </td>
+                <th class="columnDisplay">
+                    @item.TimesResult
+                </th>
+                <td>
+                    @item.ToTals
+                </td>
+                <td style="position:relative;">
+                    @if (item.DateEnd == null)
+                    {
+                        <input data-toggle="tooltip" data-placement="top" title="Tooltip on top" data-code="@item.TrackingCode" id="txtCountStep" data-id="@item.TrackingID" type="number" class="form-control" value="@item.CountStep" min="1" data-max="@item.CountStep" data-old="@item.ToTals" onchange="changesl(this)" onmouseover="mousemove(this)" onmouseout="mouseout()" />
+                    }
+                    else
+                    {
+                        <input disabled data-toggle="tooltip" data-placement="top" title="Tooltip on top" data-code="@item.TrackingCode" id="txtCountStep" data-id="@item.TrackingID" type="number" class="form-control" value="@item.CountStep" min="1" data-max="@item.CountStep" data-old="@item.ToTals" onchange="changesl(this)" onmouseover="mousemove(this)" onmouseout="mouseout()" />
+                    }
+                    <div class="tootip_box">
+                        sdsda
+                    </div>
+                </td>
+                <td class="columnDisplay">
+                    @item.KPI
+                </td>
+                <td class="columnDisplay">
+                    @if (item.KPI > 0)
+                        {
+                        <strong class="text-primary">
+                            Đạt
+                        </strong>
+                    }
+                    else
+                    {
+                        <strong class="text-danger">
+                            Chưa đạt KPI
+                        </strong>
+                    }
+                </td>
+            </tr>
+        }
+        i++;
+    }
+}
+
+<script>
+    $(".tootip_box").hide();
+    function changesl(dis) {
+        var sl = $(dis).val();
+        var slold = $(dis).attr("data-max");
+        //if (parseInt(sl) > parseInt(slold)) {
+        //    $(dis).val(slold).change();
+        //}
+        var param = {
+            "TrackingID":$(dis).attr("data-id"),
+            "CountStep": $(dis).val(),
+            "TrackingCode": $(dis).attr("data-code"),
+            "Count": $(dis).attr("data-old")
+        }
+        $.ajax({
+            url: '/Tracking/UpdateCountStep',
+            type: 'POST',
+            data:param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                if (data == 0)
+                {
+                    loadTracking();
+                }
+                else {
+                    swal({
+                        title: "Thông báo", text: "Số lượng xuất không hợp lệ, số lượng còn lại :"+data, type:
+             "success"
+                    }).then(function () {
+                        $(dis).val(slold).change();
+                    }
+);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+
+    }
+
+    function mousemove(dis,id) {
+
+        var param = { 
+            "TrackingCode": $(dis).attr("data-code")
+        }
+        $.ajax({
+            url: '/Tracking/GetSLRemain', 
+            data: param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                $("#tg_" + id).show();
+                $(".tootip_box").html("Số lượng còn lại :"+data)
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function mouseout(id) {
+        $("#tg_"+id).hide();
+    }
+</script>
