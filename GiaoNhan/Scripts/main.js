@@ -57,8 +57,6 @@ $('input[name="daterange"]').daterangepicker({
     }
 });
 function reportData() {
-
-   
     $("#contents").html('');
     //
     var date_range = $("#daterange").val();
@@ -68,36 +66,14 @@ function reportData() {
     var end = dates[1];
 
     //Trường hợp là nhập kho, trung chuyển với giao nhận
-    var permissionId = $("#slPermission").val();  
-    if (permissionId == 2 || permissionId == 5 || permissionId == 6) {
-        var param = {
-            "fromDate": start,
-            "toDate": end,
-            "UserID": $("#slUser").val()
-        }  
-        $.ajax({
-            url: '/Report/LoadReceivedDataList',
-            dataType: 'html',
-            type: 'POST',
-            data: param,
-            dataType: 'html',
-            success: function (data, status, xhr) {
-                $("#contents").html(data);
-            },
-            error: function (xhr, status, error) {
-                alert(status);
-            }
-        });
-    }
-    else {
-        var param = {
+   var param = {
             "fromDate": start,
             "toDate": end,
             "UserID": $("#slUser").val(),
             "Code": $("#slDelivery option:selected").text()
         }
         $.ajax({
-            url: '/Report/LoadTrackingData2',
+            url: '/Report/ThongKeBaoCao',
             dataType: 'html',
             type: 'POST',
             data: param,
@@ -109,7 +85,6 @@ function reportData() {
                 alert(status);
             }
         });
-    }
    
 }
 

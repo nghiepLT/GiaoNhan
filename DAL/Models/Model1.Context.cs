@@ -40,5 +40,7 @@ namespace DAL.Models
         public virtual DbSet<tbTheTai> tbTheTais { get; set; }
         public virtual DbSet<tbTheTaiChiTiet> tbTheTaiChiTiets { get; set; }
         public virtual DbSet<tbTracking> tbTrackings { get; set; }
+        public virtual DbSet<tbRole> tbRoles { get; set; }
+        public virtual DbSet<tbRoleMenu> tbRoleMenus { get; set; }
     }
 }

@@ -12,14 +12,10 @@ namespace DAL.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbMenu
+    public partial class tbRoleMenu
     {
-        public int MenuId { get; set; }
-        public string MenuName { get; set; }
-        public string MenuURL { get; set; }
-        public string Controller { get; set; }
-        public string Action { get; set; }
-        public string Icon { get; set; }
-        public Nullable<int> STT { get; set; }
+        public int RoleMenuID { get; set; }
+        public Nullable<int> RoleId { get; set; }
+        public Nullable<int> MenuId { get; set; }
     }
 }

@@ -36,17 +36,21 @@ namespace DAL
             var model = (from us in dbContext.tbUSers
                          join pm in dbContext.tbPermissions
                          on us.PermissionID equals pm.PermissionID
-                         where us.Status==1
-                         && ((PermissionID==0) || (us.PermissionID==PermissionID))
+                         join r in dbContext.tbRoles
+                         on us.RoleId equals r.RoleId into gj
+                         from x in gj.DefaultIfEmpty()
+                         where us.Status == 1
+                         && ((PermissionID == 0) || (us.PermissionID == PermissionID))
                          select new VM_User()
                          {
                              Description = us.Description,
                              PermissionID = us.PermissionID,
                              PermissionName = pm.PermissionName,
-                             UserID = us.UserID, 
-                             EmployeeName=us.EmployeeName,
-                             UserName=us.UserName,
-                             Code=us.Code
+                             UserID = us.UserID,
+                             EmployeeName = us.EmployeeName,
+                             UserName = us.UserName,
+                             Code = us.Code,
+                             RoleName = x != null ? x.RoleName : "Chưa phân quyền"
                          }
                        );
             return model;
@@ -103,6 +107,7 @@ namespace DAL
                     us.PermissionID = user.PermissionID;
                     us.Code = user.Code;
                     us.Status = 1;
+                    us.RoleId = user.RoleId;
                     dbContext.tbUSers.Add(us);
                     dbContext.SaveChanges();
                 }
@@ -114,6 +119,7 @@ namespace DAL
                     us.EmployeeName = user.EmployeeName;
                     us.PermissionID = user.PermissionID;
                     us.Code = user.Code;
+                    us.RoleId = user.RoleId;
                     dbContext.SaveChanges();
                 }
                 return true;

@@ -131,18 +131,73 @@ input.form-control.form-control-sm {
     position: absolute;
     top: -20px;
 }
-#lstRad span{
+
+#lstRad span {
+}
+
+.hinhthucnhap {
+}
+
+.hinhthucnhap_checkbox {
+    margin-right: 10px;
+}
+
+.tdProductName {
+    width: 30%;
+}
+
+.input100 {
+    width: 100%;
+    min-width: 100%;
+}
+
+.ulRole {
+    margin: 0px;
+    padding: 0px;
+}
+
+    .ulRole li {
+        display: block;
+    }
+
+    .ulRole input {
+        margin-right: 5px;
+        margin-bottom: 10px;
+    }
+
+    .ulRole span {
+    }
+
+    .ulRole strong {
+    }
+
+    .ulRole a {
+        cursor: pointer;
+    }
+    .tkct_title{
+
+font-weight: bold;
+
+margin-bottom: 15px;
+
+text-transform: capitalize;
 
 }
 @media only screen and (max-width: 640px) {
-    .trangthaigiao{
-        font-size:12px;
+    .tdProductName {
+        width: auto;
+    }
+
+    .trangthaigiao {
+        font-size: 12px;
         width: 50px;
         display: inline-block;
     }
-    .kethucphieu{
-        font-size:12px;
+
+    .kethucphieu {
+        font-size: 12px;
     }
+
     .mapx {
     }
 

@@ -5,7 +5,7 @@
 
 <div class="reportDetail" onmousemove="childMove()" onmouseout="childOut()">
     <div class="reportDetailTitle">
-        Thống kê ngày @ViewBag.StartDate.ToShortDateString()
+        Thống kê xuất kho @ViewBag.StartDate.ToShortDateString()
     </div>
     <div class="reportclose">
         <a onclick="closeModal()"><i class="fas fa-times"></i></a>
@@ -102,6 +102,76 @@
 
         </tbody>
 
+    </table>
+
+    <div class="reportDetailTitle" style="margin-top:30px;">
+        Thống kê nhập kho @ViewBag.StartDate.ToShortDateString()
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Hình thức</th>
+                <th>
+                    Thời gian bắt đầu
+                </th>
+                <th>
+                    Thời gian kết thúc
+                </th>
+                <th>Tổng thời gian</th>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>KPI</th>
+                <th>Kết quả</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.Model2 != null)
+            {
+                foreach (var item in ViewBag.Model2)
+                {
+                    <tr>
+                        @if (item.Type == 1)
+                        {
+                            <td>Nhập</td> 
+                        }
+                        <td>@item.DateStart.ToString("hh:mm:ss")</td>
+                        <td>@item.DateEnd.ToString("hh:mm:ss")</td>
+                        <td>@item.TimesResult</td>
+                        <td>@item.Products</td>
+                        <td>@item.ToTals</td>
+                        <td>
+                            @if (item.KPI > 0)
+                            {
+                                <span class="text-primary">
+                                    @item.KPI
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">
+                                    @item.KPI
+                                </span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.KPI > 0)
+                            {
+                                <span class="text-primary">
+                                    Đạt
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">
+                                    Chưa đạt KPI
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+          
+        </tbody>
     </table>
 </div>
 

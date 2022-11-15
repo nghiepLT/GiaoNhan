@@ -104,7 +104,7 @@
         loadTracking();
         $("#txtScan").focus();
 
-        var str = '@ViewBag.ListTheTai';
+        var str = '@ViewBag.ListTheTai2';
         var str1 = str.split(',');
         for (i = 0; i < str1.length; i++) {
             if (str1[i] != '') {
@@ -114,7 +114,7 @@
         $("#lstRad").hide();
         loadcontrol();
         if (lstRadTheTai != null) {
-            slThetai = lstRadTheTai[0]; 
+            slThetai = lstRadTheTai[0];
         }
     });
     function getDatenow() {
@@ -144,7 +144,7 @@
             }
         });
     }
-    function InsertData() { 
+    function InsertData() {
         if (slThetai == "" && $("#txtScan").val().includes("-L") && lstRadTheTai.length > 0) {
             swal("Vui lòng chọn thẻ tài");
         }
@@ -178,35 +178,63 @@
                     var chk = lstRadTheTai.includes($("#txtScan").val());
                     if (chk == false) {
                         if ($("#txtScan").val().includes("GN")) {
-                            lstRadTheTai.push($("#txtScan").val()); 
+                            lstRadTheTai.push($("#txtScan").val());
                         }
                         loadcontrol();
                         if (firtsload == true) {
                             slThetai = lstRadTheTai[0];
                             firtsload = false;
+                        //  removesptai("sptai_"+slThetai);
                         }
                     }
                     loadTracking();
                 }
+        //n2fix
+                    if(data == 10){
+                       //  loadcontrol();
+
+                        for (var i = 0; i < lstRadTheTai.length; i++) {
+                           //  alert(slThetai +"_"+ lstRadTheTai[i]);
+                        if (lstRadTheTai[i] === slThetai) {
+                          //  alert(slThetai +"_"+ lstRadTheTai[i]);
+                          lstRadTheTai.splice(lstRadTheTai[i], 1);
+                          i--;
+                        }
+                      }
+                       // lstRadTheTai.splice(slThetai, 1);
+                      removesptai("sptai_"+slThetai);
+                    console.log(lstRadTheTai);
+                    loadTracking();
+                    }
+
+       //end fix
                 $("#txtScan").val('');
             },
             error: function (xhr, status, error) {
                 alert(status);
             }
         });
+   // location.reload();
+    }
+    function removesptai(abc)
+    {
+    $("#"+abc).remove();
     }
     function loadcontrol() {
-        
+
         $("#lstRad").empty();
         if (lstRadTheTai.length > 0) {
             $("#lstRad").show();
         }
         var j = 0;
         for (i = 0; i < lstRadTheTai.length; i++) {
-            var hmtl = "<a onclick='choseTheTai(this)' style='cursor:pointer'></span> <input id=\"ip_"+i+"\" type=\"radio\"  name=\"radControl\"/>" + "<i style='margin-left:5px;margin-right:3px;'  class='fas fa-id-card'></i><span>" + lstRadTheTai[i] + "</span></a>";
+    //if(){}
+            var hmtl = "<div class='sptai' id='sptai_"+lstRadTheTai[i]+"'><a onclick='choseTheTai(this)' style='cursor:pointer'></span> <input id=\"ip_"+i+"\" type=\"radio\"  name=\"radControl\"/>" + "<i style='margin-left:5px;margin-right:3px;'  class='fas fa-id-card'></i><span>" + lstRadTheTai[i] + "</span></a></div>";
             $("#lstRad").append(hmtl);
         }
         $("#ip_" + idsl).prop("checked",true);
+
+
     }
     var slThetai = "";
     var idsl = 0;
@@ -215,10 +243,18 @@
         child.prop("checked", true);
         var childspan = $(dis).find("span");
         slThetai = childspan.html();
-        idsl = $(dis).find("input").attr("id").replace("ip_",""); 
+        idsl = $(dis).find("input").attr("id").replace("ip_","");
     }
 </script>
 <style>
+    .sptai {
+    width: 20%;
+    float: left;
+    }
+    .text-left {
+    float: left;
+    width: 100%;
+    }
    #lstRad {
     position: relative;
     left: 25px;

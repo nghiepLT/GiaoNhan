@@ -1,0 +1,187 @@
+﻿@if (ViewBag.tkNhap != null)
+{
+
+    <div class="tkct_title">
+        Chi tiết nhập kho
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Hình thức
+                    </th>
+                    <th>
+                        Thời gian bắt đầu
+                    </th>
+                    <th>
+                        Thời gian kết thúc
+                    </th>
+                    <th>
+                        Tổng thời gian
+                    </th>
+                    <th>
+                        Sản phẩm
+                    </th>
+                    <th>
+                        Số lượng
+                    </th>
+                    <th>
+                        KPI
+                    </th>
+                    <th>
+                        Kết quả
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.tkNhap)
+                {
+                    <tr>
+                        @if (item.Type == 1)
+                        {
+                            <td>
+                                <span>Nhập</span>
+                            </td>
+                        }
+                        @if (item.Type == 2)
+                    {
+                            <td>
+                                <span>Trung chuyển</span>
+                            </td>
+                        }
+                        @if (item.Type == 3)
+                    {
+                            <td>
+                                <span>Sắp xếp</span>
+                            </td>
+                        }
+
+                        <td>
+                            @item.DateStart.ToString("hh:mm:ss")
+                        </td>
+                        <td>
+                            @item.DateEnd.ToString("hh:mm:ss")
+                        </td>
+                        <td>
+                            @item.TimesResult
+                        </td>
+                        <td>
+                            @item.Products
+                        </td>
+                        <td>
+                            @item.ToTals
+                        </td>
+                        <td>
+                            @if (item.KPI > 0)
+                            {
+                                <strong class="text-primary">@item.KPI</strong>
+                            }
+                            else
+                            {
+                                <strong class="text-danger">@item.KPI</strong>
+                            }
+                        </td>
+                        <td>
+                            @if (item.KPI > 0)
+                            {
+                                <strong class="text-primary">Đạt</strong>
+                            }
+                            else
+                            {
+                                <strong class="text-danger">Chưa đạt KPI</strong>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+}
+@if (ViewBag.tkXuat != null)
+{
+
+    <div class="tkct_title">
+        Chi tiết xuất kho
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Mã Phiếu
+                    </th>
+                    <th>
+                        Thời gian bắt đầu
+                    </th>
+                    <th>
+                        Thời gian kết thúc
+                    </th>
+                    <th>
+                        Tổng thời gian
+                    </th>
+                    <th>
+                        Số lượng
+                    </th>
+                    <th>
+                        KPI
+                    </th>
+                    <th>
+                        Kết quả
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var it in ViewBag.tkXuat)
+                {
+                    <tr>
+                        <td>
+                            @it.TrackingCode
+                        </td>
+                        <td>
+                            @it.DateStart.ToString("hh:mm:ss")
+                        </td>
+                        <td>
+                            @it.DateEnd.ToString("hh:mm:ss")
+                        </td>
+                        <td>
+                            @it.TimesResult
+                        </td>
+                        <td>
+                            @it.ToTals
+                        </td>
+                        <td>
+                            @if (it.KPI > 0)
+                            {
+                                <strong class="text-primary">@it.KPI</strong>
+                            }
+                            else
+                            {
+                                <strong class="text-danger">@it.KPI</strong>
+                            }
+                        </td>
+                        <td>
+                            @if (it.KPI > 0)
+                            {
+                                <strong class="text-primary">Đạt</strong>
+                            }
+                            else
+                            {
+                                <strong class="text-danger">Chưa đạt KPI</strong>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+<style>
+    .modal-dialog {
+    max-width: 70%;
+    margin: 1.75rem auto;
+}
+</style>

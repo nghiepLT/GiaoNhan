@@ -37,9 +37,9 @@ namespace BAL
             }
 
         }
-        public bool Update(int ReceivedID,int NCCID, int Type, List<tbReceivedDetail> list)
+        public bool Update(int ReceivedID,int NCCID,string Products, int SLNhap, int SlKiemTra,int type)
         {
-            return received.Update(ReceivedID,NCCID, Type, list);
+            return received.Update(ReceivedID,NCCID, Products, SLNhap, SlKiemTra, type);
         }
         public IEnumerable<tbNCC> GetNCC()
         {

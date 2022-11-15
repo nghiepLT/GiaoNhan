@@ -8,18 +8,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                @if (ViewBag.Permission != null)
-                {
-                    <h1>@ViewBag.Permission.PermissionName</h1>
-                }
+                <h1>Trung chuyển</h1>
             </div>
-            <div class="col-sm-6">  
+            <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                    @if (ViewBag.Permission != null)
-                    {
-                        <li class="breadcrumb-item active">@ViewBag.Permission.PermissionName</li>
-                    }
+                    <li class="breadcrumb-item active">Trung chuyển</li>
                 </ol>
             </div>
         </div>
@@ -44,25 +38,25 @@
                             <div class="form-group">
                                 <div class="row">
                                     @*<div class="col-sm-5">
-                                        <label for="exampleInputEmail1">Thời gian</label>
-                                        <input disabled id="txtTime" type="text" class="form-control" style="width: 100%;max-width: 100%;" />
-                                    </div>*@
+                                            <label for="exampleInputEmail1">Thời gian</label>
+                                            <input disabled id="txtTime" type="text" class="form-control" style="width: 100%;max-width: 100%;" />
+                                        </div>*@
                                     <div class="col-sm-5">
                                         <label for="User name" class="label_title">Nhân viên</label>
                                         <input data-id="@ViewBag.UserId" disabled id="txtUser" value="@ViewBag.userName" type="text" class="form-control" style="width: 100%;max-width: 100%;" />
                                     </div>
                                     <div class="col-sm-2 text-left">
-                                        <a  onclick="startReceived()" class="btn btn-sm btn-danger btn_taodon"><i class="fas fa-list-alt" style="margin-right:5px;font-size:12px;"></i>Tạo đơn </a>
+                                        <a onclick="startReceived()" class="btn btn-sm btn-danger btn_taodon"><i class="fas fa-list-alt" style="margin-right:5px;font-size:12px;"></i>Tạo đơn </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group table-responsive table_margin" >
+                            <div class="form-group table-responsive table_margin">
                                 <table class="table table-striped " id="tbHistory">
                                     <thead>
                                         <tr class="noExl">
                                             <th>
                                                 STT
-                                            </th> 
+                                            </th>
                                             <th>Thời gian </th>
                                             <th>
                                                 Sản phẩm
@@ -113,7 +107,7 @@
                     <label id="Type"></label>
                 </div>
                 <div class="col-4">
-                    <strong >Tổng thời gian :</strong>
+                    <strong>Tổng thời gian :</strong>
                 </div>
                 <div class="col-8">
                     <label id="TimesResult"></label>
@@ -136,7 +130,7 @@
 </div>
 
 
-    <script>
+<script>
         $(".shadow").hide();
         $(document).ready(function () {
        // getDatenow();
@@ -230,18 +224,18 @@
 
 
 
-    </script>
+</script>
 <style>
-  #tgModal {
-    position: fixed;
-    left: 50%;
-    top: 25%;
-    background-color: white;
-    width: 90%;
-    transform: translate(-50%,-50%);
-    padding: 10px 15px;
-    border-radius: 3px 3px;
-}
+    #tgModal {
+        position: fixed;
+        left: 50%;
+        top: 25%;
+        background-color: white;
+        width: 90%;
+        transform: translate(-50%,-50%);
+        padding: 10px 15px;
+        border-radius: 3px 3px;
+    }
 
     .shadow {
         background-color: #1010105c;
@@ -255,6 +249,6 @@
 
         .shadow label {
             font-size: 15px;
-            font-weight:400!important;
+            font-weight: 400 !important;
         }
 </style>

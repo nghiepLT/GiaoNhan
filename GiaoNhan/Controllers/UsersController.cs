@@ -15,10 +15,12 @@ namespace GiaoNhan.Controllers
         BAL_User user = new BAL_User();
         BAL_Employee employee = new BAL_Employee();
         BAL_Permission permission = new BAL_Permission();
+        BAL_Role balRole = new BAL_Role();
         // GET: Users
         public ActionResult GetListUser()
         { 
             ViewBag.ListPermission = permission.GetALl();
+            ViewBag.ListRole = balRole.GetAllRole();
             return View();
         }
         public ActionResult GetListUserData(int PermissionID)

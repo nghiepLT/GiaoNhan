@@ -130,7 +130,9 @@
         setInterval(function () { getDatenow() }, 1000);
     }
     function ScanNext() {
-        InsertData();
+        var findTR = $("tr[data-value=" + $("#txtScan").val() + "]");
+        var ipChild = findTR.find("input"); 
+        InsertData(ipChild.val());
         $("#txtScan").focus();
     }
     $("#txtScan").focusout(function () {
@@ -150,10 +152,12 @@
             }
         });
     }
-    function InsertData() {
+    function InsertData(sl) {
+
+       
         var param = {
             "TrackingCode": $("#txtScan").val().trim(),
-            "CountStep": $("#txtCountStep").val()
+            "CountStep":sl
         }
         $.ajax({
             url: '/Tracking/Insert',

@@ -12,6 +12,9 @@
                     Bộ phận
                 </th>
                 <th>
+                    Quyền
+                </th>
+                <th>
                     Chức năng
                 </th>
             </tr>
@@ -33,7 +36,9 @@
                 <td>
                     @item.PermissionName
                 </td>
-
+                <td>
+                    @item.RoleName
+                </td>
                 <td>
                     <a style="margin-right:10px;cursor:pointer;" onclick="editAccount('@item.UserID')"><i class="nav-icon fas fa-edit"></i></a>
                     <a style="cursor:pointer;" onclick="deleteAccount('@item.UserID')"><i class="nav-icon fas fa-trash"></i></a>

@@ -22,5 +22,8 @@ namespace DAL.Models
         public Nullable<System.DateTime> DateEnd { get; set; }
         public Nullable<int> Type { get; set; }
         public Nullable<int> Kpi { get; set; }
+        public Nullable<int> SLNhap { get; set; }
+        public Nullable<int> SlKiemTra { get; set; }
+        public string Products { get; set; }
     }
 }

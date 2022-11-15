@@ -15,7 +15,7 @@ namespace GiaoNhan.Controllers
     {
         BAL_User user = new BAL_User();
         BAL_Permission permission = new BAL_Permission();
-      
+        BAL_Role balrole = new BAL_Role();
         //KpiManagerEntities dbcontext = new KpiManagerEntities();
         public ActionResult Index()
         {
@@ -24,7 +24,7 @@ namespace GiaoNhan.Controllers
             {
                 var userName = Request.Cookies["trakinglogin"].Value;
                 tbUSer tbaccount = user.GetAccountID(userName);
-                ViewBag.Menu = permission.GetMenuByPermission(tbaccount.PermissionID).FirstOrDefault().MenuURL;
+                ViewBag.Menu = balrole.GetLeftMenu(tbaccount.UserID).OrderByDescending(m=>m.STT).FirstOrDefault().MenuURL;
                 returnMenu = ViewBag.Menu;
                 return Redirect(returnMenu);
             }
@@ -50,7 +50,8 @@ namespace GiaoNhan.Controllers
             {
                 var userName = Request.Cookies["trakinglogin"].Value;
                 tbUSer tbaccount = user.GetAccountID(userName);
-                ViewBag.ListMenu = permission.GetMenuByPermission(tbaccount.PermissionID);
+                ViewBag.ListMN = balrole.GetLeftMenu(tbaccount.UserID);
+               // ViewBag.ListMenu = permission.GetMenuByPermission(tbaccount.PermissionID);
                 ViewBag.AccountUser = tbaccount.UserName;
             }
             return PartialView();

@@ -48,6 +48,9 @@ namespace DAL
                              ReceivedID=rc.ReceivedID,
                              STT=rc.STT,
                              Type=rc.Type,
+                             Products=rc.Products,
+                             SlKiemTra= rc.SlKiemTra!=null?rc.SlKiemTra.Value:0,
+                             SLNhap= rc.SLNhap!=null?rc.SLNhap.Value:0,
                              KPI= rc.Kpi!=null?rc.Kpi.Value *(-1):0
                          }
                        );
@@ -105,7 +108,7 @@ namespace DAL
            
         }
         
-        public int GetKPI(DateTime dateStart, DateTime? dateEnd, int? Totals, int? Type)
+        public int GetKPI(DateTime dateStart, DateTime? dateEnd, int SLNhap,int SLKiemtra, int? Type)
         {
             int kpiResult=0;
             DAL_Config dalConfig = new DAL_Config();
@@ -118,16 +121,16 @@ namespace DAL
                 //Nhập
                 if (Type == 1)
                 {
-                    NTG40 = Totals * config.TG40;
+                    NTG40 = SLNhap * config.TG40;
                 }
                 //Kiểm tra
-                if (Type == 2)
+                if (Type == 1)
                 {
-                    KTG80 = Totals * config.TG80;
+                    KTG80 = SLKiemtra * config.TG80;
                 }
-                if(Type==3 || Type == 4)
+                if(Type==2 || Type==3)
                 {
-                    NTG40 = Totals * config.TG40;
+                    NTG40 = SLNhap * config.TG40;
                 }
                 int TGKPI = (NTG40 + KTG80).Value;
                 kpiResult = int.Parse(minusDateSS.ToString()) - TGKPI; 
@@ -140,27 +143,21 @@ namespace DAL
             var totals = list.Sum(m=>m.Count);
             return totals.Value;
         }
-        public bool Update(int ReceivedID,int NCCID, int Type, List<tbReceivedDetail> list)
+        public bool Update(int ReceivedID,int NCCID, string Products, int SLNhap, int SlKiemTra,int type)
         {
             tbReceived tb = dbcontext.tbReceiveds.Find(ReceivedID);
             try
             {
                 if (tb != null)
                 { 
-                    tb.Type = Type;
+                    tb.Type = type;
                     tb.NCCID = NCCID;
-                    tb.DateEnd = DateTime.Now;
-
-                    tb.Kpi = GetKPI(tb.DateStart, tb.DateEnd, GetTotalProducts(list), tb.Type);
-                    dbcontext.SaveChanges();
-                    foreach(var item in list)
-                    {
-                        item.ReceivedID = ReceivedID;
-                        item.Type = Type;
-                    }
-                    dbcontext.tbReceivedDetails.AddRange(list);
-                    dbcontext.SaveChanges();
-                   
+                    tb.Products = Products;
+                    tb.SLNhap = SLNhap;
+                    tb.SlKiemTra = SlKiemTra;
+                    tb.DateEnd = DateTime.Now; 
+                    tb.Kpi = GetKPI(tb.DateStart, tb.DateEnd,SLNhap,SlKiemTra, type);
+                    dbcontext.SaveChanges();  
                 }
 
                 return true;

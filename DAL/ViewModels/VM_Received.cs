@@ -15,6 +15,9 @@ namespace DAL.ViewModels
         public string KPIResults { get; set; } 
         public int ToTalTimes { get; set; }
         public string TimesResult { get; set; }
+        public string Products { get; set; }
+        public int SLNhap { get; set; }
+        public int SlKiemTra { get; set; }
     }
     public class VM_ReceivedList
     {
@@ -25,6 +28,9 @@ namespace DAL.ViewModels
         public string KPIResults { get; set; }
         public int ToTalTimes { get; set; }
         public string TimesResult { get; set; }
+        public string Products { get; set; }
+        public int SLNhap { get; set; }
+        public int SlKiemTra { get; set; }
 
         public List<VM_Received> lstVMReceived = new List<VM_Received>();
     }
@@ -38,6 +44,9 @@ namespace DAL.ViewModels
         public int ? Type { get; set; }
         public int ? ToTals { get; set; }
         public int  KPI { get; set; }
+        public string Products { get; set; }
+        public int SLNhap { get; set; }
+        public int SlKiemTra { get; set; }
         public string ProductDescription { get; set; }
         public string KPIResults { get; set; }
         public int ToTalTimes { get; set; }

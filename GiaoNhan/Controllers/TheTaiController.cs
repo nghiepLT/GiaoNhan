@@ -23,6 +23,7 @@ namespace GiaoNhan.Controllers
         public ActionResult QuetTheTai()
         {
             ViewBag.ListTheTai = balTheTai.GetGroupTheTai();
+            ViewBag.ListTheTai2 = balTheTai.GetGroupTheTaiwait();
             return View();
         }
         public VM_Json GetJsonData(string spx)
@@ -44,7 +45,7 @@ namespace GiaoNhan.Controllers
         public ActionResult LoadTheTai()
         {
             var userName = Request.Cookies["trakinglogin"].Value;
-            if (userName.ToLower() == "TheTai".ToLower())
+            if (userName.ToLower() == "TheTai".ToLower() || userName.ToLower()== "minhtn".ToLower())
                 ViewBag.Type = 1;
             else
                 ViewBag.Type = 2;
@@ -136,7 +137,7 @@ namespace GiaoNhan.Controllers
                             ckhTracking.DateEnd = DateTime.Now;
                         ckhTracking.KPI = tracking.GetKPI(ckhTracking.DateStart, ckhTracking.DateEnd, ckhTracking.Count, type);
                         balTheTai.UpdateData(ckhTracking);
-                        return 1;
+                        return 10; //n2fix 1=>10
                     }
                 }
                 //Trường hợp quét phiếu xuất

@@ -49,6 +49,7 @@
           <Property Name="Controller" Type="nvarchar" MaxLength="200" />
           <Property Name="Action" Type="nvarchar" MaxLength="200" />
           <Property Name="Icon" Type="nvarchar" MaxLength="200" />
+          <Property Name="STT" Type="int" />
         </EntityType>
         <EntityType Name="tbNCC">
           <Key>
@@ -92,6 +93,9 @@
           <Property Name="DateEnd" Type="datetime" />
           <Property Name="Type" Type="int" />
           <Property Name="Kpi" Type="int" />
+          <Property Name="SLNhap" Type="int" />
+          <Property Name="SlKiemTra" Type="int" />
+          <Property Name="Products" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbReceivedDetail">
           <Key>
@@ -102,6 +106,21 @@
           <Property Name="ReceivedID" Type="int" />
           <Property Name="Count" Type="int" />
           <Property Name="Type" Type="int" />
+        </EntityType>
+        <EntityType Name="tbRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbRoleMenu">
+          <Key>
+            <PropertyRef Name="RoleMenuID" />
+          </Key>
+          <Property Name="RoleMenuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="MenuId" Type="int" />
         </EntityType>
         <EntityType Name="tbTheTai">
           <Key>
@@ -156,6 +175,7 @@
           <Property Name="Status" Type="int" />
           <Property Name="Code" Type="nvarchar" MaxLength="200" />
           <Property Name="DepartmentID" Type="int" />
+          <Property Name="RoleId" Type="int" />
         </EntityType>
         <EntityContainer Name="KpiManagerModelStoreContainer">
           <EntitySet Name="tbConfig" EntityType="Self.tbConfig" Schema="dbo" store:Type="Tables" />
@@ -169,6 +189,8 @@
           <EntitySet Name="tbProducts" EntityType="Self.tbProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbReceived" EntityType="Self.tbReceived" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbReceivedDetail" EntityType="Self.tbReceivedDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbRole" EntityType="Self.tbRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbRoleMenu" EntityType="Self.tbRoleMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTheTai" EntityType="Self.tbTheTai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTheTaiChiTiet" EntityType="Self.tbTheTaiChiTiet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTracking" EntityType="Self.tbTracking" Schema="dbo" store:Type="Tables" />
@@ -222,6 +244,7 @@
           <Property Name="Controller" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Action" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Icon" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="STT" Type="Int32" />
         </EntityType>
         <EntityType Name="tbNCC">
           <Key>
@@ -265,6 +288,9 @@
           <Property Name="DateEnd" Type="DateTime" Precision="3" />
           <Property Name="Type" Type="Int32" />
           <Property Name="Kpi" Type="Int32" />
+          <Property Name="SLNhap" Type="Int32" />
+          <Property Name="SlKiemTra" Type="Int32" />
+          <Property Name="Products" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tbReceivedDetail">
           <Key>
@@ -289,6 +315,7 @@
           <Property Name="Status" Type="Int32" />
           <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DepartmentID" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
         </EntityType>
         <EntityContainer Name="KpiManagerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbConfigs" EntityType="Self.tbConfig" />
@@ -306,6 +333,8 @@
           <EntitySet Name="tbTheTais" EntityType="KpiManagerModel.tbTheTai" />
           <EntitySet Name="tbTheTaiChiTiets" EntityType="KpiManagerModel.tbTheTaiChiTiet" />
           <EntitySet Name="tbTrackings" EntityType="KpiManagerModel.tbTracking" />
+          <EntitySet Name="tbRoles" EntityType="KpiManagerModel.tbRole" />
+          <EntitySet Name="tbRoleMenus" EntityType="KpiManagerModel.tbRoleMenu" />
         </EntityContainer>
         <EntityType Name="tbTheTai">
           <Key>
@@ -346,6 +375,21 @@
           <Property Name="Count" Type="Int32" Nullable="false" />
           <Property Name="KPI" Type="Int32" />
           <Property Name="CountStep" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbRoleMenu">
+          <Key>
+            <PropertyRef Name="RoleMenuID" />
+          </Key>
+          <Property Name="RoleMenuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="MenuId" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -394,6 +438,7 @@
           <EntitySetMapping Name="tbMenus">
             <EntityTypeMapping TypeName="KpiManagerModel.tbMenu">
               <MappingFragment StoreEntitySet="tbMenu">
+                <ScalarProperty Name="STT" ColumnName="STT" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="MenuName" ColumnName="MenuName" />
                 <ScalarProperty Name="MenuURL" ColumnName="MenuURL" />
@@ -440,6 +485,9 @@
           <EntitySetMapping Name="tbReceiveds">
             <EntityTypeMapping TypeName="KpiManagerModel.tbReceived">
               <MappingFragment StoreEntitySet="tbReceived">
+                <ScalarProperty Name="Products" ColumnName="Products" />
+                <ScalarProperty Name="SlKiemTra" ColumnName="SlKiemTra" />
+                <ScalarProperty Name="SLNhap" ColumnName="SLNhap" />
                 <ScalarProperty Name="ReceivedID" ColumnName="ReceivedID" />
                 <ScalarProperty Name="STT" ColumnName="STT" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -465,6 +513,7 @@
           <EntitySetMapping Name="tbUSers">
             <EntityTypeMapping TypeName="KpiManagerModel.tbUSer">
               <MappingFragment StoreEntitySet="tbUSer">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -517,6 +566,23 @@
                 <ScalarProperty Name="TrackingDate" ColumnName="TrackingDate" />
                 <ScalarProperty Name="TrackingCode" ColumnName="TrackingCode" />
                 <ScalarProperty Name="TrackingID" ColumnName="TrackingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbRoles">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbRole">
+              <MappingFragment StoreEntitySet="tbRole">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbRoleMenus">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbRoleMenu">
+              <MappingFragment StoreEntitySet="tbRoleMenu">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleMenuID" ColumnName="RoleMenuID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

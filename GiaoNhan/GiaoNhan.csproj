@@ -175,6 +175,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ReceivedController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TheTaiController.cs" />
     <Compile Include="Controllers\TrackingController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -2311,6 +2312,11 @@
     <Content Include="Views\TheTai\LoadKetThuc.cshtml" />
     <Content Include="Views\Report\ThongKeThongKeGiaoNhan.cshtml" />
     <Content Include="Views\Report\ThongKeThongKeGiaoNhanData.cshtml" />
+    <Content Include="Views\Role\RoleList.cshtml" />
+    <Content Include="Views\Received\TrungChuyen.cshtml" />
+    <Content Include="Views\Received\XepHang.cshtml" />
+    <Content Include="Views\Report\ThongKeBaoCao.cshtml" />
+    <Content Include="Views\Report\ThongKeChiTiet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,5 +17,7 @@ namespace DAL.ViewModels
         public int ? EmployeeID { get; set; }
         public string EmployeeName { get; set; } 
         public string Code { get; set; }
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
     }
 }

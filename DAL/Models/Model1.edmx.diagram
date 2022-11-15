@@ -20,6 +20,8 @@
         <EntityTypeShape EntityType="KpiManagerModel.tbTheTai" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="KpiManagerModel.tbTheTaiChiTiet" Width="1.5" PointX="9.375" PointY="4.75" />
         <EntityTypeShape EntityType="KpiManagerModel.tbTracking" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbRole" Width="1.5" PointX="9.375" PointY="7.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbRoleMenu" Width="1.5" PointX="3.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -27,8 +27,32 @@ namespace GiaoNhan.Controllers
                 ViewBag.userName = Request.Cookies["trakinglogin"].Value;
                 tbUSer user = account.GetAccountID(ViewBag.userName);
                 ViewBag.UserId = user.UserID;
+                ViewBag.Type = 1;
                 ViewBag.Permission = permission.GetByID(user.PermissionID);
             } 
+            return View();
+        }
+        //Trung chuyển
+        public ActionResult TrungChuyen()
+        {
+            if (Request.Cookies["trakinglogin"] != null)
+            {
+                ViewBag.userName = Request.Cookies["trakinglogin"].Value;
+                tbUSer user = account.GetAccountID(ViewBag.userName);
+                ViewBag.UserId = user.UserID;
+                ViewBag.Type = 2;
+            }
+            return View();
+        }
+        public ActionResult XepHang()
+        {
+            if (Request.Cookies["trakinglogin"] != null)
+            {
+                ViewBag.userName = Request.Cookies["trakinglogin"].Value;
+                tbUSer user = account.GetAccountID(ViewBag.userName);
+                ViewBag.UserId = user.UserID;
+                ViewBag.Type = 3;
+            }
             return View();
         }
 
@@ -45,7 +69,7 @@ namespace GiaoNhan.Controllers
             }
             return false;
         }
-        public ActionResult Edit(int ReceivedID)
+        public ActionResult Edit(int ReceivedID,int? type)
         {
             if (Request.Cookies["trakinglogin"] != null)
             {
@@ -57,17 +81,19 @@ namespace GiaoNhan.Controllers
             var model = received.GetById(ReceivedID);
             ViewBag.ListNCC = received.GetNCC();
             ViewBag.ListProduct = received.GetProduct();
-            ViewBag.ReceivedID = ReceivedID; 
+            ViewBag.ReceivedID = ReceivedID;
+            ViewBag.Type = type;
             return View(model);
         }
         [HttpPost]
-        public bool  Update(int ReceivedID,int NCCID,int Type,List<tbReceivedDetail> list)
+        public bool  Update(int ReceivedID,int NCCID,string Products,int SLNhap,int  SlKiemTra,int type)
         { 
-            return received.Update(ReceivedID,NCCID, Type,list);
+            return received.Update(ReceivedID,NCCID, Products, SLNhap, SlKiemTra, type);
         }
-        public ActionResult LoadData(int UserID)
+        public ActionResult LoadData(int UserID,int Type)
         {
             var model = received.GetAllByIDUser(UserID).OrderByDescending(m=>m.DateStart).ToList();
+            ViewBag.Type = Type;
             return PartialView(model);
         }
         [HttpPost]

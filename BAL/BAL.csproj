@@ -44,7 +44,9 @@
     <Compile Include="BAL_Employee.cs" />
     <Compile Include="BAL_Permission.cs" />
     <Compile Include="BAL_Report.cs" />
+    <Compile Include="BAL_Role.cs" />
     <Compile Include="BAL_TheTai.cs" />
+    <Compile Include="BAL_ThongKe.cs" />
     <Compile Include="BAL_Tracking.cs" />
     <Compile Include="BAL_User.cs" />
     <Compile Include="BAL_Received.cs" />

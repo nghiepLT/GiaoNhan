@@ -1,0 +1,192 @@
+﻿<div style="margin:10px 0px;font-size:18px;margin-top:30px;">
+    Kết quả thống kê từ <strong style="color:#ff0000;margin:0px 10px;">@ViewBag.FromDate</strong> đến ngày <strong style="color:#ff0000;margin:0px 10px;"> @ViewBag.ToDate</strong>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped text-center">
+        <tr>
+            <th>
+                Tổng số đơn
+            </th>
+            <th>
+                Tổng số lượng
+            </th>
+            <th>
+                Tổng thời gian
+            </th>
+            <th>
+                Tổng KPI
+            </th>
+            <th>
+                Kết quả
+            </th>
+        </tr>
+        <tbody>
+            @if (ViewBag.ThongKeTong != null)
+            {
+                <tr>
+                    <td>
+                        @ViewBag.ThongKeTong.TongSoDon
+                    </td>
+                    <td>
+                        @ViewBag.ThongKeTong.TongSoLuong
+                    </td>
+                    <td>
+                        @ViewBag.ThongKeTong.TongThoiGian
+                    </td>
+                    <td>
+                        @if (ViewBag.ThongKeTong.TongKPI > 0)
+                        {
+                            <strong class="text-primary">@ViewBag.ThongKeTong.TongKPI</strong>
+                        }
+                        else
+                        {
+                            <strong class="text-danger">@ViewBag.ThongKeTong.TongKPI</strong>
+                        }
+                    </td>
+                    <td>
+                        @if (ViewBag.ThongKeTong.TongKPI > 0)
+                        {
+                            <strong class="text-primary">Đạt KPI</strong>
+                        }
+                        else
+                        {
+                            <strong class="text-danger">Chưa đạt KPI</strong>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div style="font-size:18px;margin-top:30px;">
+    <strong class="thongkect_title">
+        Thống kê chi tiết
+    </strong>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th>Ngày</th>
+                <th>Tổng số đơn</th>
+                <th>Tổng số lượng</th>
+                <th>Tổng thời gian</th>
+                <th>KPI</th>
+                <th>Kết quả</th>
+                <th>Xem chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.ListThongKeMoiNgay != null)
+            {
+                foreach (var item in ViewBag.ListThongKeMoiNgay)
+                {
+                    <tr>
+                        <td>
+                            @item.NgayTao.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @if (item.SLNhap > 0)
+                            {
+                                <div>
+                                  <span>Nhập: </span>  @item.SLNhap
+                                </div>
+                            }
+                            @if (item.SLXuat > 0)
+                            {
+                                <div>
+                                    <span>Xuất: </span>  @item.SLXuat
+                                </div>
+                            }
+                            @if (item.SLNhap > 0 && item.SLXuat > 0)
+                            {
+                                <div>
+                                    <span>Tổng cộng: </span>  @item.TongSoDon
+                                </div>
+                            }
+
+                        </td>
+                        <td>
+                            @item.TongSoLuong
+                        </td>
+                        <td>
+                            @item.TongThoiGian
+                        </td>
+                        <td>
+                            @if (item.TongKPI > 0)
+                            {
+                                <strong class="text-primary">@item.TongKPI</strong>
+                            }
+                            else
+                            {
+                                <strong class="text-danger">@item.TongKPI</strong>
+                            }
+                        </td>
+                        <td>
+                            @if (item.TongKPI > 0)
+                            {
+                                <strong class="text-primary">Đạt KPI</strong>
+                            }
+                            else
+                            {
+                                <strong class="text-danger">Chưa đạt KPI</strong>
+                            }
+                        </td>
+                        <td>
+                            <a onclick="openmodal('@item.NgayTao.ToString("dd/MM/yyyy")')" style="cursor:pointer">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal fade" id="mdDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết báo cáo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="mdContents">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openmodal(date) {
+        var param = {
+            "Date": date,
+            "UserID": $("#slUser").val() 
+        }
+        $.ajax({
+            url: '/Report/ThongKeChiTiet',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                $("#mdContents").html(data);
+                $("#mdDetail").modal("toggle");
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>

@@ -120,7 +120,11 @@ namespace DAL
                              ReceivedID = rc.ReceivedID,
                              STT = rc.STT,
                              KPI= rc.Kpi!=null?rc.Kpi.Value*(-1):0,
-                             Type = rc.Type
+                             Type = rc.Type,
+                             SLNhap=rc.SLNhap.Value,
+                             SlKiemTra=rc.SlKiemTra.Value,
+                             Products=rc.Products, 
+                             ToTals=rc.SLNhap>0?rc.SLNhap:rc.SlKiemTra
                          }
                        );
 
@@ -144,11 +148,12 @@ namespace DAL
                         totals += item2.Count;
                     }
                     item.ProductDescription = str;
-                    item.ToTals = totals;
+                    item.ToTals = item.SLNhap>0?item.SLNhap : item.SlKiemTra;
                     item.KPIResults = CheckKPI(item.DateStart, item.DateEnd, item.ToTals, item.Type);
                     var totalsecond = item.DateEnd.Value.TimeOfDay.TotalSeconds - item.DateStart.TimeOfDay.TotalSeconds;
                     item.ToTalTimes = int.Parse(Math.Round(double.Parse(totalsecond.ToString())).ToString());
                     item.TimesResult = Tool.Helper.ReturnTime(item.ToTalTimes);
+
                 }
 
             } 

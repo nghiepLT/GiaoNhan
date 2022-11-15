@@ -44,7 +44,10 @@ namespace DAL
                              DateStart = s.DateStart,
                              KPI = s.Kpi.Value * (-1),
                              Type = s.Type,
-                             ReceivedID = s.ReceivedID
+                             ReceivedID = s.ReceivedID,
+                             SlKiemTra = s.SlKiemTra.HasValue?s.SlKiemTra.Value:0,
+                             SLNhap = s.SLNhap.HasValue?s.SLNhap.Value:0,
+                             Products=s.Products
                          }
                          );
             List<VM_Received> lstCclone = new List<VM_Received>();
@@ -66,10 +69,25 @@ namespace DAL
                         totals += item2.Count;
                     }
                     item.ProductDescription = str;
-                    item.ToTals = totals;
+                    if(item.SLNhap>0 && item.SlKiemTra>0)
+                    {
+                        item.ToTals = item.SLNhap ;
+                    }
+                    else
+                    {
+                        if(item.SLNhap > 0)
+                        {
+                            item.ToTals = item.SLNhap;
+                        }
+                        if (item.SlKiemTra > 0)
+                        {
+                            item.ToTals = item.SlKiemTra;
+                        }
+                    }
                     var totalsecond = item.DateEnd.Value.TimeOfDay.TotalSeconds - item.DateStart.TimeOfDay.TotalSeconds;
                     item.ToTalTimes = int.Parse(Math.Round(double.Parse(totalsecond.ToString())).ToString());
                     item.TimesResult = Tool.Helper.ReturnTime(item.ToTalTimes);
+                    item.SlKiemTra = item.SlKiemTra;
                 }
             }
             return lstCclone.OrderByDescending(m => m.STT);

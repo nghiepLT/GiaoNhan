@@ -76,7 +76,7 @@ namespace DAL
         public IEnumerable<VM_TheTai> LoadTracking(int UserID)
         {
             var model = (from m in dbContext.tbTheTais.ToList()
-                         where m.UserId == UserID && (m.DateStart.Value.Date == DateTime.Now.Date)
+                         where ((UserID == 2029 || UserID == 1019) || m.UserId == UserID) && (m.DateStart.Value.Date == DateTime.Now.Date)
                          select new VM_TheTai()
                          {
                              ThetaiID=m.ThetaiID,
@@ -132,6 +132,21 @@ namespace DAL
                 }
             }
            
+            return strResult;
+        }
+        public string GetGroupTheTaiwait() //n2fix
+        {
+            string strResult = "";
+            var lst = dbContext.tbTheTais.ToList().Where(m => m.DateEnd == null && m.DateStart.Value.Date == DateTime.Now.Date);
+            if (lst != null && lst.Count() > 0)
+            {
+                var gr = lst.GroupBy(m => m.MaThe);
+                foreach (var item in gr)
+                {
+                    strResult += item.Key + ",";
+                }
+            }
+
             return strResult;
         }
         public bool CheckDetailThetai(string MaPhieu)

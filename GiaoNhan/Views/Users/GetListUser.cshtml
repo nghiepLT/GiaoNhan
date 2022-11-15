@@ -114,11 +114,24 @@
                             @if (ViewBag.ListPermission != null)
                             {
                                 <select class="form-control" id="slPermission" onchange="slChange()">
+                                    <option value="1" selected>--Chọn bộ phận--</option>
                                     @foreach (var item in ViewBag.ListPermission)
                                     {
                                         <option value="@item.PermissionID">@item.PermissionName</option>
                                     }
                                 </select> 
+                            }
+                        </div>
+                        <div class="form-group" >
+                            <label for="User name">Quyền</label>
+                            @if (ViewBag.ListRole != null)
+                            {
+                                <select class="form-control" id="slRole" onchange="slChange()">
+                                    @foreach (var item in ViewBag.ListRole)
+                                    {
+                                        <option value="@item.RoleId">@item.RoleName</option>
+                                    }
+                                </select>
                             }
                         </div>
                         <div class="form-group" id="MaTai">
@@ -235,7 +248,8 @@
             "UserName": $("#txtUserName").val(),
             "UserPassword": $("#txtPassword").val(),
             "PermissionID": $("#slPermission").val(),
-            "Code": code
+            "Code": code,
+            "RoleId":$("#slRole").val()
         }
         $.ajax({
             url: '/Users/UserUpdate',
@@ -284,6 +298,7 @@
             success: function (data, status, xhr) {
                 $("#txtUserID").val(data.UserID);
                 $("#slPermission").val(data.PermissionID).change();
+                $("#slRole").val(data.RoleId).change();
                 $("#txtUserName").val(data.UserName); 
                 $("#txtEmployeeName").val(data.EmployeeName);
                 $("#txtPassword").val(data.UserPassword);

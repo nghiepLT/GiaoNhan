@@ -52,6 +52,10 @@ namespace BAL
         {
             return dalTheTai.GetGroupTheTai();
         }
+        public string GetGroupTheTaiwait() //n2fix
+        {
+            return dalTheTai.GetGroupTheTaiwait();
+        }
         public bool CheckDetailThetai(string MaPhieu)
         {
             return dalTheTai.CheckDetailThetai(MaPhieu);

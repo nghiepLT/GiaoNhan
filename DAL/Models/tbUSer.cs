@@ -23,5 +23,6 @@ namespace DAL.Models
         public Nullable<int> Status { get; set; }
         public string Code { get; set; }
         public Nullable<int> DepartmentID { get; set; }
+        public Nullable<int> RoleId { get; set; }
     }
 }
