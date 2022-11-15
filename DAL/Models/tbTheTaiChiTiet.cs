@@ -20,5 +20,6 @@ namespace DAL.Models
         public Nullable<int> Status { get; set; }
         public string MaThe { get; set; }
         public Nullable<System.DateTime> DateEnd { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -14,13 +14,12 @@
             <th>
                 Thời gian bắt đầu
             </th>
-            <th>Thời gian kết thúc</th>
-          
-            <th>
-                Tổng thời gian
-            </th>
+            <th>Thời gian kết thúc làm hàng</th>
             <th>
                 Danh sách phiếu
+            </th>
+            <th>
+                Tổng thời gian
             </th>
         </tr>
     </thead>
@@ -30,6 +29,7 @@
             foreach(var item in Model)
             {
                 <tr>
+                   
                     <td>
                         @item.DateStart.ToString("dd/MM/yyyy")
                     </td>
@@ -51,9 +51,7 @@
                         }
                     </td>
                   
-                    <td>
-                        @item.TongThoigian
-                    </td>
+                  
                     <td>
                         @if (item.lstTheTaiChiTiet != null)
                         {
@@ -63,6 +61,12 @@
                                 {
                                     <div>
                                        <strong class="txtPhieu">@it.MaPhieu</strong> <span> <span> Kết thúc: </span> <strong class="text-danger">@it.DateEnd.ToString("hh:mm:ss")</strong> </span>
+                                        @if (it.Status == -1)
+                                        {
+                                            <div>
+                                                <strong class="text-danger">Đã hủy </strong> <span> Lý do : </span> <strong>@it.Description</strong>
+                                            </div>
+                                        }
                                     </div>
                                 }
                                 else
@@ -73,6 +77,11 @@
                                 }
                             }
                         }
+                    </td>
+                    <td>
+                       <strong>
+                         <i class="fas fa-clock"></i>  @item.TongThoigian
+                       </strong>
                     </td>
                 </tr>
             }

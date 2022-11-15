@@ -46,7 +46,7 @@
                                     <div class="col-sm-2">
                                         <div id="slTheTai">
                                             <label for="User name">Chọn tài</label>
-                                            <select class="form-control" style="max-width:100%" onchange="chonthetai()" id="slChonTheTai">
+                                            <select  class="form-control" style="max-width:100%" onchange="chonthetai()" id="slChonTheTai">
                                                 <option value="0">Chọn thẻ tài</option>
                                                 @if (Model != null)
                                                 {
@@ -81,7 +81,12 @@
     </div><!-- /.container-fluid -->
 </section>
 <script>
-
+    $(document).ready(function () {
+        if ('@ViewBag.UserID' != "GNTK") {
+            $("#slChonTheTai").val('@ViewBag.UserID').change();
+            $("#slChonTheTai").attr('disabled', 'disabled').change();
+        }
+    });
     function changePermission() {
 
         var param = {

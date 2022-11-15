@@ -62,7 +62,11 @@
                             @item.DateStart.ToString("hh:mm:ss")
                         </td>
                         <td>
-                            @item.DateEnd.ToString("hh:mm:ss")
+                            @if (item.DateEnd != null)
+                            {
+                                @item.DateEnd.ToString("hh:mm:ss")
+
+                            }
                         </td>
                         <td>
                             @item.TimesResult
@@ -145,7 +149,10 @@
                             @it.DateStart.ToString("hh:mm:ss")
                         </td>
                         <td>
-                            @it.DateEnd.ToString("hh:mm:ss")
+                            @if (it.DateEnd != null)
+                            {
+                                @it.DateEnd.ToString("hh:mm:ss")
+                            }
                         </td>
                         <td>
                             @it.TimesResult

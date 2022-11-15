@@ -29,10 +29,10 @@ namespace DAL
                           {
                               DateEnd=n.DateEnd,
                               DateStart=n.DateStart,
-                              KPI=n.Kpi.Value *(-1),
+                              KPI= n.Kpi.HasValue? n.Kpi.Value *(-1):0,
                               Products=n.Products,
                               Type=n.Type,
-                              ToTals=n.SLNhap>0?n.SLNhap:n.SlKiemTra,
+                              ToTals=(n.SLNhap!=null && n.SLNhap > 0) ?n.SLNhap:n.SlKiemTra,
                               ToTalTimes= n.DateEnd != null ? int.Parse(Math.Round(double.Parse((n.DateEnd.Value.TimeOfDay.TotalSeconds - n.DateStart.TimeOfDay.TotalSeconds).ToString())).ToString()) : 0,
                               TimesResult = n.DateEnd != null ?Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((n.DateEnd.Value.TimeOfDay.TotalSeconds - n.DateStart.TimeOfDay.TotalSeconds).ToString())).ToString())):""
                           });
@@ -46,7 +46,7 @@ namespace DAL
                           {
                               DateEnd = n.DateEnd,
                               DateStart = n.DateStart.Value,
-                              KPI = n.KPI.Value * (-1), 
+                              KPI = n.KPI.HasValue ? n.KPI.Value * (-1) : 0,
                               ToTals = n.CountStep,
                               TrackingCode=n.TrackingCode,
                               ToTalTimes = n.DateEnd != null ? int.Parse(Math.Round(double.Parse((n.DateEnd.Value.TimeOfDay.TotalSeconds - n.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString()) : 0,

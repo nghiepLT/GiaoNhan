@@ -159,9 +159,15 @@ namespace GiaoNhan.Controllers
 
         public ActionResult ThongKeThongKeGiaoNhan()
         {
-            var model = account.GetAll().Where(m => m.Code != null && m.Code.Contains("GN") && m.UserID != 1019);
-
-            return View(model);
+            if (Request.Cookies["trakinglogin"] != null)
+            {
+                ViewBag.userName = Request.Cookies["trakinglogin"].Value;
+                tbUSer user = account.GetAccountID(ViewBag.userName); 
+                ViewBag.UserID = user.Code;
+                var model = account.GetAll().Where(m => m.Code != null && m.Code.Contains("GN") && m.UserID != 1019); 
+                return View(model);
+            }
+            return View();
         }
         public ActionResult ThongKeThongKeGiaoNhanData(string fromDate, string toDate,string MaThe)
         {
@@ -219,9 +225,10 @@ namespace GiaoNhan.Controllers
                 if (rowNhap != null && rowNhap.Count()>0)
                 {
                     ThongKeMoiNgay.NgayTao = rowNhap.FirstOrDefault().DateStart; 
-                    ThongKeMoiNgay.TongSoLuong = rowNhap.Sum(m => m.SLNhap > 0 ? m.SLNhap.Value : m.SlKiemTra.Value);
-                    ThongKeMoiNgay.TongKPI = rowNhap.Sum(m => m.Kpi.Value);
-                    ThongKeMoiNgay.TotalTimes = (int)Math.Round(rowNhap.Sum(m => m.DateEnd.Value.TimeOfDay.TotalSeconds - m.DateStart.TimeOfDay.TotalSeconds));
+                    ThongKeMoiNgay.TongSoLuong =rowNhap.Sum(m => (m.SLNhap > 0 && m.SLNhap>0) ? m.SLNhap.Value : (m.SlKiemTra.HasValue?m.SlKiemTra.Value:0));
+                    ThongKeMoiNgay.TongKPI = rowNhap.Sum(m => m.Kpi.HasValue?m.Kpi.Value:0);
+                    ThongKeMoiNgay.TongKPI = ThongKeMoiNgay.TongKPI * (-1);
+                    ThongKeMoiNgay.TotalTimes = (int)Math.Round(rowNhap.Sum(m => m.DateEnd.HasValue? m.DateEnd.Value.TimeOfDay.TotalSeconds - m.DateStart.TimeOfDay.TotalSeconds:0));
                     ThongKeMoiNgay.TongThoiGian = Tool.Helper.ReturnTime(ThongKeMoiNgay.TotalTimes);
                     ThongKeMoiNgay.TongSoDon = rowNhap.Count();
                     ThongKeMoiNgay.SLNhap = rowNhap.Count();
@@ -230,9 +237,9 @@ namespace GiaoNhan.Controllers
                 {
                     ThongKeMoiNgay.NgayTao = rowXuat.FirstOrDefault().DateStart.Value;
                     ThongKeMoiNgay.SLXuat = rowXuat.Count();
-                    ThongKeMoiNgay.TongKPI+=rowXuat.Sum(m => m.KPI.Value);
+                    ThongKeMoiNgay.TongKPI+=rowXuat.Sum(m => m.KPI.HasValue? m.KPI.Value:0);
                     ThongKeMoiNgay.TongKPI = ThongKeMoiNgay.TongKPI * (-1);
-                    ThongKeMoiNgay.TotalTimes += (int)Math.Round(rowXuat.Sum(m => m.DateEnd.Value.TimeOfDay.TotalSeconds - m.DateStart.Value.TimeOfDay.TotalSeconds));
+                    ThongKeMoiNgay.TotalTimes += (int)Math.Round(rowXuat.Sum(m => m.DateEnd.HasValue? m.DateEnd.Value.TimeOfDay.TotalSeconds - m.DateStart.Value.TimeOfDay.TotalSeconds:0));
                     ThongKeMoiNgay.TongThoiGian = Tool.Helper.ReturnTime(ThongKeMoiNgay.TotalTimes);
                     ThongKeMoiNgay.TongSoDon += rowXuat.Count();
                     ThongKeMoiNgay.TongSoLuong+= rowXuat.Sum(m => m.CountStep);

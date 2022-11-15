@@ -6,14 +6,24 @@
             <td><strong style="color:#435a39" class="kethucphieu">@item.MaPhieu</strong></td>
             @if (item.Status == 0)
             {
-                <td ><button class="btn btn-sm btn-danger"  style="margin-right:5px;cursor:pointer;color:#ffffff"  onclick="updateStatus('@item.TheTaiChiTietID')"   /> <span class="text-white text-primary trangthaigiao">Kết thúc</span></td>
+                <td >
+                    <button class="btn btn-sm btn-primary"  style="margin-right:5px;cursor:pointer;color:#ffffff"  onclick="updateStatus('@item.TheTaiChiTietID')"   /> <span class="text-white text-primary trangthaigiao">Kết thúc</span>
+                    <button class="btn btn-sm btn-danger" style="margin-top:5px;margin-right:5px;cursor:pointer;color:#ffffff" onclick="cancle('@item.TheTaiChiTietID')" /> <span class="text-white text-danger trangthaigiao">Hủy</span>
+                 </td>
             }
-            else
+            @if (item.Status == 1)
             {
                 <td><button class="btn btn-sm btn-primary"  style="margin-right:5px;cursor:pointer;color:#ffffff" disabled  checked/> <span  class="text-danger text-white trangthaigiao">Đã giao</span> </td>
             }
+            @if (item.Status == -1)
+            {
+                <td><button class="btn btn-sm btn-danger" style="margin-right:5px;cursor:pointer;color:#ffffff" disabled checked /> <span class="text-danger text-white trangthaigiao">Đã hủy</span> </td>
+            }
             <td>
                 @item.DateEnd
+            </td>
+            <td>
+                @item.Description
             </td>
         </tr>
     }
@@ -36,5 +46,10 @@
                 alert(status);
             }
         });
+    }
+  
+    function cancle(id) {
+        slId = id;
+        $("#exampleModal").modal("toggle");
     }
 </script>

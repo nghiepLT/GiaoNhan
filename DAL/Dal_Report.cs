@@ -105,10 +105,10 @@ namespace DAL
                              MaPhieu = tt.MaPhieu,
                              MaThe = tt.MaThe,
                              ThetaiID = tt.ThetaiID,
-                             UserId = tt.UserId,
+                             UserId = tt.UserId, 
                              lstTheTaiChiTiet = dbContext.tbTheTaiChiTiets.Where(m => m.ThetaiID == tt.ThetaiID).ToList(),
                              ToTalTimes = tt.DateEnd!=null? int.Parse(Math.Round(double.Parse((tt.DateEnd.Value.TimeOfDay.TotalSeconds - tt.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString()):0,
-                             TongThoigian = tt.DateEnd!=null? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateEnd.Value.TimeOfDay.TotalSeconds - tt.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString())):""
+                             TongThoigian = (tt.DateEnd!=null && dbContext.tbTheTaiChiTiets.ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd != null).LastOrDefault()!=null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - dbContext.tbTheTaiChiTiets.ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd!=null).LastOrDefault().DateEnd.Value.TimeOfDay.TotalSeconds).ToString())).ToString())*(-1)):""
                          }
                        );
 

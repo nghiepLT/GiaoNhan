@@ -198,5 +198,22 @@ namespace DAL
 
             return false ;
         }
+
+        public bool UpdateCancle(int TheTaiChiTietID, string Description)
+        {
+            try
+            {
+                tbTheTaiChiTiet ttct = dbContext.tbTheTaiChiTiets.Find(TheTaiChiTietID);
+                ttct.Status = -1;
+                ttct.Description = Description;
+                ttct.DateEnd = DateTime.Now;
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

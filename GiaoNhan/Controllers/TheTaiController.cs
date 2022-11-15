@@ -188,5 +188,10 @@ namespace GiaoNhan.Controllers
         {
             return balTheTai.UpdateStatus(TheTaiChiTietID);
         }
+
+        public bool UpdateCancle(int TheTaiChiTietID,string Description)
+        {
+            return balTheTai.UpdateCancle(TheTaiChiTietID, Description);
+        }
     }
 }

@@ -146,6 +146,7 @@
           <Property Name="Status" Type="int" />
           <Property Name="MaThe" Type="nvarchar" MaxLength="50" />
           <Property Name="DateEnd" Type="datetime" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbTracking">
           <Key>
@@ -360,6 +361,7 @@
           <Property Name="Status" Type="Int32" />
           <Property Name="MaThe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tbTracking">
           <Key>
@@ -544,6 +546,7 @@
           <EntitySetMapping Name="tbTheTaiChiTiets">
             <EntityTypeMapping TypeName="KpiManagerModel.tbTheTaiChiTiet">
               <MappingFragment StoreEntitySet="tbTheTaiChiTiet">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
                 <ScalarProperty Name="MaThe" ColumnName="MaThe" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
