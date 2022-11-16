@@ -14,9 +14,9 @@ namespace DAL
     {
         DAL_Config balConfig = new DAL_Config();
         KpiManagerEntities dbContext = new KpiManagerEntities();
-        public tbTheTai CheckExist(string MaThe)
+        public tbTheTai CheckExist(string MaThe,DateTime now)
         {
-            return dbContext.tbTheTais.OrderByDescending(m => m.ThetaiID).Where(m => m.MaThe == MaThe).FirstOrDefault();
+            return dbContext.tbTheTais.OrderByDescending(m => m.ThetaiID).ToList().Where(m => m.MaThe == MaThe && m.DateStart.Value.Date==now.Date).FirstOrDefault();
         }
         public bool InsertData(tbTheTai tbTheTai)
         {
@@ -151,7 +151,7 @@ namespace DAL
         }
         public bool CheckDetailThetai(string MaPhieu)
         {
-            return dbContext.tbTheTaiChiTiets.Any(m => m.MaPhieu == MaPhieu);
+            return dbContext.tbTheTaiChiTiets.Any(m => m.MaPhieu == MaPhieu && m.Status==1);
         }
         public VM_Json GetJsonData(string spx)
         {

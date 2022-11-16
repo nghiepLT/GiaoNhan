@@ -12,9 +12,9 @@ namespace BAL
     public class BAL_TheTai
     {
         DAL_TheTai dalTheTai = new DAL_TheTai();
-        public tbTheTai CheckExist(string MaThe)
+        public tbTheTai CheckExist(string MaThe,DateTime now)
         {
-            return dalTheTai.CheckExist(MaThe);
+            return dalTheTai.CheckExist(MaThe,now);
         }
         public bool InsertData(tbTheTai tbTheTai)
         {

@@ -117,7 +117,7 @@ namespace GiaoNhan.Controllers
                 //Trường hợp quét thẻ tài
                 if (tbtheTai.MaThe.Contains("GN"))
                 {
-                    tbTheTai ckhTracking = balTheTai.CheckExist(tbtheTai.MaThe);
+                    tbTheTai ckhTracking = balTheTai.CheckExist(tbtheTai.MaThe,DateTime.Now.Date);
 
                     if (ckhTracking == null || (ckhTracking!=null && ckhTracking.DateEnd!=null))
                     {
@@ -159,6 +159,7 @@ namespace GiaoNhan.Controllers
                         ttct.MaPhieu = tbtheTai.MaThe;
                         ttct.ThetaiID = lastThetai.ThetaiID;
                         ttct.Status = 0;
+                        ttct.DateCreate = DateTime.Now;
                         ttct.MaThe = lastThetai.MaThe;
                         balTheTai.UpdateDataDetail(ttct);
                         return 1;

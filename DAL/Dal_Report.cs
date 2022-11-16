@@ -80,7 +80,7 @@ namespace DAL
                             item.ToTals = item.SLNhap;
                         }
                         if (item.SlKiemTra > 0)
-                        {
+                        {   
                             item.ToTals = item.SlKiemTra;
                         }
                     }
