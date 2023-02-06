@@ -99,10 +99,10 @@ namespace GiaoNhan.Controllers
                 if (getJson == null)
                     return 2;
                 //Kiểm tra mã đã quét chưa
-                if (tracking.CheckedCode(accountID, tbAccount.TrackingCode))
-                {
-                    return 3;
-                }
+                //if (tracking.CheckedCode(accountID, tbAccount.TrackingCode))
+                //{
+                //    return 3;
+                //}
                 //Kiểm tra nếu đã đủ số lượng thì không cho quyet1 tiếp
                 int SoLuongconlai = 0;
                 SoLuongconlai = tracking.CheckedNumber(tbAccount.TrackingCode);
@@ -184,7 +184,8 @@ namespace GiaoNhan.Controllers
                         }
                         else
                         {
-                            tbAccount.CountStep = checkbycode.Count - checkbycode.CountStep;
+                            // tbAccount.CountStep = checkbycode.Count - SoLuongconlai;
+                            tbAccount.CountStep = SoLuongconlai;
                         }
                         //Cập nhật cho kế toán
                         //if (tbAccount.TrackingID == 0)

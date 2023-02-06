@@ -136,7 +136,39 @@
 </div>
 
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"> 
+            <div class="modal-body">
+               @if (ViewBag.ListNhanVienTrungChuyen != null)
+               {
+                   <div class="form-group">
+                     <div class="row">
+                         <span class="col-sm-2">Chọn </span>
+                        <div class="col-sm-10">
+                            <select class="form-control" style="min-width:100%">
+                                @foreach (var it in ViewBag.ListNhanVienTrungChuyen)
+                                {
+                                    <option value="@it.UserID">
+                                        @it.EmployeeName
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                     </div>
+                   </div>
+               }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Chuyển phiếu</button>
+            </div>
+        </div>
+    </div>
+</div>
     <script>
+        function trungchuyen() {
+            $("#exampleModal").modal('toggle');
+        }
         $(".shadow").hide();
         $(document).ready(function () {
        // getDatenow();

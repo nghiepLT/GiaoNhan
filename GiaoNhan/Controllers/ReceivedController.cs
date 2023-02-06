@@ -29,7 +29,9 @@ namespace GiaoNhan.Controllers
                 ViewBag.UserId = user.UserID;
                 ViewBag.Type = 1;
                 ViewBag.Permission = permission.GetByID(user.PermissionID);
-            } 
+                ViewBag.ListNhanVienTrungChuyen = received.GetNhanVienTrungChuyen().Where(m => string.IsNullOrEmpty(m.Description));
+
+            }
             return View();
         }
         //Trung chuyển

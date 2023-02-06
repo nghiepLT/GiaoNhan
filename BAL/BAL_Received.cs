@@ -57,5 +57,9 @@ namespace BAL
         {
             return received.GetPopupInfo(ReceivedID);
         }
+        public IEnumerable<tbUSer> GetNhanVienTrungChuyen()
+        {
+            return received.GetNhanVienTrungChuyen();
+        }
     }
 }

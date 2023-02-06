@@ -1,0 +1,91 @@
+﻿@if (Model != null)
+{
+    <table class="table" id="tbHistoryDetail">
+        <thead>
+            <tr>
+                <th>
+                    Mã phiếu
+                </th>
+                <th>
+                    Thời gian tạo phiếu
+                </th>
+                <th>Thời gian xuất kho</th>
+                <th>Thời gian làm hàng</th>
+                <th>Thời gian giao hàng</th>
+                <th>
+                    Tổng thời gian của phiếu
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width:10%"><strong class="text-success tkp_maphieu">@item.MaPhieu</strong></td>
+                    <td class=""><span>@item.Thoigiankinhdoanhxuatphieu.ToString("dd/MM/yyyy")</span> <span class="tgtaophieu">@item.Thoigiankinhdoanhxuatphieu.ToString("HH:mm:ss")</span></td>
+                    <td>
+                        <div>
+                            <span>Bắt đầu: </span> @item.ThoigianBatdauXuatphieu.ToString("dd/MM/yyyy")<span class="tgtaophieu"> @item.ThoigianBatdauXuatphieu.ToString("HH:mm:ss")</span>
+                        </div>
+                        <div>
+                            @if (item.ThoigianKetthucXuatphieu != DateTime.MinValue)
+                            {
+                                <span>Kết thúc: </span>   @item.ThoigianKetthucXuatphieu.ToString("dd/MM/yyyy") <span class="tgtaophieu"> @item.ThoigianKetthucXuatphieu.ToString("HH:mm:ss")</span>
+                                <div>Tổng thời gian: <strong>@Tool.Helper.Tinhtongthoigian(item.ThoigianKetthucXuatphieu, item.ThoigianBatdauXuatphieu)</strong></div>
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if (item.Batdaulamhang != DateTime.MinValue)
+                        {
+                            <div>
+                                <span>Bắt đầu: </span>  @item.Batdaulamhang.ToString("dd/MM/yyyy") <span class="tgtaophieu"> @item.Batdaulamhang.ToString("HH:mm:ss")</span>
+                            </div>
+                            <div>
+                                @if (item.Ketthuclamhang != DateTime.MinValue)
+                                {
+                                    <span>Kết thúc: </span>  @item.Ketthuclamhang.ToString("dd/MM/yyyy") <span class="tgtaophieu"> @item.Ketthuclamhang.ToString("HH:mm:ss")</span>
+                                    <div>Tổng thời gian: <strong>@Tool.Helper.Tinhtongthoigian(item.Ketthuclamhang, item.Batdaulamhang)</strong></div>
+                                }
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Thoigiangiaohang != DateTime.MinValue)
+                        {
+                            @item.Thoigiangiaohang.ToString("dd/MM/yyyy") <span class="tgtaophieu"> @item.Thoigiangiaohang.ToString("HH:mm:ss")</span>
+                            if (item.ThoigianKetthucXuatphieu != DateTime.MinValue)
+                            {
+                                <div>Tổng thời gian: <strong> @Tool.Helper.Tinhtongthoigian(item.Thoigiangiaohang, item.Ketthuclamhang) </strong></div>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @if (item.Thoigiangiaohang != DateTime.MinValue)
+                        {
+                            <div>Tổng thời gian: <strong> @Tool.Helper.Tinhtongthoigian(item.Thoigiangiaohang, item.Thoigiankinhdoanhxuatphieu) </strong></div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<style>
+    .tkp_maphieu {
+        font-size: 15px;
+    }
+    .tgtaophieu{
+        font-weight:bold;
+        color:#ff0000;
+    }
+</style>
+<script>
+    $('#tbHistoryDetail').DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": true,
+        "searching": true,
+        "pageLength": 100,
+        //"buttons": ["excel", "pdf", "colvis"]
+        "buttons": ["excel", "pdf"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+</script>

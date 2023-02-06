@@ -195,6 +195,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Images\Infinity-1s-200px.gif" />
+    <Content Include="Images\Infinity-Loading.gif" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\NguyenKimLoGo.jpg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2135,7 +2137,9 @@
     <Content Include="Templates\plugins\uplot\uPlot.iife.js" />
     <Content Include="Templates\plugins\uplot\uPlot.iife.min.js" />
     <Content Include="Templates\plugins\uplot\uPlot.min.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2317,6 +2321,9 @@
     <Content Include="Views\Received\XepHang.cshtml" />
     <Content Include="Views\Report\ThongKeBaoCao.cshtml" />
     <Content Include="Views\Report\ThongKeChiTiet.cshtml" />
+    <Content Include="Views\Report\Thongkephieu.cshtml" />
+    <Content Include="Views\Report\ThongkephieuData.cshtml" />
+    <Content Include="Views\Home\Loading.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

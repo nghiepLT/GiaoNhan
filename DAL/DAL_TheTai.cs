@@ -97,8 +97,11 @@ namespace DAL
             return dbContext.tbTheTais.OrderByDescending(m => m.ThetaiID).Any(m => m.MaThe == MaThe && m.DateEnd == null);
         }
         public IEnumerable<tbTheTaiChiTiet> GetAlltheTaiChiTiet(string MaThe)
-        {  
-            return dbContext.tbTheTaiChiTiets.ToList().Where(m=>m.DateEnd==null || (m.DateEnd.HasValue && m.DateEnd.Value.Date == DateTime.Now.Date)).Where(m => m.MaThe == MaThe && !Checkparent(m.MaThe)).OrderByDescending(m=>m.TheTaiChiTietID);
+        {
+           // var model1 = dbContext.tbTheTaiChiTiets.ToList().Where(m=>m.MaThe == MaThe && (m.DateCreate.HasValue && m.DateCreate.Value.Date == DateTime.Now.Date)).OrderByDescending(m => m.TheTaiChiTietID).ToList();
+            var model1 = dbContext.tbTheTaiChiTiets.ToList().Where(m=>m.MaThe == MaThe && (m.DateCreate.HasValue && m.DateCreate.Value.Date == DateTime.Now.Date || (m.DateCreate.HasValue && m.DateCreate.Value.Date >= DateTime.Now.Date.AddDays(-1) && m.DateEnd == null))).OrderByDescending(m => m.TheTaiChiTietID).ToList();
+            //var model2= model1.Where(m =>!Checkparent(m.MaThe)).OrderByDescending(m => m.TheTaiChiTietID);
+            return model1;
         }
         public bool UpdateStatus(int TheTaiChiTietID)
         {

@@ -98,14 +98,18 @@
                 else
                 {
                     <strong class="text-success">Hoàn tất</strong>
+                   <div class="giaotrungchuyen">
+                       <a class="btn btn-xs btn-primary" onclick="trungchuyen()">
+                           Trung chuyển
+                       </a>
+                   </div>
                 }
             </td>
         </tr>
     }
 }
-
 <script>
-     
+  
     $(".trdb").dblclick(function () {
         var getId=$(this).attr("data-value");
         var param={

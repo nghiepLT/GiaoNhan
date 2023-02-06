@@ -189,5 +189,9 @@ namespace DAL
                 return false;
             }
         }
+        public IEnumerable<tbUSer> GetNhanVienTrungChuyen()
+        {
+            return dbcontext.tbUSers.Where(m => m.RoleId == 7);
+        }
     }
 }

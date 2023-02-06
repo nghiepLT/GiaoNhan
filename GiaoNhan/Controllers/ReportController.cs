@@ -174,6 +174,7 @@ namespace GiaoNhan.Controllers
             DateTime _fromDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime _toDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             var model = balReport.ReportGiaoNhan(_fromDate, _toDate, MaThe);
+            ViewBag.sum = model.Sum(m => m.lstTheTaiChiTiet.Count());
             return PartialView(model);
         }
 
@@ -265,6 +266,18 @@ namespace GiaoNhan.Controllers
             ViewBag.tkNhap = balThongKe.ThongKeNhapChiTiet(_date, UserID);
             ViewBag.tkXuat = balThongKe.ThongKeXuatChiTiet(_date, UserID);
             return PartialView();
+        }
+
+        public ActionResult Thongkephieu()
+        {
+            return View();
+        }
+        public ActionResult ThongkephieuData(string fromDate, string toDate,int Status)
+        {
+            DateTime _fromDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime _toDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            var model = balThongKe.Thongkephieu(_fromDate, _toDate, Status);
+            return PartialView(model);
         }
     }
 }

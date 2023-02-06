@@ -1,25 +1,20 @@
-﻿
-@{
-    ViewBag.Title = "ReportByDay";
-}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="~/Scripts/jquery.table2excel.js"></script>
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thống kê</h1>
+                <h1>Thống kê phiếu</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Thống kê</li>
+                    <li class="breadcrumb-item active">Thống kê phiếu</li>
                 </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
-<!-- Main content -->
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -45,27 +40,11 @@
 
                                     <div class="col-sm-2">
                                         <div id="slTheTai">
-                                            <label for="User name">Chọn tài</label>
-                                            <select  class="form-control" style="max-width:100%" onchange="chonthetai()" id="slChonTheTai">
-                                                <option selected="selected" value="0">Chọn thẻ tài</option>
-                                                @if (Model != null)
-                                                {
-                                                    foreach (var item in Model)
-                                                    {
-                                                        if (ViewBag.UserID != "")
-                                                        {
-                                                            if (item.Code == ViewBag.UserID && item.Code!= "GNTK")
-                                                            {
-                                                                <option selected="selected" value="@item.Code">@item.Code</option>
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            <option  value="@item.Code">@item.Code</option>
-                                                        }
-
-                                                    }
-                                                }
+                                            <label for="User name">Trạng thái phiếu</label>
+                                            <select class="form-control" style="max-width:100%" onchange="chonthetai()" id="sltrangthai">
+                                                <option  value="0">Tất cả</option>
+                                                <option value="1">Đã giao</option>
+                                                <option value="2">Chưa giao</option>
                                             </select>
 
                                         </div>
@@ -78,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="form-group table-responsive" id="contents">
-                              
+
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -93,10 +72,7 @@
 </section>
 <script>
     $(document).ready(function () {
-        if ('@ViewBag.UserID' != "GNTK") {
-            $("#slChonTheTai").val('@ViewBag.UserID').change();
-            $("#slChonTheTai").attr('disabled', 'disabled').change();
-        }
+       
     });
     function changePermission() {
 
@@ -127,20 +103,21 @@
         var currentTime = new Date();
         var start = dates[0];
         var end = dates[1];
-
+        $(".boxloading").show();
         var param = {
             "fromDate": start,
-            "toDate": end,
-            "MaThe": $("#slChonTheTai").val()
+            "toDate": end ,
+            "Status": $("#sltrangthai").val()
         }
         $.ajax({
-            url: '/Report/ThongKeThongKeGiaoNhanData',
+            url: '/Report/ThongkephieuData',
             dataType: 'html',
             type: 'POST',
             data: param,
             dataType: 'html',
-            success: function (data, status, xhr) {
+            success: function (data, status, xhr) { 
                 $("#contents").html(data);
+                $(".boxloading").hide();
             },
             error: function (xhr, status, error) {
                 alert(status);

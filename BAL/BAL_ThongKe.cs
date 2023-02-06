@@ -28,5 +28,9 @@ namespace BAL
         {
             return dalThongKe.ThongKeXuatChiTiet(date, UserID);
         }
+        public IEnumerable<VM_Thongkephieu> Thongkephieu(DateTime fromDate, DateTime toDate,int Status)
+        {
+            return dalThongKe.Thongkephieu(fromDate, toDate, Status);
+        }
     }
 }

@@ -3,6 +3,14 @@
     foreach(var item in Model)
     {
         <tr>
+            @if (item.DateCreate.Date >= DateTime.Now.Date)
+            {
+                <td><span>@item.DateCreate.ToString("dd/MM/yyyy")</span></td>
+            }
+            else
+            {
+                <td><strong style="color:red">@item.DateCreate.ToString("dd/MM/yyyy")</strong></td>
+            }
             <td><strong style="color:#435a39" class="kethucphieu">@item.MaPhieu</strong></td>
             @if (item.Status == 0)
             {

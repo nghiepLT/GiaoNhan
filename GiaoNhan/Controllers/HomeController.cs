@@ -67,5 +67,9 @@ namespace GiaoNhan.Controllers
 
             return PartialView();
         }
+        public ActionResult Loading()
+        {
+            return PartialView();
+        }
     }
 }

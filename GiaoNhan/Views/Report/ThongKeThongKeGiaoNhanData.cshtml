@@ -16,7 +16,7 @@
             </th>
             <th>Thời gian kết thúc làm hàng</th>
             <th>
-                Danh sách phiếu
+                Danh sách phiếu <span id="tongsophieu">( @ViewBag.sum )<span> Phiếu</span></span>
             </th>
             <th>
                 Tổng thời gian
@@ -28,8 +28,7 @@
         {
             foreach(var item in Model)
             {
-                <tr>
-                   
+                <tr> 
                     <td>
                         @item.DateStart.ToString("dd/MM/yyyy")
                     </td>
@@ -41,17 +40,17 @@
                         @item.Count
                     </td>
                     <td>
-                        @item.DateStart.ToString("hh:mm:ss")
+                        @item.DateStart.ToString("HH:mm:ss")
                     </td>
                     <td>
                         @if (item.DateEnd != null)
                         {
-                            @item.DateEnd.ToString("hh:mm:ss")
-
+                            @item.DateEnd.ToString("HH:mm:ss")
+                            <span>
+                                | <strong>@Tool.Helper.Tinhtongthoigian(item.DateEnd, item.DateStart)</strong>
+                            </span>
                         }
-                    </td>
-                  
-                  
+                    </td>   
                     <td>
                         @if (item.lstTheTaiChiTiet != null)
                         {
@@ -60,13 +59,16 @@
                                 if (it.DateEnd != null)
                                 {
                                     <div>
-                                       <strong class="txtPhieu">@it.MaPhieu</strong> <span> <span> Kết thúc: </span> <strong class="text-danger">@it.DateEnd.ToString("hh:mm:ss")</strong> </span>
+                                        <strong class="txtPhieu">@it.MaPhieu</strong> <span> <span> Kết thúc: </span> <strong class="text-danger">@it.DateEnd.ToString("dd/MM/yyyy HH:mm:ss")</strong> </span>
                                         @if (it.Status == -1)
                                         {
                                             <div>
                                                 <strong class="text-danger">Đã hủy </strong> <span> Lý do : </span> <strong>@it.Description</strong>
                                             </div>
                                         }
+                                        <div style="margin-bottom:5px;border-bottom:1px solid #eee">
+                                            Tổng thời gian : <strong>@Tool.Helper.Tinhtongthoigian(it.DateEnd, item.DateEnd)</strong>
+                                        </div>
                                     </div>
                                 }
                                 else

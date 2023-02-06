@@ -309,15 +309,44 @@ namespace DAL
         //Kiểm tra quét lần 2
         public bool CheckedCode(int UserID,string TrackingCode)
         {
-            return dbContext.tbTrackings.Any(m => m.UserID == UserID && m.DateEnd!=null  && m.TrackingCode == TrackingCode);
+            var other = dbContext.tbTrackings.Where(m => m.TrackingCode == TrackingCode && m.UserID != UserID);
+            int countmaxOther = 0;
+            int countstepOther = 0;
+            if (other != null && other.Count() > 0)
+            {
+                countmaxOther = other.FirstOrDefault().Count;
+                countstepOther = other.Sum(m => m.CountStep);
+                if (countmaxOther == countstepOther)
+                {
+                    return true;
+                } 
+            }
+            //Lấy tổng hiện tại
+            var current = dbContext.tbTrackings.Where(m =>m.TrackingCode == TrackingCode && m.UserID==UserID);
+            if (current != null && current.Count()>0)
+            {
+                var countmax = current.FirstOrDefault().Count;
+                var countstep = current.Sum(m => m.CountStep);
+                if (other != null && other.Count() > 0)
+                {
+                    countstep += countstepOther;
+                }
+                    if (countmax> countstep)
+                    return true;
+                else
+                    return false;
+            }
+            
+            return false;
         }
         //Kiểm tra số lượng phiếu
         public int CheckedNumber( string TrackingCode)
         {
-            var chk = dbContext.tbTrackings.Where(m => m.TrackingCode == TrackingCode).FirstOrDefault();
-            if (chk == null)
+            var chk = dbContext.tbTrackings.Where(m => m.TrackingCode == TrackingCode);
+            if (chk == null || chk.Count()==0)
                 return -1;
-            var total = chk.Count-chk.CountStep ;
+            int totalstep = int.Parse(chk.Sum(m => m.CountStep).ToString());
+            var total = chk.FirstOrDefault().Count- totalstep;
             return total;
         }
         public Dictionary<int,int> CheckSoLuong(int TrackingID,string TrackingCode)
