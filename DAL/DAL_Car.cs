@@ -196,17 +196,18 @@ namespace DAL
         {
             try
             {
-                bdDotbaoduong bdbd = dbContext.bdDotbaoduongs.Where(m => m.IDCar == IDCar).FirstOrDefault();
-                if (bdbd == null)
-                {
-                    bdbd = new bdDotbaoduong();
-                    bdbd.IDCar = IDCar;
-                    bdbd.SoKmHientai = 0; 
-                    bdbd.NgayBD = NgayBD;
-                    bdbd.SokmDau = SokmDau;
-                    dbContext.bdDotbaoduongs.Add(bdbd);
-                    dbContext.SaveChanges();
-                }
+                //Cập nhật cho thằng trước
+                bdDotbaoduong bdbdbefore = dbContext.bdDotbaoduongs.Where(m => m.IDCar == IDCar).ToList().LastOrDefault();
+                bdbdbefore.SoKmCuoi = SokmDau;
+                bdDotbaoduong bdbd = new bdDotbaoduong();
+                bdbd = new bdDotbaoduong();
+                bdbd.IDCar = IDCar;
+                bdbd.SoKmHientai = 0;
+                bdbd.NgayBD = NgayBD;
+                bdbd.SokmDau = SokmDau;
+                dbContext.bdDotbaoduongs.Add(bdbd);
+               
+                dbContext.SaveChanges();
                 return true;
             }
             catch(Exception ex)
@@ -237,7 +238,7 @@ namespace DAL
                              Chisodukienlansau=d.SokmDau.Value+tc.DinhMucBaoDuong.Value,
                              Sokmconlai= tc.DinhMucBaoDuong.Value-d.SoKmHientai.Value
                          }
-                       ).FirstOrDefault();
+                       ).ToList().LastOrDefault();
             return model;
         }
         public IEnumerable<bdHanhtrinhbaotri> GetHanhtrinhbaotri(int IDCar)
