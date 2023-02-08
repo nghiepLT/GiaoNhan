@@ -1,0 +1,98 @@
+﻿
+<div class="row">
+    <div class="col-sm-10">
+        <div class="qlbd_title">
+            <h3>ĐỢT BẢO DƯỠNG</h3>
+        </div>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Đợt bảo dưỡng</th>
+                <th>
+                    Ngày bảo dưỡng gần nhất
+                </th>
+                <th>
+                    Chỉ số km bảo dưỡng lần gần nhất
+                </th>
+                <th>
+                    Số km đã đi được sau khi bảo dưỡng
+                </th>
+                @*<th>
+                    Định mức km để bảo dưỡng
+                </th>*@
+                <th>
+                    Chỉ số km dự kiến bảo dưỡng lần tiếp theo
+                </th>
+                <th>
+                    Số km  còn lại tới hạn bảo dưỡng
+                </th>
+            </tr>
+            <tbody>
+                @if (Model != null)
+                {
+                    <tr>
+                        <td style="display:none" id="tdkm" data-km="@Model.SoKmHientai"></td>
+                        <td>@Model.STT</td>
+                        <td>
+                            @if (Model.NgayBD != null)
+                            {
+                                @Model.NgayBD.ToString("dd/MM/yyyy")
+                            }
+                        </td>
+                        <td>@Model.SokmDau.ToString("##,###")</td>
+                        <td>
+                            <span>@Model.SoKmHientai.ToString("##,###")</span>  <a style="float:right" onclick="Capnhatkm()" class="btn btn-danger btn-xs">Cập nhật KM</a>
+                        </td>
+                        <td>
+                           @Model.Chisodukienlansau.ToString("##,###")
+                        </td>
+                        <td>
+                            @Model.Sokmconlai.ToString("##,###")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+      
+    </div>
+    <div class="col-sm-2">
+        <div class="qlbd_title">
+            <h3>CHI TIẾT</h3>
+        </div>
+        <table class="table table-striped">
+            <tr>
+                <th width="20%">
+                    Ngày
+                </th>
+                <th>
+                  KM
+                </th>
+                <th width="5%">
+
+                </th>
+            </tr>
+            <tbody>
+                @if (ViewBag.Listchild != null)
+                {
+                    foreach (var item in ViewBag.Listchild)
+                    {
+                        <tr>
+                            <td>
+                                @item.NgayTao.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @item.Sokm
+                            </td>
+                            <td>
+                                <a style="cursor:pointer;" onclick="deleteHanhtrinh('@item.IDHanhTrinhBaoTri')"><i style="color:red" class="nav-icon fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

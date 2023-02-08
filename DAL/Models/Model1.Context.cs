@@ -42,5 +42,12 @@ namespace DAL.Models
         public virtual DbSet<tbTracking> tbTrackings { get; set; }
         public virtual DbSet<tbRole> tbRoles { get; set; }
         public virtual DbSet<tbRoleMenu> tbRoleMenus { get; set; }
+        public virtual DbSet<bdCar> bdCars { get; set; }
+        public virtual DbSet<bdEmailSend> bdEmailSends { get; set; }
+        public virtual DbSet<bdTaixe> bdTaixes { get; set; }
+        public virtual DbSet<bdTypeCar> bdTypeCars { get; set; }
+        public virtual DbSet<bdService> bdServices { get; set; }
+        public virtual DbSet<bdDotbaoduong> bdDotbaoduongs { get; set; }
+        public virtual DbSet<bdHanhtrinhbaotri> bdHanhtrinhbaotris { get; set; }
     }
 }

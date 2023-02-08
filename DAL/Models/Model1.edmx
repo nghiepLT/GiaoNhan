@@ -5,6 +5,72 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="KpiManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bdCar">
+          <Key>
+            <PropertyRef Name="IDCar" />
+          </Key>
+          <Property Name="IDCar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarSignal" Type="nvarchar" MaxLength="200" />
+          <Property Name="IdTypeCar" Type="int" />
+          <Property Name="IdTaiXe" Type="int" />
+        </EntityType>
+        <EntityType Name="bdDotbaoduong">
+          <Key>
+            <PropertyRef Name="IdDotBaoDuong" />
+          </Key>
+          <Property Name="IdDotBaoDuong" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDCar" Type="int" />
+          <Property Name="NgayBD" Type="datetime" />
+          <Property Name="NgayKT" Type="datetime" />
+          <Property Name="SokmDau" Type="int" />
+          <Property Name="SoKmCuoi" Type="int" />
+          <Property Name="SoKmHientai" Type="int" />
+        </EntityType>
+        <EntityType Name="bdEmailSend">
+          <Key>
+            <PropertyRef Name="IdEmail" />
+          </Key>
+          <Property Name="IdEmail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="bdHanhtrinhbaotri">
+          <Key>
+            <PropertyRef Name="IDHanhTrinhBaoTri" />
+          </Key>
+          <Property Name="IDHanhTrinhBaoTri" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sokm" Type="int" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="IDDotbaoduong" Type="int" />
+        </EntityType>
+        <EntityType Name="bdService">
+          <Key>
+            <PropertyRef Name="IdService" />
+          </Key>
+          <Property Name="IdService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameService" Type="nvarchar" MaxLength="500" />
+          <Property Name="IdCar" Type="int" />
+          <Property Name="Ngaytao" Type="datetime" />
+          <Property Name="TongTien" Type="float" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Ghichu" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="bdTaixe">
+          <Key>
+            <PropertyRef Name="IdTaixe" />
+          </Key>
+          <Property Name="IdTaixe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenTaiXe" Type="nvarchar" MaxLength="200" />
+          <Property Name="MaTheTai" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="bdTypeCar">
+          <Key>
+            <PropertyRef Name="TypeCar" />
+          </Key>
+          <Property Name="TypeCar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameType" Type="nvarchar" MaxLength="200" />
+          <Property Name="DinhMucBaoDuong" Type="int" />
+          <Property Name="Ghichubaoduong" Type="int" />
+        </EntityType>
         <EntityType Name="tbConfig">
           <Key>
             <PropertyRef Name="ConfigID" />
@@ -180,6 +246,13 @@
           <Property Name="RoleId" Type="int" />
         </EntityType>
         <EntityContainer Name="KpiManagerModelStoreContainer">
+          <EntitySet Name="bdCar" EntityType="Self.bdCar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bdDotbaoduong" EntityType="Self.bdDotbaoduong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bdEmailSend" EntityType="Self.bdEmailSend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bdHanhtrinhbaotri" EntityType="Self.bdHanhtrinhbaotri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bdService" EntityType="Self.bdService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bdTaixe" EntityType="Self.bdTaixe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bdTypeCar" EntityType="Self.bdTypeCar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbConfig" EntityType="Self.tbConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbDepartment" EntityType="Self.tbDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbDriver" EntityType="Self.tbDriver" Schema="dbo" store:Type="Tables" />
@@ -337,6 +410,13 @@
           <EntitySet Name="tbTrackings" EntityType="KpiManagerModel.tbTracking" />
           <EntitySet Name="tbRoles" EntityType="KpiManagerModel.tbRole" />
           <EntitySet Name="tbRoleMenus" EntityType="KpiManagerModel.tbRoleMenu" />
+          <EntitySet Name="bdCars" EntityType="KpiManagerModel.bdCar" />
+          <EntitySet Name="bdEmailSends" EntityType="KpiManagerModel.bdEmailSend" />
+          <EntitySet Name="bdTaixes" EntityType="KpiManagerModel.bdTaixe" />
+          <EntitySet Name="bdTypeCars" EntityType="KpiManagerModel.bdTypeCar" />
+          <EntitySet Name="bdServices" EntityType="KpiManagerModel.bdService" />
+          <EntitySet Name="bdDotbaoduongs" EntityType="KpiManagerModel.bdDotbaoduong" />
+          <EntitySet Name="bdHanhtrinhbaotris" EntityType="KpiManagerModel.bdHanhtrinhbaotri" />
         </EntityContainer>
         <EntityType Name="tbTheTai">
           <Key>
@@ -394,6 +474,72 @@
           <Property Name="RoleMenuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="MenuId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="bdCar">
+          <Key>
+            <PropertyRef Name="IDCar" />
+          </Key>
+          <Property Name="IDCar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarSignal" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IdTypeCar" Type="Int32" />
+          <Property Name="IdTaiXe" Type="Int32" />
+        </EntityType>
+        <EntityType Name="bdEmailSend">
+          <Key>
+            <PropertyRef Name="IdEmail" />
+          </Key>
+          <Property Name="IdEmail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="bdTaixe">
+          <Key>
+            <PropertyRef Name="IdTaixe" />
+          </Key>
+          <Property Name="IdTaixe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenTaiXe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MaTheTai" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="bdTypeCar">
+          <Key>
+            <PropertyRef Name="TypeCar" />
+          </Key>
+          <Property Name="TypeCar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DinhMucBaoDuong" Type="Int32" />
+          <Property Name="Ghichubaoduong" Type="Int32" />
+        </EntityType>
+        <EntityType Name="bdService">
+          <Key>
+            <PropertyRef Name="IdService" />
+          </Key>
+          <Property Name="IdService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameService" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IdCar" Type="Int32" />
+          <Property Name="Ngaytao" Type="DateTime" Precision="3" />
+          <Property Name="TongTien" Type="Double" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Ghichu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="bdDotbaoduong">
+          <Key>
+            <PropertyRef Name="IdDotBaoDuong" />
+          </Key>
+          <Property Name="IdDotBaoDuong" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDCar" Type="Int32" />
+          <Property Name="NgayBD" Type="DateTime" Precision="3" />
+          <Property Name="NgayKT" Type="DateTime" Precision="3" />
+          <Property Name="SokmDau" Type="Int32" />
+          <Property Name="SoKmCuoi" Type="Int32" />
+          <Property Name="SoKmHientai" Type="Int32" />
+        </EntityType>
+        <EntityType Name="bdHanhtrinhbaotri">
+          <Key>
+            <PropertyRef Name="IDHanhTrinhBaoTri" />
+          </Key>
+          <Property Name="IDHanhTrinhBaoTri" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sokm" Type="Int32" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="IDDotbaoduong" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -589,6 +735,79 @@
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RoleMenuID" ColumnName="RoleMenuID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bdCars">
+            <EntityTypeMapping TypeName="KpiManagerModel.bdCar">
+              <MappingFragment StoreEntitySet="bdCar">
+                <ScalarProperty Name="IdTaiXe" ColumnName="IdTaiXe" />
+                <ScalarProperty Name="IdTypeCar" ColumnName="IdTypeCar" />
+                <ScalarProperty Name="CarSignal" ColumnName="CarSignal" />
+                <ScalarProperty Name="IDCar" ColumnName="IDCar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bdEmailSends">
+            <EntityTypeMapping TypeName="KpiManagerModel.bdEmailSend">
+              <MappingFragment StoreEntitySet="bdEmailSend">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdEmail" ColumnName="IdEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bdTaixes">
+            <EntityTypeMapping TypeName="KpiManagerModel.bdTaixe">
+              <MappingFragment StoreEntitySet="bdTaixe">
+                <ScalarProperty Name="MaTheTai" ColumnName="MaTheTai" />
+                <ScalarProperty Name="TenTaiXe" ColumnName="TenTaiXe" />
+                <ScalarProperty Name="IdTaixe" ColumnName="IdTaixe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bdTypeCars">
+            <EntityTypeMapping TypeName="KpiManagerModel.bdTypeCar">
+              <MappingFragment StoreEntitySet="bdTypeCar">
+                <ScalarProperty Name="Ghichubaoduong" ColumnName="Ghichubaoduong" />
+                <ScalarProperty Name="DinhMucBaoDuong" ColumnName="DinhMucBaoDuong" />
+                <ScalarProperty Name="NameType" ColumnName="NameType" />
+                <ScalarProperty Name="TypeCar" ColumnName="TypeCar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bdServices">
+            <EntityTypeMapping TypeName="KpiManagerModel.bdService">
+              <MappingFragment StoreEntitySet="bdService">
+                <ScalarProperty Name="Ghichu" ColumnName="Ghichu" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+                <ScalarProperty Name="Ngaytao" ColumnName="Ngaytao" />
+                <ScalarProperty Name="IdCar" ColumnName="IdCar" />
+                <ScalarProperty Name="NameService" ColumnName="NameService" />
+                <ScalarProperty Name="IdService" ColumnName="IdService" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bdDotbaoduongs">
+            <EntityTypeMapping TypeName="KpiManagerModel.bdDotbaoduong">
+              <MappingFragment StoreEntitySet="bdDotbaoduong">
+                <ScalarProperty Name="SoKmHientai" ColumnName="SoKmHientai" />
+                <ScalarProperty Name="SoKmCuoi" ColumnName="SoKmCuoi" />
+                <ScalarProperty Name="SokmDau" ColumnName="SokmDau" />
+                <ScalarProperty Name="NgayKT" ColumnName="NgayKT" />
+                <ScalarProperty Name="NgayBD" ColumnName="NgayBD" />
+                <ScalarProperty Name="IDCar" ColumnName="IDCar" />
+                <ScalarProperty Name="IdDotBaoDuong" ColumnName="IdDotBaoDuong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bdHanhtrinhbaotris">
+            <EntityTypeMapping TypeName="KpiManagerModel.bdHanhtrinhbaotri">
+              <MappingFragment StoreEntitySet="bdHanhtrinhbaotri">
+                <ScalarProperty Name="IDDotbaoduong" ColumnName="IDDotbaoduong" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="Sokm" ColumnName="Sokm" />
+                <ScalarProperty Name="IDHanhTrinhBaoTri" ColumnName="IDHanhTrinhBaoTri" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

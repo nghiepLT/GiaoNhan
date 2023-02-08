@@ -1,0 +1,250 @@
+﻿<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý quãng đường xe</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý quãng đường xe</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            @if (ViewBag.Listcar != null)
+            {
+                foreach (var item in ViewBag.Listcar)
+                {
+                   <div class="col-sm-2">
+                       <a onclick="chonxe(this)" class="achung" data-id="@item.IDCar" data-type="@item.DinhMucBaoDuong">
+                           <div class="qlqd_box">
+                               <div class="qlqd_img">
+                                   <img src="~/Images/Car_img.png" class="img-responsive" style="width: 70px;" />
+                               </div>
+                               <div class="qlqd_signal">
+                                   @item.CarSignal
+                               </div>
+                               <div class="qlqd_tentx">
+                                   @item.TenTaiXe
+                               </div>
+                           </div>
+                       </a>
+                   </div>
+                }
+            }
+        </div>
+
+       <div class="roadbox">
+           <div class="car_move"> 
+               <img src="~/Images/Car_img.png" class="img-responsive" style=" transition: 0.5s;
+    left: 0;" />
+           </div>
+           <div class="divimage">
+           <span id="kmhientai">0</span> <span>/</span> <span id="dinhmuckm">0</span>
+           </div>
+       </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        
+                        <div class="text-right">
+                            <a class="btn btn-success" onclick="InsertDotBaoDuong()">
+                                Thêm
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      
+                        <div id="mytable">
+
+                        </div>
+                      
+                      
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="mdAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lbltitle">Cập nhật số KM</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card-body"> 
+                        <div class="form-group">
+                            <label for="User name">Số KM</label>
+                            <input type="number" class="form-control" id="SoKmHientai" style="min-width:100%" placeholder="Số KM">
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="CapnhatsoKM()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdAccount2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lbltitle">Thêm mới đợt bảo dưỡng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="User name">Ngày bảo dưỡng gần nhất</label>
+                            <input type="date" class="form-control" id="NgayBD" style="min-width:100%" >
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Số KM bảo dưỡng gần nhất</label>
+                            <input type="number" class="form-control" id="SokmDau" style="min-width:100%" placeholder="Số KM">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="Themmoidotbaoduong()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var idcar = 0;
+    var DinhMucBaoDuong = 0;
+    function Capnhatkm() {
+        $("#mdAccount").modal("toggle");
+    }
+    function loaddata() {
+        var param = {
+            "IDCar": idcar
+        }
+        $.ajax({
+            url: '/Car/GetDotBaoDuong',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                $("#mytable").html(data);
+                drawPosition();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function chonxe(dis) {
+        $(".achung").removeClass("chosecar");
+        $(dis).addClass("chosecar");
+        idcar = $(dis).attr("data-id");
+        DinhMucBaoDuong = $(dis).attr("data-type");
+        $("#dinhmuckm").html(DinhMucBaoDuong +" Km ")
+        //Load data 
+        loaddata();
+    }
+    function InsertDotBaoDuong() {
+        $("#mdAccount2").modal("toggle");
+    }
+    function Themmoidotbaoduong() {
+        var param = {
+            "IDCar": idcar,
+            "NgayBD": $("#NgayBD").val(),
+            "SokmDau": $("#SokmDau").val()
+        }
+        $.ajax({
+            url: '/Car/InsertDotBaoDuong',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function CapnhatsoKM() {
+        var param = {
+            "IDCar": idcar,
+            "SoKM": $("#SoKmHientai").val()
+        }
+        $.ajax({
+            url: '/Car/CapnhatsoKM',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                // window.location.reload();
+                loaddata();
+                $("#mdAccount").modal("toggle");
+                $("#SoKmHientai").val('');
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    $(document).ready(function () {
+    })
+
+    function drawPosition() {
+        var maxwidth = $(".car_move").css("width").split('.')[0];
+        var kmht = $("#tdkm").attr("data-km");
+        
+        var currentwidth = (maxwidth * kmht) / DinhMucBaoDuong;
+
+        if ((maxwidth - currentwidth) < 100)
+            currentwidth = currentwidth - 120;
+        else
+            currentwidth = currentwidth - 20;
+        if (typeof kmht == 'undefined') {
+            currentwidth = 0;
+            kmht = 0;
+        }
+        $(".car_move img").css("left", currentwidth + "px");
+        $("#kmhientai").html(kmht)
+    }
+    function deleteHanhtrinh(id) {
+        var param = {
+            "IDHanhTrinhBaoTri": id
+        }
+        $.ajax({
+            url: '/Car/DeleteHanhtrinh',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                loaddata();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>

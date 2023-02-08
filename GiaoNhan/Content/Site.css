@@ -174,20 +174,19 @@ input.form-control.form-control-sm {
     .ulRole a {
         cursor: pointer;
     }
-    .tkct_title{
 
-font-weight: bold;
-
-margin-bottom: 15px;
-
-text-transform: capitalize;
-
+.tkct_title {
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: capitalize;
 }
+
 @media only screen and (max-width: 640px) {
     .modal-dialog {
-    max-width: 90%!important;
-    margin: 1.75rem auto;
-}
+        max-width: 90% !important;
+        margin: 1.75rem auto;
+    }
+
     .tdProductName {
         width: auto;
     }
@@ -242,3 +241,142 @@ text-transform: capitalize;
         margin-bottom: 10px;
     }
 }
+
+.ipmw {
+    min-width: 100%;
+}
+
+.car-img {
+    width: 100%;
+    background-color: #838383;
+}
+
+.car_box {
+    box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 50%);
+    padding: 10px 5px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.mathetai {
+    background-color: #dc3545;
+    color: white;
+    padding: 1px 7px;
+    font-size: 11px;
+    margin-left: 6px;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.tentaixe {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.cartitle {
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    transform: translate(-50%, 6px);
+    background-color: #333;
+    color: white;
+    font-size: 15px;
+    padding: 5px 11px;
+    border-left: 5px solid #fd7e14;
+}
+
+.typecarname {
+    font-size: 13px;
+    text-transform: capitalize;
+    margin-bottom: 23px;
+    font-weight: bold;
+    margin-top: 30px;
+    background-color: #4a4a4a;
+    color: white;
+    padding: 5px 55px;
+    display: inline-block;
+    border-left: 5px solid #dc3545;
+}
+
+
+.roadbox {
+    background-image: url('../Images/road.png');
+    height: 83px;
+    background-position: center;
+    background-size: contain;
+    margin-bottom: 25px;
+}
+
+.car_move {
+}
+
+    .car_move img {
+        width: 133px;
+        position: relative;
+        left: 0px;
+        top: -14px;
+    }
+
+.qlqd_box {
+    box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 50%);
+    text-align: center;
+    margin-bottom: 20px;
+    border-top: 4px solid #f3f3f3;
+    cursor: pointer;
+}
+
+qlqd_img {
+}
+
+.qlqd_img img {
+}
+
+.qlqd_signal {
+    font-weight: bold;
+    font-size: 14px;
+    color: #111;
+}
+
+.qlqd_tentx {
+    background-color: red;
+    color: white;
+    font-size: 11px;
+    padding: 3px 5px;
+    font-weight: bold;
+}
+
+.chosecar .qlqd_box {
+    border-top: 4px solid #dc3545 !important;
+}
+
+.divimage {
+    text-align: center;
+    background-color: #1c1c1c;
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+}
+
+.qlbd_title {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+    .qlbd_title h3 {
+        font-size: 15px;
+        font-weight: bold;
+    }
+   #kmhientai {
+    color: white;  
+    letter-spacing: 0.1em;
+    transition: 0.3s;
+    text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 3px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey,1px 2px 3px black;
+}
+    #dinhmuckm{
+         color: white;  
+    letter-spacing: 0.1em;
+    transition: 0.3s;
+    text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 3px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey,1px 2px 3px black;
+    }

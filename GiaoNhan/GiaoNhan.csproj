@@ -167,6 +167,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Controllers\ReceivedController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\TheTaiController.cs" />
     <Compile Include="Controllers\TrackingController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -194,6 +196,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Car-models.png" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\Infinity-1s-200px.gif" />
     <Content Include="Images\Infinity-Loading.gif" />
@@ -2324,6 +2327,14 @@
     <Content Include="Views\Report\Thongkephieu.cshtml" />
     <Content Include="Views\Report\ThongkephieuData.cshtml" />
     <Content Include="Views\Home\Loading.cshtml" />
+    <Content Include="Views\Car\CarIndex.cshtml" />
+    <Content Include="Views\Car\TypeCarIndex.cshtml" />
+    <Content Include="Views\Car\GetListTypeCar.cshtml" />
+    <Content Include="Views\Car\TaixeIndex.cshtml" />
+    <Content Include="Views\Car\CarChildIndex.cshtml" />
+    <Content Include="Views\Service\ServiceIndex.cshtml" />
+    <Content Include="Views\Car\HanhTrinhXe.cshtml" />
+    <Content Include="Views\Car\GetDotBaoDuong.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

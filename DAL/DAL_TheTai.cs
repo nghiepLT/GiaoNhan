@@ -103,6 +103,13 @@ namespace DAL
             //var model2= model1.Where(m =>!Checkparent(m.MaThe)).OrderByDescending(m => m.TheTaiChiTietID);
             return model1;
         }
+        public string GetUserthetaichitiet(int TheTaiChiTietID)
+        {
+            tbTheTaiChiTiet ttct = dbContext.tbTheTaiChiTiets.Where(m => m.TheTaiChiTietID == TheTaiChiTietID).FirstOrDefault();
+            var thetaiid = ttct.ThetaiID;
+            var userid = dbContext.tbTheTais.Where(m => m.ThetaiID == thetaiid).FirstOrDefault().MaThe;
+            return dbContext.tbUSers.Where(m => m.Code == userid).FirstOrDefault().UserName;
+        }
         public bool UpdateStatus(int TheTaiChiTietID)
         {
             try

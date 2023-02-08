@@ -1,0 +1,189 @@
+﻿<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý tài xế</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý tài xế</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DANH SÁCH TÀI XẾ</h3>
+                        <div class="text-right">
+                            <a class="btn btn-success" onclick="InsertCar()">
+                                Thêm
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th style="width:50%">
+                                   Họ tên
+                                </th>
+                                <th style="width:40%">
+                                   Mã thẻ tài
+                                </th>
+                            </tr>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.TenTaiXe
+                                            </td>
+                                            <td>
+                                                @item.MaTheTai
+                                            </td>
+                                            <td>
+                                                <a style="margin-right:10px;cursor:pointer;" onclick="EditTypeCar('@item.IdTaixe')"><i class="nav-icon fas fa-edit"></i></a>
+                                                <a style="cursor:pointer;" onclick="deleteTypecar('@item.IdTaixe')"><i class="nav-icon fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="mdAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lbltitle">Thêm mới tài xế</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="User name">Họ tên</label>
+                            <input type="text" class="form-control" id="TenTaiXe" style="min-width:100%" placeholder="Họ tên">
+                            <input type="hidden" id="IdTaixe" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Mã thẻ tài</label>
+                            <input type="text" class="form-control" id="MaTheTai" style="min-width:100%" placeholder="Mã thẻ tài">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateTypeCar()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+    });
+    function resetData() {
+        $("#IdTaixe").val(0);
+        $("#TenTaiXe").val('');
+    }
+    function InsertCar() {
+        $("#mdAccount").modal("toggle");
+        $("#lbltitle").html("Thêm mới tài xế");
+        resetData();
+    }
+    function UpdateTypeCar() {
+
+
+        var param = {
+            "IdTaixe": $("#IdTaixe").val(),
+            "TenTaiXe": $("#TenTaiXe").val(),
+            "MaTheTai": $("#MaTheTai").val()
+        }
+        $.ajax({
+            url: '/Car/InsertTaiXe',
+            data: { "data": JSON.stringify(param) },
+            type:'POST',
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function EditTypeCar(id) {
+        $("#lbltitle").html("Chỉnh sửa tài xế");
+        $("#mdAccount").modal("toggle");
+
+        var param = {
+            "IdTaixe": id
+        }
+        $.ajax({
+            url: '/Car/GetTypeTaiXerByID',
+            data: param,
+            type: 'POST',
+            dataType: 'json',
+            success: function (data, status, xhr) {
+                $("#IdTaixe").val(data.IdTaixe);
+                $("#TenTaiXe").val(data.TenTaiXe);
+                $("#MaTheTai").val(data.MaTheTai);
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function deleteTypecar(id) {
+        swal({
+            title: "Xóa tài xế?",
+            text: "Bạn có muốn xóa tài xế này!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+.then((willDelete) => {
+    if (willDelete) {
+        var param = {
+            "IdTaixe": id
+        }
+        $(".boxloading").show();
+        $.ajax({
+            url: '/Car/DeleteTaiXe',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    } else {
+    }
+});
+    }
+
+
+</script>

@@ -1,0 +1,295 @@
+﻿<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý thông tin chi phí</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý thông tin chi phí</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DANH SÁCH THÔNG TIN CHI PHÍ</h3>
+                        <div class="text-right">
+                            <a class="btn btn-success" onclick="InsertCar()">
+                                Thêm
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>
+                                    Xe
+                                </th>
+                                <th>
+                                    Tên dịch vụ
+                                </th>
+                                <th>
+                                    Tổng tiền
+                                </th>
+                                <th>
+                                    Loại dịch vụ
+                                </th>
+                                <th>
+                                    Ghi chú
+                                </th>
+                                <th>
+                                    Ngày thanh toán
+                                </th>
+                                <th> 
+                                </th>
+                            </tr>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <strong>@item.CarSignal</strong> - @item.TenTaiXe
+                                            </td>
+                                            <td>
+                                                @item.NameService
+                                            </td>
+                                            <td>
+                                                @item.TongTien.ToString("##,###")
+                                            </td>
+                                            <td>
+                                                @if (item.Type == 1)
+                                                {
+                                                    <span>Phí dịch vụ hằng ngày</span>
+                                                }
+                                                @if (item.Type == 2)
+                                                {
+                                                    <span>Phí dịch vụ bảo dưỡng</span>
+                                                }
+                                                @if (item.Type == 3)
+                                                {
+                                                    <span>Phí dịch vụ đăng kiểm</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @item.Ghichu
+                                            </td>
+                                            <td>
+                                                @item.Ngaytao
+                                            </td>
+                                            <td>
+                                                <a style="margin-right:10px;cursor:pointer;" onclick="EditTypeCar('@item.IdService')"><i class="nav-icon fas fa-edit"></i></a>
+                                                <a style="cursor:pointer;" onclick="deleteTypecar('@item.IdService')"><i class="nav-icon fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="mdAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lbltitle">Thêm mới chi phí</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="User name">Xe</label>
+                            @if (ViewBag.Listcar != null)
+                            {
+                                <select class="form-control ipmw" id="slCar">
+                                    <option value="0">
+                                        -- Chọn Xe --
+                                    </option>
+                                    @foreach (var item in ViewBag.Listcar)
+                                    {
+                                        <option value="@item.IDCar">
+                                            @item.CarSignal - @item.TenTaiXe
+                                        </option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                        <div class="form-group mydate">
+                            <label for="User name">Ngày thanh toán</label>
+                            <input type="date" class="form-control" id="Ngaytao" style="min-width:100%" placeholder="Ngày thanh toán">
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Tên dịch vụ</label>
+                            <input type="text" class="form-control" id="NameService" style="min-width:100%" placeholder="Tên dịch vụ">
+                            <input type="hidden" id="IdService" value="0" />
+                        </div>
+                       
+                        <div class="form-group">
+                            <label for="User name">Tổng tiền</label>
+                            <input type="text" class="form-control" id="TongTien" style="min-width:100%" placeholder="Tổng tiền">
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Loại dịch vụ</label>
+                            <select class="form-control ipmw" id="slService">
+                                <option value="0">
+                                     -- Chọn loại dịch vụ --
+                                </option>
+                                <option value="1">
+                                    Phí dịch vụ hằng ngày
+                                </option>
+                                <option value="2">
+                                    Phí dịch vụ bảo dưỡng
+                                </option>
+                                <option value="3">
+                                    Phí dịch vụ đăng kiểm
+                                </option>
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Ghi chú</label>
+                            <textarea id="Ghichu" class="form-control" rows="3" style="min-width:100%"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateTypeCar()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var day = now.getDate();
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+        var today = now.getFullYear() + '-' + month + '-' + day;
+        $("#Ngaytao").val(today);
+    });
+    function resetData() {
+        $("#IdService").val(0);
+        $("#slCar").val(0);
+        $("#NameService").val('');
+        $("#TongTien").val('');
+        $("#slService").val(0);
+    }
+    function InsertCar() {
+        $("#mdAccount").modal("toggle");
+        $("#lbltitle").html("Thêm mới chi phí");
+        resetData();
+    }
+    function UpdateTypeCar() {
+        var param = {
+            "IdService": $("#IdService").val(),
+            "NameService": $("#NameService").val(),
+            "IdCar": $("#slCar").val(),
+            "TongTien": $("#TongTien").val(),
+            "Type": $("#slService").val(),
+            "Ghichu": $("#Ghichu").val(),
+            "Ngaytao": $("#Ngaytao").val(),
+        }
+        $.ajax({
+            url: '/Service/InsertService',
+            data: { "data": JSON.stringify(param) },
+            type:'POST',
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function EditTypeCar(id) {
+        $("#lbltitle").html("Chỉnh sửa chi phí");
+        $("#mdAccount").modal("toggle");
+
+        var param = {
+            "IdService": id
+        }
+        $.ajax({
+            url: '/Service/GetServiceByID',
+            data: param,
+            type: 'POST',
+            dataType: 'json',
+            success: function (data, status, xhr) {
+                $("#IdService").val(data.IdService);
+                $("#NameService").val(data.NameService);
+                $("#slCar").val(data.IdCar);
+                $("#TongTien").val(data.TongTien);
+                $("#slService").val(data.Type);
+                $("#Ghichu").val(data.Ghichu);
+                var dateString = new Date(parseInt(data.Ngaytao.substr(6)));
+                var month = (dateString.getMonth() + 1);
+                var day = dateString.getDate();
+                if (month < 10)
+                    month = "0" + month;
+                if (day < 10)
+                    day = "0" + day;
+                var today = dateString.getFullYear() + '-' + month + '-' + day;
+                $("#Ngaytao").val(today);
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function deleteTypecar(id) {
+        swal({
+            title: "Xóa chi phí?",
+            text: "Bạn có muốn xóa chi phí này!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+.then((willDelete) => {
+    if (willDelete) {
+        var param = {
+            "IdService": id
+        }
+        $(".boxloading").show();
+        $.ajax({
+            url: '/Service/DeleteService',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    } else {
+    }
+});
+    }
+
+
+</script>

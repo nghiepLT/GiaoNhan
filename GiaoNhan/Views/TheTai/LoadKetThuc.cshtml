@@ -1,4 +1,5 @@
-﻿@if (Model != null)
+﻿@using DAL;
+@if (Model != null)
 {
     foreach(var item in Model)
     {
@@ -15,7 +16,12 @@
             @if (item.Status == 0)
             {
                 <td >
-                    <button class="btn btn-sm btn-primary"  style="margin-right:5px;cursor:pointer;color:#ffffff"  onclick="updateStatus('@item.TheTaiChiTietID')"   /> <span class="text-white text-primary trangthaigiao">Kết thúc</span>
+                   @{ 
+                       DAL_TheTai dalThetai = new DAL_TheTai();
+
+                   }
+
+                    <button class="btn btn-sm btn-primary"  style="margin-right:5px;cursor:pointer;color:#ffffff"  onclick="updateStatus('@item.TheTaiChiTietID','@item.MaPhieu','@dalThetai.GetUserthetaichitiet(item.TheTaiChiTietID)')"   /> <span class="text-white text-primary trangthaigiao">Kết thúc</span>
                     <button class="btn btn-sm btn-danger" style="margin-top:5px;margin-right:5px;cursor:pointer;color:#ffffff" onclick="cancle('@item.TheTaiChiTietID')" /> <span class="text-white text-danger trangthaigiao">Hủy</span>
                  </td>
             }
@@ -38,7 +44,7 @@
 }
 
 <script>
-    function updateStatus(id) {
+    function updateStatus(id,maphieu,username) {
         var param = {
             "TheTaiChiTietID": id
         }

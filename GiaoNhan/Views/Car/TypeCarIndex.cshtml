@@ -1,0 +1,204 @@
+﻿<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý loại xe</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý lọai xe</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DANH SÁCH LOẠI XE</h3>
+                        <div class="text-right">
+                            <a class="btn btn-success" onclick="InsertCar()">
+                                Thêm
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>
+                                   Tên loại
+                                </th>
+                                <th>
+                                    Định mức bảo dưỡng
+                                </th>
+                                <th>
+                                   Cảnh báo bảo dưỡng
+                                </th>
+                            </tr>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.NameType
+                                            </td>
+                                            <td>
+                                                @item.DinhMucBaoDuong.ToString("##,###")
+                                            </td>
+                                            <td>
+                                                @item.Ghichubaoduong.ToString("##,###")
+                                            </td>
+                                            <td>
+                                                <a style="margin-right:10px;cursor:pointer;" onclick="EditTypeCar('@item.TypeCar')"><i class="nav-icon fas fa-edit"></i></a>
+                                                <a style="cursor:pointer;" onclick="deleteTypecar('@item.TypeCar')"><i class="nav-icon fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="mdAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lbltitle">Thêm mới loại xe</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="User name">Loại xe</label>
+                            <input type="text" class="form-control" id="NameType" style="min-width:100%" placeholder="Loại xe">
+                            <input type="hidden" id="TypeCar" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Định mức bảo dưỡng</label>
+                            <input type="number" class="form-control" id="DinhMucBaoDuong" style="min-width:100%" placeholder="Định mức bảo dưỡng">
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Cảnh báo bảo dưỡng</label>
+                            <input type="number" class="form-control" id="Ghichubaoduong" style="min-width:100%" placeholder="Cảnh báo bảo dưỡng">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateTypeCar()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+    });
+    function resetData() {
+        $("#TypeCar").val(0);
+        $("#NameType").val('');
+        $("#DinhMucBaoDuong").val('');
+        $("#Ghichubaoduong").val('');
+    }
+    function InsertCar() {
+        $("#mdAccount").modal("toggle");
+        $("#lbltitle").html("Thêm mới loại xe");
+        resetData();
+    }
+    function UpdateTypeCar() {
+     
+
+        var param = {
+            "TypeCar": $("#TypeCar").val(),
+            "NameType": $("#NameType").val(),
+            "DinhMucBaoDuong": $("#DinhMucBaoDuong").val(),
+            "Ghichubaoduong": $("#Ghichubaoduong").val()
+        }
+        $.ajax({
+            url: '/Car/InsertTypeCar',
+            data: { "data": JSON.stringify(param) },
+            type:'POST',
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function EditTypeCar(id) {
+        $("#lbltitle").html("Chỉnh sửa loại xe");
+        $("#mdAccount").modal("toggle");
+
+        var param = {
+            "TypeCar": id
+        }
+        $.ajax({
+            url: '/Car/GetTypeCarByID',
+            data: param,
+            type: 'POST',
+            dataType: 'json',
+            success: function (data, status, xhr) {
+                $("#TypeCar").val(data.TypeCar);
+                $("#NameType").val(data.NameType);
+                $("#DinhMucBaoDuong").val(data.DinhMucBaoDuong);
+                $("#Ghichubaoduong").val(data.Ghichubaoduong);
+
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function deleteTypecar(id) {
+        swal({
+            title: "Xóa loại xe?",
+            text: "Bạn có muốn xóa loại xe này!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+.then((willDelete) => {
+    if (willDelete) {
+        var param = {
+            "TypeCar": id
+        }
+        $(".boxloading").show();
+        $.ajax({
+            url: '/Car/DeleteTypeCar',
+            type: 'POST',
+            dataType: 'html',
+            data: param,
+            success: function (data, status, xhr) {
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    } else {
+    }
+});
+    }
+
+     
+</script>

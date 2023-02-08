@@ -1,0 +1,31 @@
+﻿@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+      
+        <div class="col-sm-2">
+            <a onclick="EditTypeCar('@item.IDCar')">
+                <div class="car_box">
+                    <div>
+                        <img src="~/Images/Car_img.png" class="img-responsive thumbnail car-img" />
+                    </div>
+                    <div class="cartitle">
+                        <strong>@item.CarSignal</strong>
+                    </div>
+
+                    <div>
+                        <div>
+
+                        </div>
+                        <div class="tentaixe">
+                            <i class="fa fa-user-tie"></i>  <span>@item.TenTaiXe</span>
+                        </div>
+                        <div class="tentaixe">
+                            Mã Thẻ Tài : <span class="mathetai">@item.MaTheTai </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+}

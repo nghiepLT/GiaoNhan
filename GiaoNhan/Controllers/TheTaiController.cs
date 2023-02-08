@@ -184,6 +184,10 @@ namespace GiaoNhan.Controllers
             var model = balTheTai.GetAlltheTaiChiTiet(MaThe);
             return PartialView(model);
         }
+        public static int testc()
+        {
+            return 1;
+        }
         [HttpPost]
         public bool updateStatus(int TheTaiChiTietID)
         {
