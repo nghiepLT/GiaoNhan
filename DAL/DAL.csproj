@@ -69,6 +69,9 @@
     <Compile Include="Models\bdCar.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\bdDichVudangkiembaoduong.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\bdDotbaoduong.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -76,6 +79,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\bdHanhtrinhbaotri.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\bdSendMail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\bdService.cs">

@@ -1,0 +1,205 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="~/Scripts/jquery.table2excel.js"></script>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thống kê chi phí dịch vụ</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Thống kê chi phí dịch vụ</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    @*<div class="card-header text-right" >
+
+                        </div>*@
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <label for="User name">Xe</label>
+                                        <select class="form-control" id="slCar" style="max-width:100%;padding-left: 39px;">
+                                            @if (ViewBag.Listcar != null)
+                                            {
+                                                <option value="0">Tất cả</option>
+                                                foreach (var item in ViewBag.Listcar)
+                                                {
+                                                    <option value="@item.IDCar">
+                                                       @item.CarSignal
+                                                    </option>
+                                                }
+                                            }
+                                          
+                                        </select>
+                                        <i class="fas fa-car" style="position: absolute;left: 17px;top: 43px;"></i>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label for="User name">Loại thống kê</label>
+                                        <select class="form-control" id="slTypeDate" style="max-width:100%;padding-left: 39px;" onchange="sltypedate()">
+                                            <option value="1">
+                                                Theo tháng
+                                            </option>
+                                            <option value="2">
+                                                Từ ngày đến ngày
+                                            </option>
+                                        </select>
+                                        <i class="fas fa-calendar-day" style="position: absolute;left: 17px;top: 43px;"></i>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div id="tm1">
+                                            <label for="exampleInputEmail1">Tháng</label>
+                                            <select class="form-control" id="slMonth" style="max-width:100%;padding-left: 39px;">
+                                                <option value="1">
+                                                  Tháng 1
+                                                </option>
+                                                <option value="2">
+                                                    Tháng 2
+                                                </option>
+                                                <option value="3">
+                                                    Tháng 3
+                                                </option>
+                                                <option value="4">
+                                                    Tháng 4
+                                                </option>
+                                                <option value="5">
+                                                    Tháng 5
+                                                </option>
+                                                <option value="6">
+                                                    Tháng 6
+                                                </option>
+                                                <option value="7">
+                                                    Tháng 7
+                                                </option>
+                                                <option value="8">
+                                                    Tháng 8
+                                                </option>
+                                                <option value="9">
+                                                    Tháng 9
+                                                </option>
+                                                <option value="10">
+                                                    Tháng 10
+                                                </option>
+                                                <option value="11">
+                                                    Tháng 11
+                                                </option>
+                                                <option value="12">
+                                                    Tháng 12
+                                                </option>
+                                            </select>
+                                            <i class="fas fa-calendar" style="position: absolute;left: 17px;top: 43px;"></i>
+                                        </div>
+                                        <div id="tm2">
+                                            <label for="exampleInputEmail1">Chọn thời gian  </label>
+                                            <input style="cursor:pointer;max-width:100%;padding-left: 39px;" type="text" class="form-control mb-mg-20" id="daterange" name="daterange" value="01/01/2018 - 01/15/2018" />
+                                            <i class="fas fa-calendar" style="position: absolute;left: 17px;top: 43px;"></i>
+                                        </div>
+                                       
+                                    </div>
+                                 
+                                    <div class="col-sm-2">
+                                        <label for="User name">Loại dịch vụ</label>
+                                        <select  class="form-control" id="slType" >
+                                            <option value="0" selected>
+                                               -- Tất cả --
+                                            </option>
+                                            <option value="1">Phí dịch vụ hằng ngày</option>
+                                            <option value="2">
+                                            Phí dịch vụ bảo dưỡng
+                                            </option>
+                                            <option value="3">
+                                            Phí dịch vụ đăng kiểm
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 text-left">
+                                        <a style="margin-top:35px;" onclick="reportDichVu()" class="btn btn-sm btn-danger"><i class="fas fa-filter"></i> Lọc</a>
+                                        @*<a id="exportToExcel" style="margin-top:35px;" onclick="ExportExcel()"   class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Export Excel</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group table-responsive" id="contents" style="    overflow-y: scroll;
+    height: 363px;">
+
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section> 
+<script>
+    $(document).ready(function () {
+        $("#tm2").hide();
+        ActiveDate();
+    });
+
+    function reportDichVu() {
+        var date_range = $("#daterange").val();
+        var dates = date_range.split(" - ");
+        var currentTime = new Date();
+        var start = dates[0];
+        var end = dates[1];
+        $(".boxloading").show();
+        var param = {
+            "fromDate": start,
+            "toDate": end,
+            "Type": $("#slType").val(),
+            "typeDate": typeDate,
+            "month": $("#slMonth").val(),
+            "Idcar": $("#slCar").val()
+        }
+        $.ajax({
+            url: '/Report/ThongKeChiPhiData',
+            dataType: 'html',
+            type: 'POST',
+            data: param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                $("#contents").html(data);
+                $(".boxloading").hide();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    var typeDate = 1;
+    function ActiveDate() {
+        var dayCurrent = new Date();
+        var monthCurrent = dayCurrent.getMonth() + 1;
+        $("#slMonth").val(monthCurrent).change();
+    }
+    function sltypedate() {
+        typeDate = $("#slTypeDate").val();
+        if (typeDate == 1) {
+            $("#tm2").hide();
+            $("#tm1").show();
+        }
+        else {
+            $("#tm2").show();
+            $("#tm1").hide();
+        }
+    }
+</script>

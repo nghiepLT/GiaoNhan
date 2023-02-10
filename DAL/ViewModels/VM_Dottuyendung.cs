@@ -19,5 +19,7 @@ namespace DAL.ViewModels
         public int DinhMucBaoDuong { get; set; }
         public int Chisodukienlansau { get; set; }
         public int Sokmconlai { get; set; }
+        public string CarSignal { get; set; }
+        public string TenTaiXe { get; set; }
     }
 }

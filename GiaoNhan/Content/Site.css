@@ -277,13 +277,13 @@ input.form-control.form-control-sm {
 
 .cartitle {
     position: absolute;
-    top: -17px;
+    top: -8px;
     left: 50%;
     transform: translate(-50%, 6px);
     background-color: #333;
     color: white;
     font-size: 15px;
-    padding: 5px 11px;
+    padding: 0px 11px;
     border-left: 5px solid #fd7e14;
 }
 
@@ -381,3 +381,9 @@ qlqd_img {
         text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey,1px 1px 2px black;
 
     }
+  .qlqd_sokm {
+    font-size: 13px;
+    font-weight: bold;
+    padding: 2px 0px;
+    color: #28a745;
+}

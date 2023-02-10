@@ -118,5 +118,73 @@ namespace DAL
             }
             return model;
         }
+
+
+        #region Thống kê dịch vụ
+        public IEnumerable<VM_Service> ReportChiPhiDichVu(DateTime fromDate, DateTime toDate, int Type, int typeDate, int month,int Idcar)
+        {
+            List<bdService> modelservice = new List<bdService>();
+            if (typeDate == 2)
+                modelservice = dbcontext.bdServices.ToList().Where(m => (m.Ngaytao.Value.Date >= fromDate.Date && m.Ngaytao.Value.Date <= toDate.Date)).ToList();
+            else
+                modelservice = dbcontext.bdServices.ToList().Where(m => m.Ngaytao.Value.Month == month && m.Ngaytao.Value.Year == DateTime.Now.Year).ToList();
+            var model = (from sv in modelservice
+                         join c in dbcontext.bdCars
+                         on sv.IdCar equals c.IDCar
+                         join tx in dbcontext.bdTaixes
+                         on c.IdTaiXe equals tx.IdTaixe
+                         where (Type == 0 || sv.Type == Type)
+                         && (Idcar==0 || c.IDCar == Idcar)
+                         select new VM_Service()
+                         {
+                             CarSignal = c.CarSignal,
+                             IDCar = c.IDCar,
+                             IdService = sv.IdService,
+                             NameService = sv.NameService,
+                             Ngaytao = sv.Ngaytao.Value,
+                             TongTien = sv.TongTien.Value,
+                             Type = sv.Type.Value,
+                             TenTaiXe = tx.TenTaiXe,
+                             Ghichu = sv.Ghichu
+                         }
+                       ).OrderByDescending(m => m.IdService).ToList();
+            return model;
+        }
+
+        public IEnumerable<VM_DotBaoDuong> ReportDotbaoduong(int Idcar)
+        {
+            var model = (from d in dbcontext.bdDotbaoduongs 
+                         join c in dbcontext.bdCars
+                         on d.IDCar equals c.IDCar
+                         join tx in dbcontext.bdTaixes
+                         on c.IdTaiXe equals tx.IdTaixe
+                         join tc in dbcontext.bdTypeCars
+                         on c.IdTypeCar equals tc.TypeCar
+                         where (Idcar==0 || d.IDCar==Idcar)
+                         select new VM_DotBaoDuong()
+                         {
+                             IdDotBaoDuong=d.IdDotBaoDuong,
+                             IDCar=d.IDCar,
+                             NgayBD=d.NgayBD,
+                             NgayKT=d.NgayKT,
+                             SokmDau=d.SokmDau,
+                             SoKmCuoi=d.SoKmCuoi,
+                             CarSignal=c.CarSignal,
+                             TenTaiXe=tx.TenTaiXe,
+                             SoKmHientai=d.SoKmHientai.Value,
+                             DinhMucBaoDuong=tc.DinhMucBaoDuong.Value,
+                             Sokmconlai= tc.DinhMucBaoDuong.Value- d.SoKmHientai.Value,
+                             Chisodukienlansau = tc.DinhMucBaoDuong.Value+ d.SokmDau.Value
+                         }).OrderByDescending(m=>m.IdDotBaoDuong);
+            var mgb = model.GroupBy(m => m.IDCar).ToList();
+            List<VM_DotBaoDuong> lstVMBaoduong = new List<VM_DotBaoDuong>();
+            foreach(var item in mgb)
+            {
+                var lastitem = model.Where(m=>m.IDCar==item.Key).FirstOrDefault();
+                lstVMBaoduong.Add(lastitem);
+            }
+            return lstVMBaoduong;
+        }
+        #endregion
     }
 }

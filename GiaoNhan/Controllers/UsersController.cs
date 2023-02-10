@@ -54,5 +54,10 @@ namespace GiaoNhan.Controllers
         {
             return user.DeleteUser(UserID);
         }
+
+        public ActionResult ConfigEmail()
+        {
+            return View();
+        }
     }
 }

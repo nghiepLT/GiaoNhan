@@ -48,8 +48,8 @@
                                 <th>
                                     Ghi chú
                                 </th>
-                              
-                                <th> 
+
+                                <th>
                                 </th>
                             </tr>
                             <tbody>
@@ -87,7 +87,7 @@
                                             <td>
                                                 @item.Ghichu
                                             </td>
-                                          
+
                                             <td>
                                                 <a style="margin-right:10px;cursor:pointer;" onclick="EditTypeCar('@item.IdService')"><i class="nav-icon fas fa-edit"></i></a>
                                                 <a style="cursor:pointer;" onclick="deleteTypecar('@item.IdService')"><i class="nav-icon fas fa-trash"></i></a>
@@ -135,41 +135,27 @@
                             }
                         </div>
                         <div class="form-group mydate">
-                            <label for="User name">Ngày thanh toán</label>
+                            <label for="User name">Ngày bảo dưỡng</label>
                             <input type="date" class="form-control" id="Ngaytao" style="min-width:100%" placeholder="Ngày thanh toán">
                         </div>
-                        <div class="form-group">
+                        <a class="float-right" onclick="themdichvu()">
+                            Thêm dịch vụ
+                        </a>
+                        @*<div class="form-group">
                             <label for="User name">Tên dịch vụ</label>
-                            <textarea class="form-control" placeholder="Tên dịch vụ" id="NameService" style="min-width:100%"></textarea>
+                            <input type="text" class="form-control" id="NameService" style="min-width:100%" placeholder="Tên dịch vụ">
                             <input type="hidden" id="IdService" value="0" />
                         </div>
-                       
+
                         <div class="form-group">
                             <label for="User name">Tổng tiền</label>
                             <input type="text" class="form-control" id="TongTien" style="min-width:100%" placeholder="Tổng tiền">
                         </div>
-                        <div class="form-group">
-                            <label for="User name">Loại dịch vụ</label>
-                            <select class="form-control ipmw" id="slService">
-                                <option value="0">
-                                     -- Chọn loại dịch vụ --
-                                </option>
-                                <option value="1">
-                                    Phí dịch vụ hằng ngày
-                                </option>
-                                <option value="2">
-                                    Phí dịch vụ bảo dưỡng
-                                </option>
-                                <option value="3">
-                                    Phí dịch vụ đăng kiểm
-                                </option>
-                            </select>
-
-                        </div>
+                       
                         <div class="form-group">
                             <label for="User name">Ghi chú</label>
                             <textarea id="Ghichu" class="form-control" rows="3" style="min-width:100%"></textarea>
-                        </div>
+                        </div>*@
                     </div>
                 </form>
             </div>
@@ -180,7 +166,25 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="mdAccount2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lbltitle">Thêm mới chi phí</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+             
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateTypeCar()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         var now = new Date();
@@ -193,6 +197,11 @@
         var today = now.getFullYear() + '-' + month + '-' + day;
         $("#Ngaytao").val(today);
     });
+    function themdichvu() {
+        $("#mdAccount2").modal("toggle");
+    }
+
+
     function resetData() {
         $("#IdService").val(0);
         $("#slCar").val(0);
@@ -206,23 +215,6 @@
         resetData();
     }
     function UpdateTypeCar() {
-        if ($("#slCar").val() == 0) {
-            swal("Vui lòng chọn xe");
-            return false;
-        }
-        //NameService
-        if ($("#NameService").val() == 0) {
-            swal("Vui lòng nhập tên dịch vụ");
-            return false;
-        }
-        if ($("#TongTien").val() == '') {
-            swal("Vui lòng nhập tổng tiền");
-            return false;
-        }
-        if ($("#slService").val() == 0) {
-            swal("Vui lòng chọn loại dịch vụ");
-            return false;
-        }
         var param = {
             "IdService": $("#IdService").val(),
             "NameService": $("#NameService").val(),

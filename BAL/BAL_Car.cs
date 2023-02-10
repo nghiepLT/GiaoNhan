@@ -86,5 +86,9 @@ namespace BAL
         {
             return dalCar.DeleteHanhtrinh(IDHanhTrinhBaoTri);
         }
+        public bool CheckSendEmail(int IDcar, int SoKM)
+        {
+            return dalCar.CheckSendEmail(IDcar, SoKM);
+        }
     }
 }

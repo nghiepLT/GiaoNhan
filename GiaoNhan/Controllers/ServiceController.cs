@@ -47,5 +47,14 @@ namespace GiaoNhan.Controllers
         {
             return balService.DeleteService(IdService);
         }
+
+        #region dịch vụ bảo dưỡng
+        public ActionResult ServiceBaoduongIndex()
+        {
+            var model = balService.GetListTypeCar();
+            ViewBag.Listcar = balCar.GetListCar();
+            return View(model);
+        }
+        #endregion
     }
 }

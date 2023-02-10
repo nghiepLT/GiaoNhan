@@ -23,5 +23,7 @@ namespace BAL
         {
             return dalReport.ReportGiaoNhan(fd, td, MaThe);
         }
+
+       
     }
 }

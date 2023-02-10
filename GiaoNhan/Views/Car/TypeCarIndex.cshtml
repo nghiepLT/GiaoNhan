@@ -124,8 +124,19 @@
         resetData();
     }
     function UpdateTypeCar() {
-     
 
+        if ($("#NameType").val() == '') {
+            swal("Vui lòng nhập tên loại xe");
+            return false;
+        }
+        if ($("#DinhMucBaoDuong").val() == '') {
+            swal("Vui lòng nhập định mức bảo dưỡng");
+            return false;
+        }
+        if ($("#Ghichubaoduong").val() == '') {
+            swal("Vui lòng nhập cảnh báo bảo dưỡng");
+            return false;
+        }
         var param = {
             "TypeCar": $("#TypeCar").val(),
             "NameType": $("#NameType").val(),
@@ -200,5 +211,5 @@
 });
     }
 
-     
+
 </script>

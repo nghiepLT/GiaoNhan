@@ -15,42 +15,55 @@
                 </li>
             }
         }
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-table"></i>
-                <p>
-                    Quản lý bảo dưỡng
-                    <i class="fas fa-angle-left right"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="/quan-ly-tai-xe" class="nav-link">
-                        <p>Quản lý tài xế</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/quan-ly-loai-xe" class="nav-link">
-                        <p>Quản lý loại xe</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/quan-ly-xe" class="nav-link">
-                        <p>Quản lý xe</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/quan-ly-chi-phi" class="nav-link">
-                        <p>Quản lý chi phí</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/quan-ly-quang-duong-xe" class="nav-link">
-                        <p>Quản lý quãng đường xe</p>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        @if (ViewBag.AccountUser == "minhtn")
+        { 
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-table"></i>
+                    <p>
+                        Quản lý bảo dưỡng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/quan-ly-tai-xe" class="nav-link">
+                            <i class="fas fa-users-cog" style="margin-right:10px;"></i> <p>Quản lý tài xế</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/quan-ly-loai-xe" class="nav-link">
+                            <i class="fas fa-car-side" style="margin-right:10px;"></i> <p>Quản lý loại xe</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/quan-ly-xe" class="nav-link">
+                            <i class="fas fa-car" style="margin-right:10px;"></i> <p>Quản lý xe</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/quan-ly-chi-phi" class="nav-link">
+                            <i class="fas fa-money-bill" style="margin-right:10px;"></i> <p>Quản lý chi phí</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/quan-ly-bao-tri" class="nav-link">
+                            <i class="fas fa-road" style="margin-right:10px;"></i> <p>Quản lý quãng đường</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/thong-ke-chi-phi" class="nav-link">
+                            <i class="fas fa-money-bill" style="margin-right:10px;"></i>  <p>Thống kê chi phí</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/thong-ke-bao-tri" class="nav-link">
+                            <i class="fas fa-road" style="margin-right:10px;"></i> <p>Thống kê quãng đường</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
         @*<li class="nav-item">
             <a href="/import-excel" class="nav-link">
                 <i class="nav-icon fas fa-th-list "></i>

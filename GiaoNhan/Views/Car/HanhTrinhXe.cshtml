@@ -30,6 +30,16 @@
                                <div class="qlqd_signal">
                                    @item.CarSignal
                                </div>
+                               <div class="qlqd_sokm">
+                                   @if (item.SoKmHientai != 0)
+                                   {
+                                    @item.SoKmHientai.ToString("##,###") <span>/</span> @item.DinhMucBaoDuong.ToString("##,###");
+                                   }
+                                   else
+                                   {
+                                     <span>0 / </span> @item.DinhMucBaoDuong.ToString("##,###");
+                                   }
+                               </div>
                                <div class="qlqd_tentx">
                                    @item.TenTaiXe
                                </div>
@@ -66,11 +76,8 @@
                       
                         <div id="mytable">
 
-                        </div>
-                      
-                      
-                    </div>
-
+                        </div> 
+                    </div> 
                 </div>
             </div>
         </div>
@@ -168,7 +175,12 @@
         loaddata();
     }
     function InsertDotBaoDuong() {
-        $("#mdAccount2").modal("toggle");
+        if (idcar != 0) {
+            $("#mdAccount2").modal("toggle");
+        }
+        else {
+            swal("Vui lòng chọn xe");
+        }
     }
     function Themmoidotbaoduong() {
         var param = {

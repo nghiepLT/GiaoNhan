@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DAL.Models;
 using Tool;
 using DAL.ViewModels;
+using System.Net.Mail;
+using System.Web;
 namespace DAL
 {
     public class DAL_Account
@@ -157,5 +159,78 @@ namespace DAL
                 return true;
             return false;
         }
+        public bool CheckSendmailKiemDinh()
+        {
+            var chkEmail = dbContext.bdSendMails.ToList().Any(m => m.NgayGui.Value.Date == DateTime.Now.Date);
+            return chkEmail;
+        }
+        public IEnumerable<bdCar> GetListCarEmail()
+        {
+            var lstCar = dbContext.bdCars.ToList().Where(m => m.ThoiGianDangKiem.Value.AddDays(-7).Date == DateTime.Now.Date);
+            return lstCar;
+        }
+        public bool TaoEmailKiemDinh()
+        {
+            var lstCar = dbContext.bdCars.ToList().Where(m => m.ThoiGianDangKiem.Value.AddDays(-7).Date == DateTime.Now.Date);
+            foreach (var item in lstCar)
+            {
+                bdSendMail bdSendmail = new bdSendMail();
+                bdSendmail.IdCar = item.IDCar;
+                bdSendmail.Type = 2;
+                bdSendmail.NgayGui = DateTime.Now;
+                dbContext.bdSendMails.Add(bdSendmail);
+                dbContext.SaveChanges();
+            }
+            return true;
+        }
+
+
+        //Email
+        public IEnumerable<bdEmailSend> GetListEmail()
+        {
+            return dbContext.bdEmailSends.ToList();
+        }
+
+        public bdEmailSend GetEmailByID(int IdEmail)
+        {
+            return dbContext.bdEmailSends.Find(IdEmail);
+        }
+        public bool InsertEmail(bdEmailSend bdEmailSend)
+        {
+            try
+            {
+                if (bdEmailSend.IdEmail == 0)
+                {
+                    dbContext.bdEmailSends.Add(bdEmailSend);
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    bdEmailSend bdedit = dbContext.bdEmailSends.Find(bdEmailSend.IdEmail);
+                    bdedit.Email = bdEmailSend.Email; 
+                    dbContext.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool DeleteEmail(int IdEmail)
+        {
+            try
+            {
+                var item = dbContext.bdEmailSends.Find(IdEmail);
+                dbContext.bdEmailSends.Remove(item);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
     }
 }

@@ -272,11 +272,36 @@ namespace GiaoNhan.Controllers
         {
             return View();
         }
-        public ActionResult ThongkephieuData(string fromDate, string toDate,int Status)
+        public ActionResult ThongkephieuData(string fromDate, string toDate,int Status,int typeDate,int month)
         {
             DateTime _fromDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime _toDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             var model = balThongKe.Thongkephieu(_fromDate, _toDate, Status);
+            return PartialView(model);
+        }
+        BAL_Car balCar = new BAL_Car();
+        public ActionResult ThongKeChiPhi()
+        {
+            ViewBag.Listcar = balCar.GetListCar();
+            return View();
+        }
+        public ActionResult ThongKeChiPhiData(string fromDate, string toDate, int Type,int typeDate,int month,int Idcar)
+        {
+            DateTime _fromDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime _toDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            var model = balThongKe.ReportChiPhiDichVu(_fromDate, _toDate, Type, typeDate, month, Idcar);
+            ViewBag.Totals = model.Sum(m => m.TongTien);
+            return PartialView(model);
+        }
+
+        public ActionResult ThongKeQuangDuong()
+        {
+            ViewBag.Listcar = balCar.GetListCar();
+            return View();
+        }
+        public ActionResult ThongKeQuangDuongData(int Idcar)
+        {
+            var model = balThongKe.ReportDotbaoduong(Idcar);
             return PartialView(model);
         }
     }

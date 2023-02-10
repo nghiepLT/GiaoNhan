@@ -49,5 +49,7 @@ namespace DAL.Models
         public virtual DbSet<bdService> bdServices { get; set; }
         public virtual DbSet<bdDotbaoduong> bdDotbaoduongs { get; set; }
         public virtual DbSet<bdHanhtrinhbaotri> bdHanhtrinhbaotris { get; set; }
+        public virtual DbSet<bdDichVudangkiembaoduong> bdDichVudangkiembaoduongs { get; set; }
+        public virtual DbSet<bdSendMail> bdSendMails { get; set; }
     }
 }

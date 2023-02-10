@@ -29,6 +29,8 @@
         <EntityTypeShape EntityType="KpiManagerModel.bdService" Width="1.5" PointX="11.375" PointY="10.75" />
         <EntityTypeShape EntityType="KpiManagerModel.bdDotbaoduong" Width="1.5" PointX="13.375" PointY="0.75" />
         <EntityTypeShape EntityType="KpiManagerModel.bdHanhtrinhbaotri" Width="1.5" PointX="11.375" PointY="3.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdDichVudangkiembaoduong" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdSendMail" Width="1.5" PointX="13.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

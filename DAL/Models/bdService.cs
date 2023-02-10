@@ -21,5 +21,6 @@ namespace DAL.Models
         public Nullable<double> TongTien { get; set; }
         public Nullable<int> Type { get; set; }
         public string Ghichu { get; set; }
+        public Nullable<int> DichvudangkiembaoduongID { get; set; }
     }
 }

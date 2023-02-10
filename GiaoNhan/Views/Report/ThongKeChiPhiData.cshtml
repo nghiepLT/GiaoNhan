@@ -1,0 +1,74 @@
+﻿<table class="table table-bordered">
+    <tr>
+        <th>
+            Ngày thanh toán
+        </th>
+        <th>
+            Xe
+        </th>
+        <th>
+            Tên dịch vụ
+        </th>
+        <th>
+            Tổng tiền
+        </th>
+        <th>
+            Loại dịch vụ
+        </th>
+        <th>
+            Ghi chú
+        </th>
+    </tr>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                       <strong class="text-primary">@item.Ngaytao.ToString("dd/MM/yyyy")</strong>
+                    </td>
+                    <td>
+                        <strong>@item.CarSignal</strong> - @item.TenTaiXe
+                    </td>
+                    <td>
+                        @item.NameService
+                    </td>
+                    <td>
+                        @item.TongTien.ToString("##,###")
+                    </td>
+                    <td>
+                        @if (item.Type == 1)
+                        {
+                            <span>Phí dịch vụ hằng ngày</span>
+                        }
+                        @if (item.Type == 2)
+                        {
+                            <span>Phí dịch vụ bảo dưỡng</span>
+                        }
+                        @if (item.Type == 3)
+                        {
+                            <span>Phí dịch vụ đăng kiểm</span>
+                        }
+                    </td>
+                    <td>
+                        @item.Ghichu
+                    </td>
+                   
+                  
+                </tr>
+            }
+            <tr style="    position: sticky;
+    bottom: 0px;
+    background-color: white;
+    left: 0px;">
+                <td></td>
+                <td></td>
+                <td><strong>Tổng tiền</strong></td>
+                <td><strong>@ViewBag.Totals.ToString("##,###")</strong></td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>

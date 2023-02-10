@@ -12,12 +12,11 @@ namespace DAL.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class bdCar
+    public partial class bdSendMail
     {
-        public int IDCar { get; set; }
-        public string CarSignal { get; set; }
-        public Nullable<int> IdTypeCar { get; set; }
-        public Nullable<int> IdTaiXe { get; set; }
-        public Nullable<System.DateTime> ThoiGianDangKiem { get; set; }
+        public int SendmailId { get; set; }
+        public Nullable<System.DateTime> NgayGui { get; set; }
+        public Nullable<int> IdCar { get; set; }
+        public Nullable<int> Type { get; set; }
     }
 }

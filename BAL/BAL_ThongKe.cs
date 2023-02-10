@@ -32,5 +32,13 @@ namespace BAL
         {
             return dalThongKe.Thongkephieu(fromDate, toDate, Status);
         }
+        public IEnumerable<VM_Service> ReportChiPhiDichVu(DateTime fromDate, DateTime toDate, int Type, int typeDate, int month,int Idcar)
+        {
+            return dalThongKe.ReportChiPhiDichVu(fromDate, toDate, Type, typeDate, month, Idcar);
+        }
+        public IEnumerable<VM_DotBaoDuong> ReportDotbaoduong(int Idcar)
+        {
+            return dalThongKe.ReportDotbaoduong(Idcar);
+        }
     }
 }

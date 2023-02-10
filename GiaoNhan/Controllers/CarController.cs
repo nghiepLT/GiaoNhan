@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using BAL;
 using Newtonsoft.Json;
 using DAL.Models;
+using System.Net.Mail;
+
 namespace GiaoNhan.Controllers
 {
     public class CarController : Controller
@@ -14,6 +16,7 @@ namespace GiaoNhan.Controllers
         #region Typecar
         public ActionResult TypeCarIndex()
         {
+            
             var model = balCar.GetListTypeCar();
             return View(model);
         }
@@ -71,6 +74,10 @@ namespace GiaoNhan.Controllers
             {
                 return false;
             }
+        }
+        public bool DeleteCar(int IDCar)
+        {
+            return balCar.DeleteCar(IDCar);
         }
         public JsonResult GetCarByID(int IDCar)
         {
@@ -141,6 +148,33 @@ namespace GiaoNhan.Controllers
         }
         public bool CapnhatsoKM(int IDCar, int SoKM)
         {
+            if (balCar.CheckSendEmail(IDCar, SoKM))
+            {
+                string title = "";
+                string content = "";
+                title = "Cảnh báo bảo dưỡng";
+                bdCar bdCar = balCar.GetCarByID(IDCar);
+               var dotbaoduong= balCar.GetDotBaoDuong(IDCar);
+
+                content+= "<table>";
+
+                // Row1
+                content += "<tr style=\"padding:2px 10px\">";
+                content += "<td>";
+                content += "Dear Anh Minh,";
+                content += "</td>";
+                content += "</tr>";
+
+                // Row2
+                content += "<tr style=\"padding:2px 10px\">";
+                content += "<td>";
+                content += "Xe "+ bdCar.CarSignal+"-"+ dotbaoduong.TenTaiXe+  " đã chạy gần tới định mức bảo dưỡng với số Km hiện tại là "+ dotbaoduong.SoKmHientai;
+                content += "</td>";
+                content += "</tr>";
+
+                content += "</table>";
+                sendEmail("minhtn@nguyenkimvn.vn", title,content);
+            }
             return balCar.CapnhatsoKM(IDCar, SoKM);
         }
         public bool DeleteHanhtrinh(int IDHanhTrinhBaoTri)
@@ -148,5 +182,43 @@ namespace GiaoNhan.Controllers
             return balCar.DeleteHanhtrinh(IDHanhTrinhBaoTri);
         }
         #endregion
+
+        private bool sendEmail(string to, string title, string sContent)
+        {
+            try
+            {
+
+                string AdminEmail = "nghiphep@nguyenkimvn.vn";
+                string AdminPass = "12345678";
+                string MailHost = "192.168.117.200";
+                int intPort = 25;
+                SmtpClient SmtpServer = new SmtpClient();
+                SmtpServer.Credentials = new System.Net.NetworkCredential(AdminEmail, AdminPass);
+                SmtpServer.Port = intPort;
+                SmtpServer.Host = MailHost;
+                if (intPort == 25)
+                    SmtpServer.EnableSsl = false;
+                else
+                    SmtpServer.EnableSsl = true;
+                SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+                mail.From = new MailAddress(AdminEmail, Request.Url.Host.ToString(), System.Text.Encoding.UTF8);
+                mail.To.Add(to);
+                //cc
+
+                mail.Subject = title;
+                mail.Body = sContent;
+                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                mail.IsBodyHtml = true;
+                SmtpServer.Send(mail);
+                return true;
+
+            }
+            catch (System.Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

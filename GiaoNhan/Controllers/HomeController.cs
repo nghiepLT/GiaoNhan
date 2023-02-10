@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.OleDb;
 using BAL;
 using DAL.Models;
+using System.Net.Mail;
 //using GiaoNhan.Models;
 namespace GiaoNhan.Controllers
 {
@@ -59,17 +60,85 @@ namespace GiaoNhan.Controllers
         public ActionResult Rightnavbar()
         {
             if (Request.Cookies["trakinglogin"] != null)
-            {
+            { 
                 var userName = Request.Cookies["trakinglogin"].Value;
                 tbUSer tbaccount = user.GetAccountID(userName);
                 ViewBag.AccountUser = tbaccount.UserName;
-            }
+                //Gửi mail Kiểm định Xe
+                var chkEmail=  user.CheckSendmailKiemDinh();
+                string title = "";
+                string content = "";
+                title = "Cảnh báo kiểm định xe";
+                if (chkEmail == false)
+                {
+                    var lstcar = user.GetListCarEmail();
+                    foreach(var item in lstcar)
+                    {
+                        content = "";
+                        content += "<table>";
 
+                        // Row1
+                        content += "<tr style=\"padding:2px 10px\">";
+                        content += "<td>";
+                        content += "Dear Anh Minh,";
+                        content += "</td>";
+                        content += "</tr>";
+
+                        // Row2
+                        content += "<tr style=\"padding:2px 10px\">";
+                        content += "<td>";
+                        content += "Xe " + item.CarSignal +  " đã gần tới thời gian kiểm định vào ngày "+item.ThoiGianDangKiem.Value.ToShortDateString();
+                        content += "</td>";
+                        content += "</tr>";
+
+                        content += "</table>";
+                        sendEmail("minhtn@nguyenkimvn.vn", title, content);
+                    }
+                    user.TaoEmailKiemDinh();
+                }
+            }
             return PartialView();
         }
         public ActionResult Loading()
         {
             return PartialView();
+        }
+        private bool sendEmail(string to, string title, string sContent)
+        {
+            try
+            {
+
+                string AdminEmail = "nghiphep@nguyenkimvn.vn";
+                string AdminPass = "12345678";
+                string MailHost = "192.168.117.200";
+                int intPort = 25;
+                SmtpClient SmtpServer = new SmtpClient();
+                SmtpServer.Credentials = new System.Net.NetworkCredential(AdminEmail, AdminPass);
+                SmtpServer.Port = intPort;
+                SmtpServer.Host = MailHost;
+                if (intPort == 25)
+                    SmtpServer.EnableSsl = false;
+                else
+                    SmtpServer.EnableSsl = true;
+                SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+                mail.From = new MailAddress(AdminEmail, Request.Url.Host.ToString(), System.Text.Encoding.UTF8);
+                mail.To.Add(to);
+                //cc
+
+                mail.Subject = title;
+                mail.Body = sContent;
+                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                mail.IsBodyHtml = true;
+                SmtpServer.Send(mail);
+                return true;
+
+            }
+            catch (System.Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

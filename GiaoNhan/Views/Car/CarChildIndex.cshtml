@@ -10,7 +10,7 @@
                         <img src="~/Images/Car_img.png" class="img-responsive thumbnail car-img" />
                     </div>
                     <div class="cartitle">
-                        <strong>@item.CarSignal</strong>
+                        <span>@item.CarSignal</span>
                     </div>
 
                     <div>
@@ -22,6 +22,9 @@
                         </div>
                         <div class="tentaixe">
                             Mã Thẻ Tài : <span class="mathetai">@item.MaTheTai </span>
+                        </div>
+                        <div>
+                            Ngày dự kiến đăng kiểm : <strong style="color:#ff0000">@item.ThoiGianDangKiem.ToString("dd/MM/yyyy")</strong>
                         </div>
                     </div>
                 </div>

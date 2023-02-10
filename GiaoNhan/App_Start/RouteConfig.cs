@@ -23,7 +23,12 @@ namespace GiaoNhan
             routes.MapRoute(name: "Quản lý xe", url: "quan-ly-xe", defaults: new { controller = "Car", action = "CarIndex" });
             routes.MapRoute(name: "Quản lý tài xế", url: "quan-ly-tai-xe", defaults: new { controller = "Car", action = "TaixeIndex" });
             routes.MapRoute(name: "Quản lý chi phí", url: "quan-ly-chi-phi", defaults: new { controller = "Service", action = "ServiceIndex" });
-            routes.MapRoute(name: "Quản lý quãng đường xe", url: "quan-ly-quang-duong-xe", defaults: new { controller = "Car", action = "HanhTrinhXe" });
+            routes.MapRoute(name: "Quản lý chi phí bảo dưỡng", url: "quan-ly-bao-duong", defaults: new { controller = "Service", action = "ServiceBaoduongIndex" });
+
+
+            routes.MapRoute(name: "Quản lý bảo trì xe", url: "quan-ly-bao-tri", defaults: new { controller = "Car", action = "HanhTrinhXe" });
+            routes.MapRoute(name: "Thống kê chi phí", url: "thong-ke-chi-phi", defaults: new { controller = "Report", action = "ThongKeChiPhi" });
+            routes.MapRoute(name: "Thống kê bảo trì", url: "thong-ke-bao-tri", defaults: new { controller = "Report", action = "ThongKeQuangDuong" });
 
             routes.MapRoute(name: "Đăng nhập", url: "dang-nhap", defaults: new { controller = "Login", action = "Index" }); 
 

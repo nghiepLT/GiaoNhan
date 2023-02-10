@@ -2335,6 +2335,12 @@
     <Content Include="Views\Service\ServiceIndex.cshtml" />
     <Content Include="Views\Car\HanhTrinhXe.cshtml" />
     <Content Include="Views\Car\GetDotBaoDuong.cshtml" />
+    <Content Include="Views\Report\ThongKeChiPhi.cshtml" />
+    <Content Include="Views\Report\ThongKeChiPhiData.cshtml" />
+    <Content Include="Views\Service\ServiceBaoduongIndex.cshtml" />
+    <Content Include="Views\Report\ThongKeQuangDuongData.cshtml" />
+    <Content Include="Views\Report\ThongKeQuangDuong.cshtml" />
+    <Content Include="Views\Users\ConfigEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

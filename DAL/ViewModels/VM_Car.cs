@@ -14,5 +14,7 @@ namespace DAL.ViewModels
         public string MaTheTai { get; set; }
         public string NameType { get; set; }
         public int DinhMucBaoDuong { get; set; }
+        public DateTime ThoiGianDangKiem { get; set; }
+        public int SoKmHientai { get; set; }
     }
 }

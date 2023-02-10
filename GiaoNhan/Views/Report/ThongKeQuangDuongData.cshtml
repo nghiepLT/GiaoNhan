@@ -1,0 +1,64 @@
+﻿<table class="table table-bordered table-striped">
+    <tr>
+       
+        <th>
+            Xe
+        </th>
+        <th>
+            Ngày bảo dưỡng gần nhất
+        </th>
+
+        <th>
+            Chỉ số km bảo dưỡng lần gần nhất
+        </th>
+        <th>
+            Số km đã đi được sau khi bảo dưỡng
+        </th>
+        <th>
+            Định mức km để bảo dưỡng
+        </th>
+        <th>
+            Chỉ số km dự kiến bảo dưỡng lần tiếp theo
+        </th>
+        <th>
+            Số km  còn lại tới hạn bảo dưỡng
+        </th>
+       
+    </tr>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                  
+                    <td>
+                        <strong>@item.CarSignal</strong> - @item.TenTaiXe
+                    </td>
+                    <td>
+                        @item.NgayBD.ToString("dd/MM/yyyy")
+                    </td>
+                   
+                    <td>@item.SokmDau.ToString("##,###")</td>
+                    <td>
+                        @if (item.SoKmHientai != null)
+                        {
+                            @item.SoKmHientai.ToString("##,###")
+                        }
+                
+                    </td>
+                    <td>
+                        @item.DinhMucBaoDuong.ToString("##,###")
+                    </td>
+                    <td>
+                        @item.Chisodukienlansau.ToString("##,###")
+                    </td>
+                    <td>
+                        @item.Sokmconlai.ToString("##,###")
+                    </td>
+                    
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -65,5 +65,17 @@ namespace BAL
         {
             return account.CheckUserName(UserName);
         }
+        public bool CheckSendmailKiemDinh()
+        {
+            return account.CheckSendmailKiemDinh();
+        }
+        public bool TaoEmailKiemDinh()
+        {
+            return account.TaoEmailKiemDinh();
+        }
+        public IEnumerable<bdCar> GetListCarEmail()
+        {
+            return account.GetListCarEmail();
+        }
     }
 }
