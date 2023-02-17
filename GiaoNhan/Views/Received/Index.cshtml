@@ -77,7 +77,7 @@
                                             <th class="columnDisplay">
                                                 Kết quả
                                             </th>
-                                            <th>
+                                            <th >
                                                 Trạng thái
                                             </th>
                                         </tr>
@@ -144,30 +144,103 @@
                {
                    <div class="form-group">
                      <div class="row">
-                         <span class="col-sm-2">Chọn </span>
-                        <div class="col-sm-10">
-                            <select class="form-control" style="min-width:100%">
+                         <span class="col-sm-12">Chọn </span>
+                         <input id="txtReceivedID"  type="hidden" />
+                        <div class="col-sm-12">
+                            @*<select class="form-control" style="min-width:100%" id="slNVTT">
                                 @foreach (var it in ViewBag.ListNhanVienTrungChuyen)
                                 {
                                     <option value="@it.UserID">
                                         @it.EmployeeName
                                     </option>
                                 }
-                            </select>
+                            </select>*@
+                            <ul class="chuyenphieuul">
+                               @foreach (var it in ViewBag.ListNhanVienTrungChuyen)
+                               {
+                                <li >
+                                    <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID"  value="@it.UserID" />
+                                    <span dat-id="@it.UserID">
+                                        @it.EmployeeName <span>(Trung chuyển)</span>
+                                    </span>
+                                   
+                                </li>
+                               }
+                                @foreach (var it in ViewBag.ListNhanVienXepHang)
+                                {
+                                    <li>
+                                        <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID" value="@it.UserID" />
+                                        <span dat-id="@it.UserID">
+                                            @it.EmployeeName <span>(Xếp hàng)</span>
+                                        </span>
+
+                                    </li>
+                                }
+                            </ul>
                         </div>
                      </div>
+                       <div class="row">
+                           <div class="col-sm-4">
+                               Thời gian cho phép
+                           </div>
+                           <div class="col-sm-8">
+                               <input class="form-control" placeholder="Thời gian cho phép (phút)" id="txtTime"  value="15"/>
+                           </div>
+                       </div>
                    </div>
                }
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Chuyển phiếu</button>
+                <button type="button" class="btn btn-primary" onclick="chuyenPhieu()">Chuyển phiếu</button>
             </div>
         </div>
     </div>
 </div>
     <script>
-        function trungchuyen() {
+        var lstUser = [];
+
+        function selectUSer(dis) {
+            var checked = $(dis).prop("checked");
+            var value = $(dis).val();
+            //Cap nhật lại list
+            lstUser = [];
+            $(".ipchung").each(function () {
+                if ($(this).prop("checked") == true) {
+                    lstUser.push($(this).val());
+                }
+            });
+            console.clear();
+            console.log(lstUser);
+
+        }
+        function chuyenPhieu() {
+            var strData = "";
+            for (i = 0; i < lstUser.length; i++) {
+                if (lstUser[i] != '') {
+                    strData += lstUser[i] + ",";
+                }
+            }
+            var param = {
+                "ReceivedID":   $("#txtReceivedID").val(),
+                "UserID": strData,
+                "Time": $("#txtTime").val()
+            }
+            $.ajax({
+                url: '/Received/ChuyenPhieu',
+                type: 'POST',
+                dataType: 'html',
+                data: param,
+                success: function (data, status, xhr) {
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            });
+        }
+        function trungchuyen(id) {
             $("#exampleModal").modal('toggle');
+            $("#txtReceivedID").val(id);
         }
         $(".shadow").hide();
         $(document).ready(function () {
@@ -228,37 +301,39 @@
             }
         });
     }
+      
 
-    function DeleteRecived(id) {
 
-        swal({
-            title: "Xóa đơn?",
-            text: "Bạn có muốn xóa đơn này!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-.then((willDelete) => {
-    if (willDelete) {
-        var param = {
-            "ReceivedID": id
-        }
-        $.ajax({
-            url: '/Received/DeleteRecived',
-            data: param,
-            type: "POST",
-            dataType: 'html',
-            success: function (data, status, xhr) {
-                LoadData();
-            },
-            error: function (xhr, status, error) {
-                alert(status);
+        function DeleteRecived(id) {
+
+            swal({
+                title: "Xóa đơn?",
+                text: "Bạn có muốn xóa đơn này!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+    .then((willDelete) => {
+        if (willDelete) {
+            var param = {
+                "ReceivedID": id
             }
-        });
-    } else {
-    }
-});
-    }
+            $.ajax({
+                url: '/Received/DeleteRecived',
+                data: param,
+                type: "POST",
+                dataType: 'html',
+                success: function (data, status, xhr) {
+                    LoadData();
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            });
+        } else {
+        }
+    });
+        }
 
 
 

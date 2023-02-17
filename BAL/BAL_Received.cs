@@ -61,5 +61,17 @@ namespace BAL
         {
             return received.GetNhanVienTrungChuyen();
         }
+        public IEnumerable<tbUSer> GetNhanVienXepHang()
+        {
+            return received.GetNhanVienXepHang();
+        }
+        public void ChuyenPhieu(int ReceivedID, string UserID,int Time)
+        {
+              received.ChuyenPhieu(ReceivedID, UserID, Time);
+        }
+        public bool KetThucDonChuyen(int ReceivedID)
+        {
+            return received.KetThucDonChuyen(ReceivedID); 
+        }
     }
 }

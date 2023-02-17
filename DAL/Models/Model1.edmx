@@ -182,6 +182,11 @@
           <Property Name="SLNhap" Type="int" />
           <Property Name="SlKiemTra" Type="int" />
           <Property Name="Products" Type="nvarchar" MaxLength="500" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="IsSent" Type="int" />
+          <Property Name="Time" Type="int" />
+          <Property Name="TypeTracking" Type="int" />
+          <Property Name="Code" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tbReceivedDetail">
           <Key>
@@ -388,6 +393,11 @@
           <Property Name="SLNhap" Type="Int32" />
           <Property Name="SlKiemTra" Type="Int32" />
           <Property Name="Products" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="IsSent" Type="Int32" />
+          <Property Name="Time" Type="Int32" />
+          <Property Name="TypeTracking" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tbReceivedDetail">
           <Key>
@@ -679,6 +689,11 @@
           <EntitySetMapping Name="tbReceiveds">
             <EntityTypeMapping TypeName="KpiManagerModel.tbReceived">
               <MappingFragment StoreEntitySet="tbReceived">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TypeTracking" ColumnName="TypeTracking" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="Products" ColumnName="Products" />
                 <ScalarProperty Name="SlKiemTra" ColumnName="SlKiemTra" />
                 <ScalarProperty Name="SLNhap" ColumnName="SLNhap" />

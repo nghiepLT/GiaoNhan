@@ -256,7 +256,8 @@ namespace DAL
                              DinhMucBaoDuong=tc.DinhMucBaoDuong.Value,
                              Chisodukienlansau=d.SokmDau.Value+tc.DinhMucBaoDuong.Value,
                              Sokmconlai= tc.DinhMucBaoDuong.Value-d.SoKmHientai.Value ,
-                             TenTaiXe=tx.TenTaiXe
+                             TenTaiXe=tx.TenTaiXe,
+                             Ghichubaoduong=tc.Ghichubaoduong.Value
                          }
                        ).ToList().LastOrDefault();
             return model;

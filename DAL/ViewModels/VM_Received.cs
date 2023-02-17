@@ -51,6 +51,10 @@ namespace DAL.ViewModels
         public string KPIResults { get; set; }
         public int ToTalTimes { get; set; }
         public string TimesResult { get; set; }
+        public int ParentId { get; set; }
+        public int IsSent { get; set; }
+        public int TypeTracking { get; set; }
+        public string Code { get; set; }
 
     }
 }

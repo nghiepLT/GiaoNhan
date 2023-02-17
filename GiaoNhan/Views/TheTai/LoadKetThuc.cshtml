@@ -54,6 +54,7 @@
             dataType: 'html',
             data: param,
             success: function (data, status, xhr) {
+			saveId(username,maphieu);
                 window.location.reload();
             },
             error: function (xhr, status, error) {
@@ -61,7 +62,15 @@
             }
         });
     }
-  
+  function saveId(user,id) 
+		{            
+			var ua = navigator.userAgent.toLowerCase();
+			
+			var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+			if(isAndroid) {			
+			Android.nextScreen(user,id);
+			} 
+		}
     function cancle(id) {
         slId = id;
         $("#exampleModal").modal("toggle");

@@ -53,9 +53,7 @@
                                         <input inputmode="none" onchange="ScanNext()" type="text" class="form-control" id="txtScan" style="display:inline-block;margin-left:20px;" />
                                     </div>
                                     <div class="col-7 text-right">
-                                        @*<div id="currentTime" class="d-none d-lg-block d-md-block">
-
-                                        </div>*@
+                                       <a onclick="chuyenphieu()">Chuyển phiếu</a>
                                     </div>
                                 </div>
                             </div>
@@ -103,12 +101,198 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                @if (ViewBag.ListNhanVienTrungChuyen != null)
+                {
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="checkphieu">
+                                    <li>
+                                        <input onclick="cophieu()" name="chkPhieu" type="radio" checked="checked" /> <span>Có phiếu</span>
+                                    </li>
+                                    <li>
+                                        <input onclick="khongphieu()" name="chkPhieu" type="radio" /> <span>Không phiếu</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row cophieu" style="margin:10px auto;">
+                            <span class="col-sm-2">Mã phiếu</span>
+                            <div class="col-sm-10">
+                                <input id="txtMaPhieu" onchange="slphieu()" class="form-control"  style="width:100%;min-width:100%"/>
+                            </div>
+                        </div>
+                        <div class="row" style="margin:10px auto;">
+                            <span class="col-sm-2">Số lượng</span>
+                            <div class="col-sm-10">
+                                <input id="txtSoLuong" class="form-control" style="width:100%;min-width:100%" />
+                            </div>
+                        </div>
+                        <div class="form-group khongphieu">
+                            <label for="User name">Loại Hàng</label>
+                            <table class="table table-striped">
+                                @if (ViewBag.ListProducts != null)
+                                {
+                                    foreach (var item in ViewBag.ListProducts)
+                                    {
+                                        <tr>
+                                            <td class="tdProductName">
+                                                @item.ProductName
+                                            </td>
+                                            <td>
+                                                <input data-val="@item.ProductName" class="ipProduct" style="transform: scale(1.5);position: relative;top: 6px;" type="checkbox"  />
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+
+                        <div class="row">
+                           
+                            <span class="col-sm-12">Chọn </span>
+                            <input id="txtReceivedID" type="hidden" />
+                            <div class="col-sm-12">
+                                @*<select class="form-control" style="min-width:100%" id="slNVTT">
+                                        @foreach (var it in ViewBag.ListNhanVienTrungChuyen)
+                                        {
+                                            <option value="@it.UserID">
+                                                @it.EmployeeName
+                                            </option>
+                                        }
+                                    </select>*@
+                                <ul class="chuyenphieuul">
+                                    @foreach (var it in ViewBag.ListNhanVienTrungChuyen)
+                                    {
+                                        <li>
+                                            <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID" value="@it.UserID" />
+                                            <span dat-id="@it.UserID">
+                                                @it.EmployeeName <span>(Trung chuyển)</span>
+                                            </span>
+
+                                        </li>
+                                    }
+                                    @foreach (var it in ViewBag.ListNhanVienXepHang)
+                                    {
+                                        <li>
+                                            <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID" value="@it.UserID" />
+                                            <span dat-id="@it.UserID">
+                                                @it.EmployeeName <span>(Xếp hàng)</span>
+                                            </span>
+
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                      
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="luuchuyenPhieu()">Chuyển phiếu</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         //getDatenow();
         loadTracking();
         $("#txtScan").focus();
+        $(".khongphieu").hide();
     });
+    var lstUser = [];
+    function selectUSer(dis) {
+        var checked = $(dis).prop("checked");
+        var value = $(dis).val();
+        //Cap nhật lại list
+        lstUser = [];
+        $(".ipchung").each(function () {
+            if ($(this).prop("checked") == true) {
+                lstUser.push($(this).val());
+            }
+        });
+        console.clear();
+        console.log(lstUser);
+
+    }
+    var str = "";
+    var hascheck = false;
+   
+    function slphieu() {
+        var Maphieu = $("#txtMaPhieu").val().trim();
+        var param = {
+            "Maphieu":Maphieu
+        }
+        $.ajax({
+            url: '/Tracking/LoadPhieuTheoMa',
+            type: 'POST',
+            data:param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                $("#txtSoLuong").val(data);
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    var typeTracking = 1;
+    function cophieu() {
+        $(".cophieu").show();
+        $(".khongphieu").hide();
+        typeTracking = 1;
+    }
+    function khongphieu() {
+        $(".khongphieu").show();
+        $(".cophieu").hide();
+        typeTracking = 2;
+    }
+    function chuyenphieu() {
+        $("#exampleModal").modal("toggle");
+    }
+    function luuchuyenPhieu() {
+        $(".ipProduct").each(function () {
+            if ($(this).prop("checked") == true) {
+                var getValue = $(this).attr("data-val");
+                str += getValue + ",";
+                hascheck = true;
+            }
+        });
+        console.log(str);
+        var strData = "";
+        for (i = 0; i < lstUser.length; i++) {
+            if (lstUser[i] != '') {
+                strData += lstUser[i] + ",";
+            }
+        }
+        var param = {
+            "TypeTracking": typeTracking,
+            "Code": $("#txtMaPhieu").val(),
+            "SLNhap": $("#txtSoLuong").val(),
+            "UserID": strData,
+            "Products":str
+        }
+        $.ajax({
+            url: '/Tracking/LuuChuyenPhieu',
+            type: 'POST',
+            data: param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
     function getDatenow() {
         var today = new Date();
         var date = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds() + " | " + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();

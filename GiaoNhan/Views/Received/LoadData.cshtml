@@ -92,17 +92,55 @@
             <td>
                 @if (item.DateEnd == null)
                 {
-                    <a style="margin-bottom:5px;width:60px;" class="btn  btn-xs btn-sm btn-primary" href="/Received/edit?ReceivedID=@item.ReceivedID&type=@ViewBag.Type">Kết thúc</a>
-                    <a style="margin-bottom:5px;width:60px;" onclick="DeleteRecived(@item.ReceivedID)" class="btn btn-xs btn-sm btn-danger">Xóa</a>
+                    if (item.ParentId == 0 && item.TypeTracking==0)
+                    {
+                        <a style="margin-bottom:5px;width:60px;" class="btn  btn-xs btn-sm btn-primary" href="/Received/edit?ReceivedID=@item.ReceivedID&type=@ViewBag.Type">Kết thúc</a>
+                        <a style="margin-bottom:5px;width:60px;" onclick="DeleteRecived(@item.ReceivedID)" class="btn btn-xs btn-sm btn-danger">Xóa</a>
+                    }
+                    else
+                    {
+                        if (item.ParentId != 0)
+                        {
+                            <a style="margin-bottom:5px;" class="btn  btn-xs btn-sm btn-danger" onclick="ketthucdonchuyen('@item.ReceivedID')">Kết thúc đơn chuyển Nhập</a>
+                        }
+                        else
+                        {
+                            <a style="margin-bottom:5px;" class="btn  btn-xs btn-sm btn-danger" onclick="ketthucdonchuyen2('@item.ReceivedID')">Kết thúc đơn chuyển Xuất</a>
+                        }
+                    }
                 }
                 else
                 {
                     <strong class="text-success">Hoàn tất</strong>
-                   <div class="giaotrungchuyen">
-                       <a class="btn btn-xs btn-primary" onclick="trungchuyen()">
-                           Trung chuyển
-                       </a>
-                   </div>
+                    if (ViewBag.UType == 2 || ViewBag.UType == 3)
+                    {
+                        if (item.ParentId != 0)
+                        {
+                            <strong> (Phiếu chuyển nhập kho)</strong>
+                        }
+                        if (item.TypeTracking != 0)
+                        {
+                            <strong> (Phiếu chuyển xuất kho)</strong>
+                        }
+                    }
+                    //Trường hợp là nhap
+                    if (ViewBag.UType == 1)
+                    {
+                        if (item.IsSent != 1)
+                        {
+                            <div class="giaotrungchuyen">
+                                <a class="btn btn-xs btn-primary" onclick="trungchuyen('@item.ReceivedID')">
+                                    Chuyển phiếu
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="giaotrungchuyen">
+                              <span style="color:red">Đã Chuyển phiếu</span>
+                            </div>
+                        }
+                    }
                 }
             </td>
         </tr>
@@ -144,6 +182,66 @@
             }
         });
     });
+    function ketthucdonchuyen(id) {
+
+        swal({
+            title: "Kết thúc đơn?",
+            text: "Bạn có muốn kết thúc!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+.then((willDelete) => {
+    if (willDelete) {
+        var param = {
+            "ReceivedID": id
+        }
+        $.ajax({
+            url: '/Received/KetThucDonChuyen',
+            data: param,
+            type: "POST",
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                LoadData();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    } else {
+    }
+});
+    }
+    function ketthucdonchuyen2(id) {
+
+        swal({
+            title: "Kết thúc đơn?",
+            text: "Bạn có muốn kết thúc!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+.then((willDelete) => {
+    if (willDelete) {
+        var param = {
+            "ReceivedID": id
+        }
+        $.ajax({
+            url: '/Received/KetThucDonChuyen',
+            data: param,
+            type: "POST",
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                LoadData();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    } else {
+    }
+});
+    }
 </script>
 
 

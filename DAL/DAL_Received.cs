@@ -39,7 +39,7 @@ namespace DAL
 
         public IEnumerable<VM_Received> GetAllByIDUser(int UserID)
         {
-            var model = (from rc in dbcontext.tbReceiveds
+            var model = (from rc in dbcontext.tbReceiveds.ToList()
                          where rc.UserID==UserID
                          select new VM_Received()
                          {
@@ -51,9 +51,13 @@ namespace DAL
                              Products=rc.Products,
                              SlKiemTra= rc.SlKiemTra!=null?rc.SlKiemTra.Value:0,
                              SLNhap= rc.SLNhap!=null?rc.SLNhap.Value:0,
-                             KPI= rc.Kpi!=null?rc.Kpi.Value *(-1):0
+                             KPI= rc.Kpi!=null?rc.Kpi.Value *(-1):0,
+                             ParentId= rc.ParentId.HasValue? rc.ParentId.Value:0,
+                             IsSent= rc.IsSent.HasValue?rc.IsSent.Value:0,
+                             TypeTracking= rc.TypeTracking.HasValue? rc.TypeTracking.Value:0,
+                             Code=rc.Code
                          }
-                       );
+                       ).ToList();
 
             List<VM_Received> lstCclone = new List<VM_Received>();
             foreach(var clone in model.ToList())
@@ -192,6 +196,73 @@ namespace DAL
         public IEnumerable<tbUSer> GetNhanVienTrungChuyen()
         {
             return dbcontext.tbUSers.Where(m => m.RoleId == 7);
+        }
+        public IEnumerable<tbUSer> GetNhanVienXepHang()
+        {
+            return dbcontext.tbUSers.Where(m => m.RoleId == 8);
+        }
+        public void ChuyenPhieu(int ReceivedID, string UserID,int Time)
+        {
+            tbReceived tbReceivedCurrent = dbcontext.tbReceiveds.Where(m => m.ReceivedID == ReceivedID).FirstOrDefault();
+            tbReceivedCurrent.IsSent = 1;
+            dbcontext.SaveChanges();
+            var lstSplit = UserID.Split(',');
+            foreach(var item in lstSplit)
+            {
+                if (item != "")
+                {
+                    tbReceived tbRecived = new tbReceived();
+                    tbRecived.ParentId = ReceivedID;
+                    tbRecived.UserID = int.Parse(item);
+                    tbRecived.NCCID = tbReceivedCurrent.NCCID;
+                    tbRecived.DateStart = DateTime.Now;
+                    tbRecived.Type = tbReceivedCurrent.Type;
+                    tbRecived.SLNhap = tbReceivedCurrent.SLNhap;
+                    tbRecived.SlKiemTra = tbReceivedCurrent.SlKiemTra;
+                    tbRecived.Products = tbReceivedCurrent.Products;
+                    tbRecived.Time = Time;
+                    dbcontext.tbReceiveds.Add(tbRecived);
+                    dbcontext.SaveChanges();
+                }
+            } 
+        }
+        public bool KetThucDonChuyen(int ReceivedID)
+        {
+            try
+            {
+                tbReceived tbrc = dbcontext.tbReceiveds.Find(ReceivedID);
+                if(tbrc.ParentId != null)
+                {
+                    var lstTBRc = dbcontext.tbReceiveds.Where(m => m.ParentId == tbrc.ParentId).ToList();
+                    foreach (var item in lstTBRc)
+                    {
+                        item.DateEnd = DateTime.Now;
+                        var time = int.Parse(Math.Round(item.DateEnd.Value.TimeOfDay.TotalSeconds - item.DateStart.TimeOfDay.TotalSeconds).ToString());
+                        var kpiTime = tbrc.Time * 60;
+                        var kpi = time - kpiTime;
+                        item.Kpi = kpi;
+                        dbcontext.SaveChanges();
+                    }
+                }
+                if (tbrc.TypeTracking == 1 || tbrc.TypeTracking==2)
+                {
+                    var lstTBRc = dbcontext.tbReceiveds.Where(m => m.TypeTracking == tbrc.TypeTracking).ToList();
+                    foreach(var item in lstTBRc)
+                    {
+                        item.TypeTracking = tbrc.TypeTracking;
+                        item.DateEnd = DateTime.Now;
+                        item.Kpi = GetKPI(item.DateStart, DateTime.Now, item.SLNhap.Value, 0, 2);
+                        dbcontext.SaveChanges();
+                    }
+                }
+                
+                return true;
+
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ namespace GiaoNhan.Controllers
         BAL_User user = new BAL_User();
         BAL_Permission Permission = new BAL_Permission();
         BAL_Config balConfig = new BAL_Config();
+        BAL_Received received = new BAL_Received();
+        
         public ActionResult Index()
         {
             if (Request.Cookies["trakinglogin"] != null)
@@ -29,6 +31,9 @@ namespace GiaoNhan.Controllers
                     ViewBag.Type = 1;
                 else
                     ViewBag.Type = 2;
+                ViewBag.ListNhanVienTrungChuyen = received.GetNhanVienTrungChuyen().Where(m => m.UserID != 10 && m.UserID != 12).ToList();
+                ViewBag.ListNhanVienXepHang = received.GetNhanVienXepHang().ToList();
+                ViewBag.ListProducts = received.GetProduct();
             } 
             return View();
         }
@@ -259,6 +264,16 @@ namespace GiaoNhan.Controllers
         public int GetSLRemain(string TrackingCode)
         {
             return tracking.GetSLRemain(TrackingCode);
+        }
+
+        public int LoadPhieuTheoMa(string MaPhieu)
+        {
+            var getData = GetJsonData(MaPhieu);
+            return getData.ToTal;
+        }
+        public bool LuuChuyenPhieu(int TypeTracking,string Code,int SLNhap,string UserID,string Products)
+        {
+            return tracking.LuuChuyenPhieu(TypeTracking, Code, SLNhap, UserID, Products);
         }
     }
 }

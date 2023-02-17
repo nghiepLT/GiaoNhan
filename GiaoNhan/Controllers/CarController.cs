@@ -173,7 +173,7 @@ namespace GiaoNhan.Controllers
                 content += "</tr>";
 
                 content += "</table>";
-                sendEmail("minhtn@nguyenkimvn.vn", title,content);
+               // sendEmail("minhtn@nguyenkimvn.vn", title,content);
             }
             return balCar.CapnhatsoKM(IDCar, SoKM);
         }

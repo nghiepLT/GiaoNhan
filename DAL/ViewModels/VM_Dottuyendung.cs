@@ -21,5 +21,6 @@ namespace DAL.ViewModels
         public int Sokmconlai { get; set; }
         public string CarSignal { get; set; }
         public string TenTaiXe { get; set; }
+        public int Ghichubaoduong { get; set; }
     }
 }

@@ -29,8 +29,8 @@ namespace GiaoNhan.Controllers
                 ViewBag.UserId = user.UserID;
                 ViewBag.Type = 1;
                 ViewBag.Permission = permission.GetByID(user.PermissionID);
-                ViewBag.ListNhanVienTrungChuyen = received.GetNhanVienTrungChuyen().Where(m => string.IsNullOrEmpty(m.Description));
-
+                ViewBag.ListNhanVienTrungChuyen = received.GetNhanVienTrungChuyen().Where(m=>m.UserID!=10 && m.UserID!=12).ToList();
+                ViewBag.ListNhanVienXepHang= received.GetNhanVienXepHang().ToList();
             }
             return View();
         }
@@ -95,7 +95,22 @@ namespace GiaoNhan.Controllers
         public ActionResult LoadData(int UserID,int Type)
         {
             var model = received.GetAllByIDUser(UserID).OrderByDescending(m=>m.DateStart).ToList();
+            tbUSer tuser = account.GetbyID(UserID);
+
             ViewBag.Type = Type;
+            if (tuser.RoleId == 3)
+            {
+                ViewBag.UType = 1;
+            }
+            if (tuser.RoleId == 7)
+            {
+                ViewBag.UType = 2;
+            }
+            if (tuser.RoleId == 8)
+            {
+                ViewBag.UType = 3;
+            }
+
             return PartialView(model);
         }
         [HttpPost]
@@ -108,6 +123,14 @@ namespace GiaoNhan.Controllers
         {
             var model = received.GetPopupInfo(ReceivedID);
             return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        public void ChuyenPhieu(int ReceivedID ,string UserID, int Time)
+        {
+            received.ChuyenPhieu(ReceivedID, UserID,Time);
+        }
+        public bool KetThucDonChuyen(int ReceivedID)
+        {
+            return received.KetThucDonChuyen(ReceivedID);
         }
     }
 }

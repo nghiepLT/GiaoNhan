@@ -272,7 +272,7 @@ namespace GiaoNhan.Controllers
         {
             return View();
         }
-        public ActionResult ThongkephieuData(string fromDate, string toDate,int Status,int typeDate,int month)
+        public ActionResult ThongkephieuData(string fromDate, string toDate,int Status)
         {
             DateTime _fromDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime _toDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);

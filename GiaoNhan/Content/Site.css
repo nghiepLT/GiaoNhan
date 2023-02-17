@@ -368,22 +368,55 @@ qlqd_img {
         font-size: 15px;
         font-weight: bold;
     }
-   #kmhientai {
-    color: white;  
+
+#kmhientai {
+    color: white;
     letter-spacing: 0.1em;
     transition: 0.3s;
     text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey,1px 1px 2px black;
 }
-    #dinhmuckm{
-         color: white;  
+
+#dinhmuckm {
+    color: white;
     letter-spacing: 0.1em;
     transition: 0.3s;
-        text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey,1px 1px 2px black;
+    text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 2px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey, 1px 1px 0 grey,1px 1px 2px black;
+}
 
-    }
-  .qlqd_sokm {
+.qlqd_sokm {
     font-size: 13px;
     font-weight: bold;
     padding: 2px 0px;
     color: #28a745;
 }
+
+.chuyenphieuul {
+    margin: 0px;
+    padding: 0px;
+    margin-top: 9px;
+    margin-bottom: 20px;
+}
+
+    .chuyenphieuul li {
+        display: block;
+        margin: 5px 0px;
+    }
+
+    .chuyenphieuul span {
+    }
+
+    .chuyenphieuul input {
+        margin-right: 5px;
+        position: relative;
+        top: 1px;
+    }
+
+.checkphieu {
+    margin: 0px;
+    padding: 0px;
+}
+
+    .checkphieu li {
+        display: inline-block;
+        margin-right: 20px;
+    }

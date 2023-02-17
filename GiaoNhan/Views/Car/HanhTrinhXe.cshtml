@@ -144,7 +144,9 @@
 <script>
     var idcar = 0;
     var DinhMucBaoDuong = 0;
-    function Capnhatkm() {
+    var sokmht = 0;
+    function Capnhatkm(sokm) {
+        sokmht = sokm;
         $("#mdAccount").modal("toggle");
     }
     function loaddata() {
@@ -183,6 +185,15 @@
         }
     }
     function Themmoidotbaoduong() {
+        if ($("#NgayBD").val() == '') {
+            swal("Vui lòng chọn ngày");
+            return false;
+        }
+        if ($("#SokmDau").val() == '') {
+            swal("Vui lòng nhập số KM");
+            return false;
+        }
+       
         var param = {
             "IDCar": idcar,
             "NgayBD": $("#NgayBD").val(),
@@ -202,7 +213,16 @@
         });
     }
     function CapnhatsoKM() {
-        var param = {
+
+        if (parseInt($("#SoKmHientai").val()) < sokmht) {
+            swal("Số KM phải lớn hơn hiện tại");
+            return false;
+        }
+        if (parseInt($("#SoKmHientai").val()) > DinhMucBaoDuong) {
+            swal("Số KM phải nhỏ hơn định mức bảo dưỡng");
+            return false;
+        }
+        var param = {   
             "IDCar": idcar,
             "SoKM": $("#SoKmHientai").val()
         }

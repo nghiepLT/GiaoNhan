@@ -41,13 +41,20 @@
                         </td>
                         <td>@Model.SokmDau.ToString("##,###")</td>
                         <td>
-                            <span>@Model.SoKmHientai.ToString("##,###")</span>  <a style="float:right" onclick="Capnhatkm()" class="btn btn-danger btn-xs">Cập nhật KM</a>
+                            <span>@Model.SoKmHientai.ToString("##,###")</span>  <a style="float:right" onclick="Capnhatkm('@Model.SoKmHientai')" class="btn btn-danger btn-xs">Cập nhật KM</a>
                         </td>
                         <td>
                            @Model.Chisodukienlansau.ToString("##,###")
                         </td>
                         <td>
-                            @Model.Sokmconlai.ToString("##,###")
+                            @if (Model.Sokmconlai <= Model.Ghichubaoduong)
+                            {
+                                <strong style="color:red">@Model.Sokmconlai.ToString("##,###")</strong>
+                            }
+                            else
+                            {
+                                <span>@Model.Sokmconlai.ToString("##,###")</span>
+                            }
                         </td>
                     </tr>
                 }

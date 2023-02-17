@@ -28,7 +28,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-striped">
                             <tr>
                                 <th>
                                     Ngày thanh toán
@@ -59,7 +59,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                @item.Ngaytao
+                                               <strong style="color:#037fd8">@item.Ngaytao.ToString("dd/MM/yyyy")</strong>
                                             </td>
                                             <td>
                                                 <strong>@item.CarSignal</strong> - @item.TenTaiXe
@@ -134,25 +134,11 @@
                                 </select>
                             }
                         </div>
-                        <div class="form-group mydate">
-                            <label for="User name">Ngày thanh toán</label>
-                            <input type="date" class="form-control" id="Ngaytao" style="min-width:100%" placeholder="Ngày thanh toán">
-                        </div>
-                        <div class="form-group">
-                            <label for="User name">Tên dịch vụ</label>
-                            <textarea class="form-control" placeholder="Tên dịch vụ" id="NameService" style="min-width:100%"></textarea>
-                            <input type="hidden" id="IdService" value="0" />
-                        </div>
-                       
-                        <div class="form-group">
-                            <label for="User name">Tổng tiền</label>
-                            <input type="text" class="form-control" id="TongTien" style="min-width:100%" placeholder="Tổng tiền">
-                        </div>
                         <div class="form-group">
                             <label for="User name">Loại dịch vụ</label>
                             <select class="form-control ipmw" id="slService">
                                 <option value="0">
-                                     -- Chọn loại dịch vụ --
+                                    -- Chọn loại dịch vụ --
                                 </option>
                                 <option value="1">
                                     Phí dịch vụ hằng ngày
@@ -166,6 +152,21 @@
                             </select>
 
                         </div>
+                        <div class="form-group mydate">
+                            <label for="User name">Ngày thanh toán</label>
+                            <input type="date" class="form-control" id="Ngaytao" style="min-width:100%" placeholder="Ngày thanh toán">
+                        </div>
+                        <div class="form-group">
+                            <label for="User name">Tên dịch vụ</label>
+                            <textarea class="form-control" placeholder="Tên dịch vụ" id="NameService" style="min-width:100%" rows="4"></textarea>
+                            <input type="hidden" id="IdService" value="0" />
+                        </div>
+                       
+                        <div class="form-group">
+                            <label for="User name">Tổng tiền</label>
+                            <input type="text" class="form-control" id="TongTien" style="min-width:100%" placeholder="Tổng tiền">
+                        </div>
+                        
                         <div class="form-group">
                             <label for="User name">Ghi chú</label>
                             <textarea id="Ghichu" class="form-control" rows="3" style="min-width:100%"></textarea>

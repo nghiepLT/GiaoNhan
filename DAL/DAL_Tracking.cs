@@ -387,5 +387,30 @@ namespace DAL
             var current = dbContext.tbTrackings.Where(m=>m.TrackingCode==TrackingCode).FirstOrDefault().Count- dbContext.tbTrackings.Where(m => m.TrackingCode == TrackingCode).Sum(m => m.CountStep);
             return current;
         }
+        public bool LuuChuyenPhieu(int TypeTracking, string Code, int SLNhap, string UserID, string Products)
+        {
+            try
+            {
+                var lstUser = UserID.Split(',');
+                foreach(var item in lstUser)
+                {
+                    tbReceived tbrc = new tbReceived();
+                    tbrc.TypeTracking = TypeTracking;
+                    tbrc.Type = 2;
+                    tbrc.DateStart = DateTime.Now;
+                    tbrc.Products = Products;
+                    tbrc.SLNhap = SLNhap;
+                    tbrc.UserID = int.Parse(item);
+                    dbContext.tbReceiveds.Add(tbrc);
+                    dbContext.SaveChanges();
+                }
+               
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

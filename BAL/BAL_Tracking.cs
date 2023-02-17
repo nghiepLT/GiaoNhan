@@ -87,6 +87,10 @@ namespace BAL
         {
             return tracking.GetSLRemain(TrackingCode);
         }
+        public bool LuuChuyenPhieu(int TypeTracking, string Code, int SLNhap, string UserID, string Products)
+        {
+            return tracking.LuuChuyenPhieu(TypeTracking, Code, SLNhap, UserID, Products);
+        }
     }
 }
  

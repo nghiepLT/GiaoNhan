@@ -25,5 +25,10 @@ namespace DAL.Models
         public Nullable<int> SLNhap { get; set; }
         public Nullable<int> SlKiemTra { get; set; }
         public string Products { get; set; }
+        public Nullable<int> ParentId { get; set; }
+        public Nullable<int> IsSent { get; set; }
+        public Nullable<int> Time { get; set; }
+        public Nullable<int> TypeTracking { get; set; }
+        public string Code { get; set; }
     }
 }
