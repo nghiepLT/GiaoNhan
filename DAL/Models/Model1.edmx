@@ -56,7 +56,7 @@
           <Key>
             <PropertyRef Name="SendmailId" />
           </Key>
-          <Property Name="SendmailId" Type="int" Nullable="false" />
+          <Property Name="SendmailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NgayGui" Type="datetime" />
           <Property Name="IdCar" Type="int" />
           <Property Name="Type" Type="int" />

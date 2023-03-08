@@ -53,7 +53,7 @@
                                         <input inputmode="none" onchange="ScanNext()" type="text" class="form-control" id="txtScan" style="display:inline-block;margin-left:20px;" />
                                     </div>
                                     <div class="col-7 text-right">
-                                       <a onclick="chuyenphieu()">Chuyển phiếu</a>
+                                       <a onclick="chuyenphieu()" class="btn btn-sm btn-primary">Chuyển phiếu</a>
                                     </div>
                                 </div>
                             </div>
@@ -114,10 +114,12 @@
                             <div class="col-sm-12">
                                 <ul class="checkphieu">
                                     <li>
-                                        <input onclick="cophieu()" name="chkPhieu" type="radio" checked="checked" /> <span>Có phiếu</span>
+                                        <input id="ip1" style="scale: 1.3;margin-right: 3px;" onclick="cophieu()" name="chkPhieu" type="radio" checked="checked" /> 
+                                        <span onclick="chonloaiphieu('ip1')" style="cursor:pointer;">Có phiếu</span>
                                     </li>
                                     <li>
-                                        <input onclick="khongphieu()" name="chkPhieu" type="radio" /> <span>Không phiếu</span>
+                                        <input id="id2" style="scale: 1.3;margin-right: 3px;" onclick="khongphieu()" name="chkPhieu" type="radio" /> 
+                                        <span onclick="chonloaiphieu('id2')" style="cursor:pointer;">Không phiếu</span>
                                     </li>
                                 </ul>
                             </div>
@@ -153,10 +155,10 @@
                                 }
                             </table>
                         </div>
-
+                        <hr />
                         <div class="row">
                            
-                            <span class="col-sm-12">Chọn </span>
+                            <span class="col-sm-12">Chọn người thực hiện </span>
                             <input id="txtReceivedID" type="hidden" />
                             <div class="col-sm-12">
                                 @*<select class="form-control" style="min-width:100%" id="slNVTT">
@@ -172,7 +174,7 @@
                                     {
                                         <li>
                                             <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID" value="@it.UserID" />
-                                            <span dat-id="@it.UserID">
+                                            <span dat-id="@it.UserID" onclick="tgip('@it.UserID')" style="cursor:pointer">
                                                 @it.EmployeeName <span>(Trung chuyển)</span>
                                             </span>
 
@@ -182,7 +184,7 @@
                                     {
                                         <li>
                                             <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID" value="@it.UserID" />
-                                            <span dat-id="@it.UserID">
+                                            <span dat-id="@it.UserID" onclick="tgip('@it.UserID')" style="cursor:pointer">
                                                 @it.EmployeeName <span>(Xếp hàng)</span>
                                             </span>
 
@@ -208,6 +210,13 @@
         $("#txtScan").focus();
         $(".khongphieu").hide();
     });
+    function tgip(id) {
+        $("#ip_" + id).trigger("click");
+        //if ($("#ip_" + id).prop("checked") == false)
+        //    $("#ip_" + id).prop("checked", true).change();
+        //else
+        //    $("#ip_" + id).prop("checked", false).change();
+    }
     var lstUser = [];
     function selectUSer(dis) {
         var checked = $(dis).prop("checked");
@@ -259,6 +268,20 @@
         $("#exampleModal").modal("toggle");
     }
     function luuchuyenPhieu() {
+        if (typeTracking == 1) {
+            if ($("#txtMaPhieu").val() == '') {
+                swal("Vui lòng nhập mã phiếu!");
+                return false;
+            }
+        }
+        if ($("#txtSoLuong").val() == '') {
+            swal("Vui lòng chọn số lượng!");
+            return false;
+        }
+        if (lstUser.length == 0) {
+            swal("Vui lòng chọn người thực hiện!");
+            return false;
+        }
         $(".ipProduct").each(function () {
             if ($(this).prop("checked") == true) {
                 var getValue = $(this).attr("data-val");
@@ -370,5 +393,9 @@
                 alert(status);
             }
         });
+    }
+
+    function chonloaiphieu(id) {
+        $("#" + id).click()
     }
 </script>

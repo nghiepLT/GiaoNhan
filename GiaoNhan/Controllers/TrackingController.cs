@@ -269,7 +269,7 @@ namespace GiaoNhan.Controllers
         public int LoadPhieuTheoMa(string MaPhieu)
         {
             var getData = GetJsonData(MaPhieu);
-            return getData.ToTal;
+            return getData!=null? getData.ToTal:0;
         }
         public bool LuuChuyenPhieu(int TypeTracking,string Code,int SLNhap,string UserID,string Products)
         {

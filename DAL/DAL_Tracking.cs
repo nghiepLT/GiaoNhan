@@ -400,6 +400,7 @@ namespace DAL
                     tbrc.DateStart = DateTime.Now;
                     tbrc.Products = Products;
                     tbrc.SLNhap = SLNhap;
+                    tbrc.Code = Code;
                     tbrc.UserID = int.Parse(item);
                     dbContext.tbReceiveds.Add(tbrc);
                     dbContext.SaveChanges();

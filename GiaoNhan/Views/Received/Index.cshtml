@@ -144,7 +144,7 @@
                {
                    <div class="form-group">
                      <div class="row">
-                         <span class="col-sm-12">Chọn </span>
+                         <span class="col-sm-12">Chọn người thực hiện </span>
                          <input id="txtReceivedID"  type="hidden" />
                         <div class="col-sm-12">
                             @*<select class="form-control" style="min-width:100%" id="slNVTT">
@@ -158,19 +158,18 @@
                             <ul class="chuyenphieuul">
                                @foreach (var it in ViewBag.ListNhanVienTrungChuyen)
                                {
-                                <li >
-                                    <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID"  value="@it.UserID" />
-                                    <span dat-id="@it.UserID">
-                                        @it.EmployeeName <span>(Trung chuyển)</span>
-                                    </span>
-                                   
+                                <li>
+                                    <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID" value="@it.UserID" />
+                                    <span dat-id="@it.UserID" onclick="tgip('@it.UserID')" style="cursor:pointer">
+                                       @it.EmployeeName <span>(Trung chuyển)</span>
+                                    </span> 
                                 </li>
                                }
                                 @foreach (var it in ViewBag.ListNhanVienXepHang)
                                 {
                                     <li>
                                         <input class="ipchung" type="checkbox" onclick="selectUSer(this)" id="ip_@it.UserID" value="@it.UserID" />
-                                        <span dat-id="@it.UserID">
+                                        <span dat-id="@it.UserID" onclick="tgip('@it.UserID')" style="cursor:pointer">
                                             @it.EmployeeName <span>(Xếp hàng)</span>
                                         </span>
 
@@ -215,6 +214,11 @@
         }
         function chuyenPhieu() {
             var strData = "";
+            if (lstUser.length == 0)
+            {
+                swal("Vui lòng chọn người thực hiện!");
+                return false;
+            }
             for (i = 0; i < lstUser.length; i++) {
                 if (lstUser[i] != '') {
                     strData += lstUser[i] + ",";
@@ -335,7 +339,13 @@
     });
         }
 
-
+        function tgip(id) {
+            $("#ip_" + id).trigger("click");
+            //if($("#ip_" + id).prop("checked")==false)
+            //    $("#ip_" + id).prop("checked", true);
+            //else
+            //    $("#ip_" + id).prop("checked", false);
+        }
 
     </script>
 <style>
