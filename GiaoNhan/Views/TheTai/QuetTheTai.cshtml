@@ -34,6 +34,9 @@
                         <div class="card-body">
 
                             <div class="form-group">
+                              <div id="loadsapxep">
+
+                              </div>
                                 <div class="row">
                                     <div class="col-1">
                                         <label class="mapx" for="exampleInputEmail1">Mã</label>
@@ -78,7 +81,12 @@
                                                     Số lượng
                                                 </th>
                                             }
-
+                                            <th>
+                                                Lượt đi
+                                            </th>
+                                            <th>
+                                                Lượt về
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody"></tbody>
@@ -102,6 +110,7 @@
     $(document).ready(function () {
         // getDatenow();
         loadTracking();
+        LoadSapXep();
         $("#txtScan").focus();
 
         var str = '@ViewBag.ListTheTai2';
@@ -166,6 +175,12 @@
                 if (data == 5) {
                     swal("Lượt quét đã kết thúc!");
                 }
+                if (data == 7) {
+                    swal("Mã thẻ tài không có trong danh sách sắp xếp!");
+                }
+                if (data == 8) {
+                    swal("Lượt quét trước chưa làm xong hàng!");
+                }
                 if (data == 3) {
                     swal({
                         title: "Quét mã", text: "Mã không tồn tại trong hệ thống!", type:
@@ -174,6 +189,7 @@
                     }
 );
                 }
+                LoadSapXep();
                 if (data == 1) {
                     var chk = lstRadTheTai.includes($("#txtScan").val());
                     if (chk == false) {
@@ -188,6 +204,7 @@
                         }
                     }
                     loadTracking();
+                   
                 }
         //n2fix
                     if(data == 10){
@@ -244,6 +261,55 @@
         var childspan = $(dis).find("span");
         slThetai = childspan.html();
         idsl = $(dis).find("input").attr("id").replace("ip_","");
+    }
+
+    function LoadSapXep() {
+        $.ajax({
+            url: '/TheTai/LoadSapXep',
+            type: 'POST',
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                $("#loadsapxep").html(data);
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+
+    function batdau(id) {
+        var param = {
+            ThetaiID:id
+        }
+        $.ajax({
+            url: '/TheTai/CapNhatLuotDi',
+            type: 'POST',
+            data:param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                loadTracking();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+    function ketthuc(id) {
+        var param = {
+            ThetaiID: id
+        }
+        $.ajax({
+            url: '/TheTai/CapNhatLuotVe',
+            type: 'POST',
+            data: param,
+            dataType: 'html',
+            success: function (data, status, xhr) {
+                loadTracking();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
     }
 </script>
 <style>

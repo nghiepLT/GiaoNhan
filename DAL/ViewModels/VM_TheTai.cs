@@ -18,5 +18,7 @@ namespace DAL.ViewModels
         public int? KPI { get; set; } 
         public int ToTalTimes { get; set; }
         public string TimesResult { get; set; }
+        public DateTime Luotdi { get; set; }
+        public DateTime Luotve { get; set; }
     }
 }

@@ -1,0 +1,23 @@
+﻿@if (ViewBag.ListUSer != null)
+{
+    <ul class="giaonhan_listuser">
+        @foreach (var item in ViewBag.ListUSer)
+        {
+            <li>
+                @if (item.Status == 1)
+                {
+                    <a class="aactive">
+                        @item.Code
+                    </a>
+                }
+                else
+                {
+                    <a>
+                        @item.Code
+                    </a>
+                }
+            </li>
+        }
+    </ul>
+
+}

@@ -177,6 +177,7 @@
     <Compile Include="Controllers\ReceivedController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SapXepGiaoNhanController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\TheTaiController.cs" />
     <Compile Include="Controllers\TrackingController.cs" />
@@ -2342,6 +2343,8 @@
     <Content Include="Views\Report\ThongKeQuangDuongData.cshtml" />
     <Content Include="Views\Report\ThongKeQuangDuong.cshtml" />
     <Content Include="Views\Users\ConfigEmail.cshtml" />
+    <Content Include="Views\SapXepGiaoNhan\SapXep.cshtml" />
+    <Content Include="Views\TheTai\LoadSapXep.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

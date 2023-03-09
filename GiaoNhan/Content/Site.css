@@ -421,3 +421,95 @@ qlqd_img {
         display: inline-block;
         margin-right: 20px;
     }
+
+.sapxepgn_box {
+}
+
+    .sapxepgn_box ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+        .sapxepgn_box ul li {
+            display: inline-block;
+        }
+
+            .sapxepgn_box ul li div {
+                display: block;
+                width: 100px;
+                height: 100px;
+                box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+                margin: 5px 5px;
+                cursor: pointer;
+                position: relative;
+            }
+
+                .sapxepgn_box ul li div i {
+                    position: absolute;
+                    right: 10px;
+                    top: 10px;
+                }
+
+            .sapxepgn_box ul li strong {
+                position: absolute;
+                left: 2px;
+                bottom: 2px;
+                background-color: red;
+                width: 17px;
+                height: 17px;
+                font-size: 12px;
+                color: white;
+                text-align: center;
+            }
+
+.ds_xephangbox {
+}
+
+    .ds_xephangbox ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+        .ds_xephangbox ul li {
+            display: inline-block;
+        }
+
+            .ds_xephangbox ul li a {
+                display: block;
+                position: relative;
+                margin: 10px 3px;
+                box-shadow: 0 0 1px rgb(0 0 0 / 74%), 0 1px 3px rgb(0 0 0 / 78%);
+            }
+
+.aactive {
+    background-color: #dc3545 !important;
+}
+
+.ds_xephangbox a {
+}
+
+.sapxepgn_box span {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.giaonhan_listuser {margin: 0px;padding: 0px;}
+
+    .giaonhan_listuser li {
+    display: inline-block;
+    }
+
+        .giaonhan_listuser li a {
+        display: block;
+        background-color: #878787;
+        color: white!important;
+        margin: 10px 0px;
+        padding: 5px 15px;
+        font-size: 12px;
+        border-left: 2px solid #6a6a6a;
+        box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 28%);
+        }
+        .aactive{
+              background-color: red!important;
+        }

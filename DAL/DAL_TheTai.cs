@@ -87,7 +87,9 @@ namespace DAL
                              Count = m.Count,
                              MaThe = m.MaThe, 
                              ToTalTimes = m.DateEnd != null ? int.Parse(Math.Round(double.Parse((m.DateEnd.Value.TimeOfDay.TotalSeconds - m.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString()) : 0,
-                             TimesResult = m.DateEnd != null ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((m.DateEnd.Value.TimeOfDay.TotalSeconds - m.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString())) : ""
+                             TimesResult = m.DateEnd != null ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((m.DateEnd.Value.TimeOfDay.TotalSeconds - m.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString())) : "",
+                             Luotdi=m.Luotdi.HasValue? m.Luotdi.Value:DateTime.MinValue,
+                             Luotve=m.Luotve.HasValue?m.Luotve.Value:DateTime.MinValue
                          }
                        ).OrderByDescending(m => m.DateStart);
             return model;
@@ -224,6 +226,37 @@ namespace DAL
             {
                 return false;
             }
+        }
+
+        public bool CapnhatLuotDi(int ThetaiID)
+        {
+            try
+            {
+                var tbthetai = dbContext.tbTheTais.Find(ThetaiID);
+                tbthetai.Luotdi = DateTime.Now;
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return false;
+        }
+        public bool CapnhatLuotVe(int ThetaiID)
+        {
+            try
+            {
+                var tbthetai = dbContext.tbTheTais.Find(ThetaiID);
+                tbthetai.Luotve = DateTime.Now;
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return false;
         }
     }
 }

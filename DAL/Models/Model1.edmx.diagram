@@ -31,6 +31,9 @@
         <EntityTypeShape EntityType="KpiManagerModel.bdHanhtrinhbaotri" Width="1.5" PointX="11.375" PointY="3.75" />
         <EntityTypeShape EntityType="KpiManagerModel.bdDichVudangkiembaoduong" Width="1.5" PointX="0.75" PointY="13.75" />
         <EntityTypeShape EntityType="KpiManagerModel.bdSendMail" Width="1.5" PointX="13.375" PointY="4.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbReceivedMessage" Width="1.5" PointX="13.375" PointY="7.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbSapXepConfig" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbSapXepDetail" Width="1.5" PointX="13.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -19,12 +19,21 @@ namespace GiaoNhan.Controllers
         BAL_Permission Permission = new BAL_Permission();
         BAL_Config balConfig = new BAL_Config();
         BAL_TheTai balTheTai = new BAL_TheTai();
+        BAL_SapXep balSapxep = new BAL_SapXep();
         // GET: TheTai
         public ActionResult QuetTheTai()
         {
             ViewBag.ListTheTai = balTheTai.GetGroupTheTai();
             ViewBag.ListTheTai2 = balTheTai.GetGroupTheTaiwait();
+          
             return View();
+        }
+        public ActionResult LoadSapXep()
+        {
+            var getData = balSapxep.GetLastSapXepconfig();
+            if (getData != null)
+                ViewBag.ListUSer = balSapxep.GetListUSer(balSapxep.GetLastSapXepconfig().Position);
+            return PartialView();
         }
         public VM_Json GetJsonData(string spx)
         {
@@ -53,7 +62,14 @@ namespace GiaoNhan.Controllers
             var model = balTheTai.LoadTracking(accountID);
             return PartialView(model);
         }
-
+        public bool CapNhatLuotDi(int ThetaiID)
+        {
+            return balTheTai.CapnhatLuotDi(ThetaiID);
+        }
+        public bool CapNhatLuotVe(int ThetaiID)
+        {
+            return balTheTai.CapnhatLuotVe(ThetaiID);
+        }
         public int GetKPI(DateTime? dateStart, DateTime? dateEnd, int? Totals)
         {
             int kpiResult = 0;
@@ -82,10 +98,14 @@ namespace GiaoNhan.Controllers
         //4 Lỗi
         //5 Phiếu đã quét
         // 6 Phiếu đã kết thúc
+        // 7 Không có trong danh sách sắp xếp
+        // 8 Chưa tới lượt quét
         public int Insert(string data,string MaTheSL)
         {
             if (Request.Cookies["trakinglogin"] != null)
             {
+              
+
                 var userName = Request.Cookies["trakinglogin"].Value;
                 int accountID = user.GetAccountID(userName).UserID;
                 tbTheTai tbtheTai = JsonConvert.DeserializeObject<tbTheTai>(data);
@@ -102,7 +122,31 @@ namespace GiaoNhan.Controllers
                 {
                     return 5;
                 }
-
+                //Kiểm tra theo lượt
+                var getData = balSapxep.GetLastSapXepconfig();
+                var lstUser = balSapxep.GetListUSer(balSapxep.GetLastSapXepconfig().Position);
+                if (tbtheTai.MaThe.Contains("GN"))
+                {
+                    foreach (var item in lstUser)
+                    {
+                        
+                        var checkInList = lstUser.Where(m => m.Code == tbtheTai.MaThe).FirstOrDefault();
+                        if (checkInList == null)
+                            return 7;
+                        //Kiểm tra lượt trước đó
+                        var indexof = lstUser.ToList().IndexOf(checkInList);
+                        if (indexof > 0)
+                        {
+                            // //Kiểm tra lượt trước đó n-1
+                            int indexprev = indexof - 1;
+                            var current = lstUser.ToList()[indexprev];
+                            var chkdone = balSapxep.Checkdone(current.Code);
+                            if (chkdone == false)
+                                return 8;
+                        }
+                    }
+                }
+                
                 if (getPermission != null)
                 {
                     int getPermissionID = getPermission.PermissionID;

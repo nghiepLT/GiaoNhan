@@ -56,7 +56,7 @@
           <Key>
             <PropertyRef Name="SendmailId" />
           </Key>
-          <Property Name="SendmailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SendmailId" Type="int" Nullable="false" />
           <Property Name="NgayGui" Type="datetime" />
           <Property Name="IdCar" Type="int" />
           <Property Name="Type" Type="int" />
@@ -198,6 +198,16 @@
           <Property Name="Count" Type="int" />
           <Property Name="Type" Type="int" />
         </EntityType>
+        <EntityType Name="tbReceivedMessage">
+          <Key>
+            <PropertyRef Name="ReceivedMessageID" />
+          </Key>
+          <Property Name="ReceivedMessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdReceived" Type="int" />
+          <Property Name="UserReceived" Type="nvarchar" MaxLength="200" />
+          <Property Name="Time" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="tbRole">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -213,6 +223,22 @@
           <Property Name="RoleId" Type="int" />
           <Property Name="MenuId" Type="int" />
         </EntityType>
+        <EntityType Name="tbSapXepConfig">
+          <Key>
+            <PropertyRef Name="SapXepConfigID" />
+          </Key>
+          <Property Name="SapXepConfigID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayCapNhat" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbSapXepDetail">
+          <Key>
+            <PropertyRef Name="SapXepDetail" />
+          </Key>
+          <Property Name="SapXepDetail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayCapNhat" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbTheTai">
           <Key>
             <PropertyRef Name="ThetaiID" />
@@ -226,6 +252,8 @@
           <Property Name="Count" Type="int" />
           <Property Name="UserId" Type="int" />
           <Property Name="KPI" Type="int" />
+          <Property Name="Luotdi" Type="datetime" />
+          <Property Name="Luotve" Type="datetime" />
         </EntityType>
         <EntityType Name="tbTheTaiChiTiet">
           <Key>
@@ -291,8 +319,11 @@
           <EntitySet Name="tbProducts" EntityType="Self.tbProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbReceived" EntityType="Self.tbReceived" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbReceivedDetail" EntityType="Self.tbReceivedDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbReceivedMessage" EntityType="Self.tbReceivedMessage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbRole" EntityType="Self.tbRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbRoleMenu" EntityType="Self.tbRoleMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbSapXepConfig" EntityType="Self.tbSapXepConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbSapXepDetail" EntityType="Self.tbSapXepDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTheTai" EntityType="Self.tbTheTai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTheTaiChiTiet" EntityType="Self.tbTheTaiChiTiet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTracking" EntityType="Self.tbTracking" Schema="dbo" store:Type="Tables" />
@@ -451,6 +482,9 @@
           <EntitySet Name="bdHanhtrinhbaotris" EntityType="KpiManagerModel.bdHanhtrinhbaotri" />
           <EntitySet Name="bdDichVudangkiembaoduongs" EntityType="KpiManagerModel.bdDichVudangkiembaoduong" />
           <EntitySet Name="bdSendMails" EntityType="KpiManagerModel.bdSendMail" />
+          <EntitySet Name="tbReceivedMessages" EntityType="KpiManagerModel.tbReceivedMessage" />
+          <EntitySet Name="tbSapXepConfigs" EntityType="KpiManagerModel.tbSapXepConfig" />
+          <EntitySet Name="tbSapXepDetails" EntityType="KpiManagerModel.tbSapXepDetail" />
         </EntityContainer>
         <EntityType Name="tbTheTai">
           <Key>
@@ -465,6 +499,8 @@
           <Property Name="Count" Type="Int32" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="KPI" Type="Int32" />
+          <Property Name="Luotdi" Type="DateTime" Precision="3" />
+          <Property Name="Luotve" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tbTheTaiChiTiet">
           <Key>
@@ -594,6 +630,32 @@
           <Property Name="NgayGui" Type="DateTime" Precision="3" />
           <Property Name="IdCar" Type="Int32" />
           <Property Name="Type" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbReceivedMessage">
+          <Key>
+            <PropertyRef Name="ReceivedMessageID" />
+          </Key>
+          <Property Name="ReceivedMessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdReceived" Type="Int32" />
+          <Property Name="UserReceived" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbSapXepConfig">
+          <Key>
+            <PropertyRef Name="SapXepConfigID" />
+          </Key>
+          <Property Name="SapXepConfigID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Position" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayCapNhat" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbSapXepDetail">
+          <Key>
+            <PropertyRef Name="SapXepDetail" />
+          </Key>
+          <Property Name="SapXepDetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Position" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayCapNhat" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -738,6 +800,8 @@
           <EntitySetMapping Name="tbTheTais">
             <EntityTypeMapping TypeName="KpiManagerModel.tbTheTai">
               <MappingFragment StoreEntitySet="tbTheTai">
+                <ScalarProperty Name="Luotve" ColumnName="Luotve" />
+                <ScalarProperty Name="Luotdi" ColumnName="Luotdi" />
                 <ScalarProperty Name="KPI" ColumnName="KPI" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
@@ -889,6 +953,35 @@
                 <ScalarProperty Name="IdCar" ColumnName="IdCar" />
                 <ScalarProperty Name="NgayGui" ColumnName="NgayGui" />
                 <ScalarProperty Name="SendmailId" ColumnName="SendmailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbReceivedMessages">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbReceivedMessage">
+              <MappingFragment StoreEntitySet="tbReceivedMessage">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="UserReceived" ColumnName="UserReceived" />
+                <ScalarProperty Name="IdReceived" ColumnName="IdReceived" />
+                <ScalarProperty Name="ReceivedMessageID" ColumnName="ReceivedMessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbSapXepConfigs">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbSapXepConfig">
+              <MappingFragment StoreEntitySet="tbSapXepConfig">
+                <ScalarProperty Name="NgayCapNhat" ColumnName="NgayCapNhat" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="SapXepConfigID" ColumnName="SapXepConfigID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbSapXepDetails">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbSapXepDetail">
+              <MappingFragment StoreEntitySet="tbSapXepDetail">
+                <ScalarProperty Name="NgayCapNhat" ColumnName="NgayCapNhat" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="SapXepDetail" ColumnName="SapXepDetail" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

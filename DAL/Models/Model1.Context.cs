@@ -51,5 +51,8 @@ namespace DAL.Models
         public virtual DbSet<bdHanhtrinhbaotri> bdHanhtrinhbaotris { get; set; }
         public virtual DbSet<bdDichVudangkiembaoduong> bdDichVudangkiembaoduongs { get; set; }
         public virtual DbSet<bdSendMail> bdSendMails { get; set; }
+        public virtual DbSet<tbReceivedMessage> tbReceivedMessages { get; set; }
+        public virtual DbSet<tbSapXepConfig> tbSapXepConfigs { get; set; }
+        public virtual DbSet<tbSapXepDetail> tbSapXepDetails { get; set; }
     }
 }

@@ -23,5 +23,7 @@ namespace DAL.Models
         public Nullable<int> Count { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> KPI { get; set; }
+        public Nullable<System.DateTime> Luotdi { get; set; }
+        public Nullable<System.DateTime> Luotve { get; set; }
     }
 }

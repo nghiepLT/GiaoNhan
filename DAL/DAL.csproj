@@ -62,6 +62,7 @@
     <Compile Include="DAL_Received.cs" />
     <Compile Include="Dal_Report.cs" />
     <Compile Include="DAL_Role.cs" />
+    <Compile Include="DAL_SapXep.cs" />
     <Compile Include="DAL_Service.cs" />
     <Compile Include="DAL_TheTai.cs" />
     <Compile Include="DAL_ThongKe.cs" />
@@ -141,10 +142,19 @@
     <Compile Include="Models\tbReceivedDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbReceivedMessage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbRole.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbRoleMenu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbSapXepConfig.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbSapXepDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbTheTai.cs">
@@ -168,6 +178,7 @@
     <Compile Include="ViewModels\VM_Permission_Menu.cs" />
     <Compile Include="ViewModels\VM_Received.cs" />
     <Compile Include="ViewModels\VM_Role.cs" />
+    <Compile Include="ViewModels\VM_SapXepUser.cs" />
     <Compile Include="ViewModels\VM_Service.cs" />
     <Compile Include="ViewModels\VM_TheTai.cs" />
     <Compile Include="ViewModels\VM_Thetaichitietcs.cs" />

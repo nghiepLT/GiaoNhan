@@ -68,5 +68,13 @@ namespace BAL
         {
             return dalTheTai.UpdateCancle(TheTaiChiTietID, Description);
         }
+        public bool CapnhatLuotDi(int ThetaiID)
+        {
+            return dalTheTai.CapnhatLuotDi(ThetaiID);
+        }
+        public bool CapnhatLuotVe(int ThetaiID)
+        {
+            return dalTheTai.CapnhatLuotVe(ThetaiID);
+        }
     }
 }
