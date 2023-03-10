@@ -64,17 +64,21 @@ namespace BAL
         {
             return dalTheTai.CheckMaHopLe(MaThe);
         }
-        public bool UpdateCancle(int TheTaiChiTietID, string Description)
+        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type)
         {
-            return dalTheTai.UpdateCancle(TheTaiChiTietID, Description);
+            return dalTheTai.UpdateCancle(TheTaiChiTietID, Description, Type);
         }
         public bool CapnhatLuotDi(int ThetaiID)
         {
             return dalTheTai.CapnhatLuotDi(ThetaiID);
         }
-        public bool CapnhatLuotVe(int ThetaiID)
+        public bool CapnhatLuotVe(string  Code)
         {
-            return dalTheTai.CapnhatLuotVe(ThetaiID);
+            return dalTheTai.CapnhatLuotVe(Code);
+        }
+        public bool KiemTraGiaoHetPhieu(string Code)
+        {
+            return dalTheTai.KiemTraGiaoHetPhieu(Code);
         }
     }
 }

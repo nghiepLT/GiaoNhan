@@ -32,5 +32,25 @@ namespace BAL
         {
             return dalSapxep.Checkdone(Mathe);
         }
+        public bool CreateSapXepDetail()
+        {
+            return dalSapxep.CreateSapXepDetail();
+        }
+        public tbSapXepDetail GetSapXepDetail()
+        {
+            return dalSapxep.GetSapXepDetail();
+        }
+        public bool CapNhatSapXepDetail(int ThetaiID, int Status)
+        {
+            return dalSapxep.CapNhatSapXepDetail(ThetaiID, Status);
+        }
+        public tbUSer GetUserIdByCode(string Code)
+        {
+            return dalSapxep.GetUserIdByCode(Code);
+        }
+        public IEnumerable<tbSapXepDetail> GetListSapXepDetail()
+        {
+            return dalSapxep.GetListSapXepDetail();
+        }
     }
 }

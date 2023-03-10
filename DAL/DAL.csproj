@@ -178,6 +178,7 @@
     <Compile Include="ViewModels\VM_Permission_Menu.cs" />
     <Compile Include="ViewModels\VM_Received.cs" />
     <Compile Include="ViewModels\VM_Role.cs" />
+    <Compile Include="ViewModels\VM_SapXepDetail.cs" />
     <Compile Include="ViewModels\VM_SapXepUser.cs" />
     <Compile Include="ViewModels\VM_Service.cs" />
     <Compile Include="ViewModels\VM_TheTai.cs" />

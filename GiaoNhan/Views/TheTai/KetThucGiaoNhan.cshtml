@@ -12,6 +12,19 @@
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Kết thúc phiếu</h3>
+                        @if (ViewBag.Check == false)
+                        {
+                            <a class="float-right btn btn-sm btn-danger" onclick="ketthucluot()">
+                                Kết thúc lượt
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="float-right btn btn-sm btn-danger" onclick="ketthucluot()" style="pointer-events:none;">
+                                Kết thúc lượt
+                            </a>
+                        }
+
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -73,7 +86,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                <textarea rows="3" style="width:100%;min-width:100%" class="form-control" placeholder="Nhập lý do hủy..." id="txtReason"></textarea>
+                <textarea rows="3" style="width:100%;min-width:100%" class="form-control" placeholder="Ghi chú..." id="txtReason"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button onclick="UpdateCancle()" type="button" class="btn btn-primary">Cập nhật</button>
@@ -107,10 +120,12 @@
         loaddata();
     }
     var slId = 0;
+    var type = 0;
     function UpdateCancle() {
         var param = {
             "TheTaiChiTietID":slId,
-            "Description": $("#txtReason").val()
+            "Description": $("#txtReason").val(),
+            "Type": type
         }
         $.ajax({
             url: '/TheTai/UpdateCancle',
@@ -119,6 +134,20 @@
             data: param,
             success: function (data, status, xhr) {
                 window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(status);
+            }
+        });
+    }
+
+    function ketthucluot() {
+       
+        $.ajax({
+            url: '/TheTai/CapNhatLuotVe',
+            type: 'POST',
+            dataType: 'html',
+            success: function (data, status, xhr) { 
             },
             error: function (xhr, status, error) {
                 alert(status);

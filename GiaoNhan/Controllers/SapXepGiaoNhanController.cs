@@ -17,6 +17,8 @@ namespace GiaoNhan.Controllers
             var getData = balSapxep.GetLastSapXepconfig();
             if (getData != null)
             ViewBag.Data = balSapxep.GetLastSapXepconfig().Position;
+            ViewBag.ListHistory = balSapxep.GetListSapXepDetail();
+
             return View();
         }
 
@@ -24,7 +26,6 @@ namespace GiaoNhan.Controllers
         {
             var getsplt = array.Split(',');
             tbSapXepConfig tbspconfig = new tbSapXepConfig();
-           
             tbspconfig.Position = array;
             tbspconfig.NgayCapNhat = DateTime.Now;
             return balSapxep.SapXepInsert(tbspconfig);

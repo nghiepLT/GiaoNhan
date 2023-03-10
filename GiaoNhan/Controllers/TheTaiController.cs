@@ -25,14 +25,17 @@ namespace GiaoNhan.Controllers
         {
             ViewBag.ListTheTai = balTheTai.GetGroupTheTai();
             ViewBag.ListTheTai2 = balTheTai.GetGroupTheTaiwait();
-          
+            balSapxep.CreateSapXepDetail();
             return View();
         }
         public ActionResult LoadSapXep()
         {
-            var getData = balSapxep.GetLastSapXepconfig();
+            //var getData = balSapxep.GetLastSapXepconfig();
+            //if (getData != null)
+            //    ViewBag.ListUSer = balSapxep.GetListUSer(balSapxep.GetLastSapXepconfig().Position);
+            var getData = balSapxep.GetSapXepDetail();
             if (getData != null)
-                ViewBag.ListUSer = balSapxep.GetListUSer(balSapxep.GetLastSapXepconfig().Position);
+                ViewBag.ListUser = balSapxep.GetListUSer(getData.Position);
             return PartialView();
         }
         public VM_Json GetJsonData(string spx)
@@ -66,9 +69,11 @@ namespace GiaoNhan.Controllers
         {
             return balTheTai.CapnhatLuotDi(ThetaiID);
         }
-        public bool CapNhatLuotVe(int ThetaiID)
+        public bool CapNhatLuotVe()
         {
-            return balTheTai.CapnhatLuotVe(ThetaiID);
+            var userName = Request.Cookies["trakinglogin"].Value;
+            ViewBag.accountID = user.GetAccountID(userName).Code;
+            return balTheTai.CapnhatLuotVe(ViewBag.accountID);
         }
         public int GetKPI(DateTime? dateStart, DateTime? dateEnd, int? Totals)
         {
@@ -104,8 +109,7 @@ namespace GiaoNhan.Controllers
         {
             if (Request.Cookies["trakinglogin"] != null)
             {
-              
-
+               
                 var userName = Request.Cookies["trakinglogin"].Value;
                 int accountID = user.GetAccountID(userName).UserID;
                 tbTheTai tbtheTai = JsonConvert.DeserializeObject<tbTheTai>(data);
@@ -123,13 +127,12 @@ namespace GiaoNhan.Controllers
                     return 5;
                 }
                 //Kiểm tra theo lượt
-                var getData = balSapxep.GetLastSapXepconfig();
-                var lstUser = balSapxep.GetListUSer(balSapxep.GetLastSapXepconfig().Position);
+                var getData = balSapxep.GetSapXepDetail();
+                var lstUser = balSapxep.GetListUSer(getData.Position);
                 if (tbtheTai.MaThe.Contains("GN"))
                 {
                     foreach (var item in lstUser)
                     {
-                        
                         var checkInList = lstUser.Where(m => m.Code == tbtheTai.MaThe).FirstOrDefault();
                         if (checkInList == null)
                             return 7;
@@ -140,8 +143,7 @@ namespace GiaoNhan.Controllers
                             // //Kiểm tra lượt trước đó n-1
                             int indexprev = indexof - 1;
                             var current = lstUser.ToList()[indexprev];
-                            var chkdone = balSapxep.Checkdone(current.Code);
-                            if (chkdone == false)
+                           if(current.Status==0)
                                 return 8;
                         }
                     }
@@ -181,6 +183,9 @@ namespace GiaoNhan.Controllers
                             ckhTracking.DateEnd = DateTime.Now;
                         ckhTracking.KPI = tracking.GetKPI(ckhTracking.DateStart, ckhTracking.DateEnd, ckhTracking.Count, type);
                         balTheTai.UpdateData(ckhTracking);
+                        //Cập nhật Sắp xếp Detail
+                        var getuserid = balSapxep.GetUserIdByCode(tbtheTai.MaThe);
+                        balSapxep.CapNhatSapXepDetail(getuserid.UserID, 1);
                         return 10; //n2fix 1=>10
                     }
                 }
@@ -220,6 +225,7 @@ namespace GiaoNhan.Controllers
             var userName = Request.Cookies["trakinglogin"].Value; 
             ViewBag.accountID = user.GetAccountID(userName).Code;
             var model = user.GetAll().Where(m => m.Code!=null && m.Code.Contains("GN")  && m.UserID!= 1019);
+            ViewBag.Check = balTheTai.KiemTraGiaoHetPhieu(ViewBag.accountID);
             return View(model);
         }
 
@@ -238,9 +244,9 @@ namespace GiaoNhan.Controllers
             return balTheTai.UpdateStatus(TheTaiChiTietID);
         }
 
-        public bool UpdateCancle(int TheTaiChiTietID,string Description)
+        public bool UpdateCancle(int TheTaiChiTietID,string Description,int Type)
         {
-            return balTheTai.UpdateCancle(TheTaiChiTietID, Description);
+            return balTheTai.UpdateCancle(TheTaiChiTietID, Description, Type);
         }
     }
 }

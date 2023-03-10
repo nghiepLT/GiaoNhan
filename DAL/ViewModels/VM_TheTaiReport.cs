@@ -17,6 +17,8 @@ namespace DAL.ViewModels
         public Nullable<int> UserId { get; set; }
         public int ToTalTimes { get; set; }
         public string TongThoigian { get; set; }
+        public DateTime Luotdi { get; set; }
+        public DateTime Luotve { get; set; }
         public List<tbTheTaiChiTiet> lstTheTaiChiTiet { get; set; } = new List<tbTheTaiChiTiet>();
     } 
 }

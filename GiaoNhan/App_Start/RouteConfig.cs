@@ -30,7 +30,7 @@ namespace GiaoNhan
             routes.MapRoute(name: "Thống kê chi phí", url: "thong-ke-chi-phi", defaults: new { controller = "Report", action = "ThongKeChiPhi" });
             routes.MapRoute(name: "Thống kê bảo trì", url: "thong-ke-bao-tri", defaults: new { controller = "Report", action = "ThongKeQuangDuong" });
 
-            routes.MapRoute(name: "Đăng nhập", url: "dang-nhap", defaults: new { controller = "Login", action = "Index" }); 
+            routes.MapRoute(name: "Sắp xếp giao nhận", url: "sap-xep-giao-nhan", defaults: new { controller = "SapXepGiaoNhan", action = "SapXep" }); 
 
             routes.MapRoute(
                 name: "Default",

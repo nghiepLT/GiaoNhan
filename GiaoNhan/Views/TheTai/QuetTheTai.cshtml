@@ -81,12 +81,7 @@
                                                     Số lượng
                                                 </th>
                                             }
-                                            <th>
-                                                Lượt đi
-                                            </th>
-                                            <th>
-                                                Lượt về
-                                            </th>
+                                          
                                         </tr>
                                     </thead>
                                     <tbody id="tbody"></tbody>
@@ -154,12 +149,14 @@
         });
     }
     function InsertData() {
+        $("#ip_0").trigger("click");
         if (slThetai == "" && $("#txtScan").val().includes("-L") && lstRadTheTai.length > 0) {
             swal("Vui lòng chọn thẻ tài");
         }
+
         var param = {
             "MaThe": $("#txtScan").val()
-        }
+        } 
         $.ajax({
             url: '/TheTai/Insert',
             type: 'POST',
@@ -305,6 +302,7 @@
             dataType: 'html',
             success: function (data, status, xhr) {
                 loadTracking();
+                LoadSapXep();
             },
             error: function (xhr, status, error) {
                 alert(status);

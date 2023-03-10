@@ -31,7 +31,7 @@ namespace GiaoNhan.Controllers
         public void Logout()
         {
             var cokie = Request.Cookies["trakinglogin"];
-            cokie.Expires = DateTime.Now.AddDays(-2);
+            cokie.Expires = DateTime.Now.AddDays(-1);
             cokie.Value = null;
             Response.Cookies.Add(cokie);
         }

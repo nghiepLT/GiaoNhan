@@ -211,12 +211,19 @@ namespace DAL
             return false ;
         }
 
-        public bool UpdateCancle(int TheTaiChiTietID, string Description)
+        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type)
         {
             try
             {
                 tbTheTaiChiTiet ttct = dbContext.tbTheTaiChiTiets.Find(TheTaiChiTietID);
-                ttct.Status = -1;
+                if (Type == 1)
+                {
+                    ttct.Status = 1;
+                }
+                else
+                {
+                    ttct.Status = -1; 
+                } 
                 ttct.Description = Description;
                 ttct.DateEnd = DateTime.Now;
                 dbContext.SaveChanges();
@@ -243,11 +250,34 @@ namespace DAL
             }
             return false;
         }
-        public bool CapnhatLuotVe(int ThetaiID)
+        public bool CapnhatLuotVe(string  Code)
         {
             try
             {
-                var tbthetai = dbContext.tbTheTais.Find(ThetaiID);
+                tbTheTai gettbthetai = dbContext.tbTheTais.Where(m => m.MaThe == Code).FirstOrDefault();
+                var tbthetai = dbContext.tbTheTais.Find(gettbthetai.ThetaiID);
+
+                tbSapXepDetail dt = dbContext.tbSapXepDetails.ToList().Where(m => m.NgayCapNhat.Value.Date == DateTime.Now.Date).FirstOrDefault();
+                var position = dt.Position;
+                var getSplit = position.Split(',');
+                string newposition = "";
+                var tuser = dbContext.tbUSers.Where(m => m.Code == tbthetai.MaThe).FirstOrDefault();
+                foreach (var item in getSplit)
+                {
+                    if (item.Contains(tuser.UserID.ToString()))
+                    {
+                        var newstr = "";
+                        newstr = item.Split('_')[0] + "_" + 0;
+                        newposition += newstr + ",";
+                    }
+                    else
+                    {
+                        newposition += item + ",";
+                    }
+
+                }
+                newposition = newposition.Substring(0, newposition.Length - 1);
+                dt.Position = newposition;
                 tbthetai.Luotve = DateTime.Now;
                 dbContext.SaveChanges();
                 return true;
@@ -255,6 +285,18 @@ namespace DAL
             catch (Exception ex)
             {
 
+            }
+            return false;
+        }
+
+        public bool KiemTraGiaoHetPhieu(string Code)
+        {
+            tbTheTai tbuser = dbContext.tbTheTais.Where(m => m.MaThe == Code).FirstOrDefault();
+            if (tbuser != null)
+            {
+                var check = dbContext.tbTheTaiChiTiets.Where(m => m.ThetaiID == tbuser.ThetaiID).Any(m => m.DateEnd == null);
+                if (check)
+                    return true;
             }
             return false;
         }

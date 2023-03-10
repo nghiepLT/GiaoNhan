@@ -12,7 +12,7 @@
         if (i == 0)
         {
             
-            <tr style="background-color:#ff0000;color:white">
+            <tr style="background-color:#dc3545 ;color:white">
                 @*<td data-order="@item.TrackingID">@item.TrackingID</td>*@
                 <td class="">@item.MaThe</td>
                 <td class="">
@@ -46,47 +46,7 @@
                         @item.Count
                     </td>
                 }
-                @if (item.DateEnd != null)
-                {
-                    <th>
-
-                        @if (item.Luotdi != DateTime.MinValue)
-                        {
-                            @item.Luotdi.ToString("hh:mm:ss")
-                        }
-                        else
-                        {
-                            <a onclick="batdau('@item.ThetaiID')" class="btn btn-sm btn-primary">
-                                Bắt đầu
-                            </a>
-                        }
-
-                    </th>
-
-                    <th>
-                     @if (item.Luotdi != DateTime.MinValue)
-                     {
-                        if (item.Luotve != DateTime.MinValue)
-                        {
-                           
-                            @item.Luotve.ToString("hh:mm:ss")
-
-                        }
-                        else
-                        {
-                            <a onclick="ketthuc('@item.ThetaiID')" class="btn btn-sm btn-primary">
-                                Kết thúc
-                            </a>
-                        }
-                     }
-                        
-                    </th>
-                }
-                else
-                {
-                    <th></th>
-                    <th></th>
-                }
+                
 
             </tr>
         }
@@ -125,48 +85,7 @@
                         @item.Count
                     </td>
                 }
-                @if (item.DateEnd != null)
-                {
-                    <th>
-
-                        @if (item.Luotdi != DateTime.MinValue)
-                        {
-                            @item.Luotdi.ToString("hh:mm:ss")
-                        }
-                        else
-                        {
-                            <a onclick="batdau('@item.ThetaiID')" class="btn btn-sm btn-primary">
-                                Bắt đầu
-                            </a>
-                        }
-
-                    </th>
-
-                    <th>
-                        @if (item.Luotdi != DateTime.MinValue)
-                        {
-                            if (item.Luotve != DateTime.MinValue)
-                            {
-
-                                @item.Luotve.ToString("hh:mm:ss")
-
-                            }
-                            else
-                            {
-                                <a onclick="ketthuc('@item.ThetaiID')" class="btn btn-sm btn-primary">
-                                    Kết thúc
-                                </a>
-                            }
-                        }
-
-                    </th>
-                }
-                else
-                {
-                    <th></th>
-                    <th></th>
-                }
-
+               
             </tr>
         }
         i++;

@@ -436,30 +436,49 @@ qlqd_img {
 
             .sapxepgn_box ul li div {
                 display: block;
-                width: 100px;
-                height: 100px;
-                box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+                width: 120px;
+                height: 120px;
+                box-shadow: 8px 6px 3px 0px rgb(0 0 0 / 28%), 0 1px 3px rgb(0 0 0 / 32%);
                 margin: 5px 5px;
                 cursor: pointer;
                 position: relative;
+                background-color: #e1e1e1d4;
             }
 
-                .sapxepgn_box ul li div i {
-                    position: absolute;
-                    right: 10px;
-                    top: 10px;
+                .sapxepgn_box ul li div:hover {
+                    box-shadow: 8px 6px 3px 0px rgb(0 0 0 / 68%), 0 1px 3px rgb(0 0 0 / 72%);
                 }
+
+            .sapxepgn_box ul li a {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                background-color: #dc3545;
+                color: white;
+                padding: 0px 8px;
+            }
+
+            .sapxepgn_box ul li div i {
+                /*position: absolute;
+                    right: 10px;
+                    top: 10px;*/
+                color: white;
+                font-size: 12px;
+                position: relative;
+                top: -1px;
+            }
 
             .sapxepgn_box ul li strong {
                 position: absolute;
-                left: 2px;
-                bottom: 2px;
-                background-color: red;
-                width: 17px;
-                height: 17px;
+                left: 0px;
+                bottom: 0px;
+                background-color: #fd7e14;
+                width: 21px;
+                height: 21px;
                 font-size: 12px;
                 color: white;
                 text-align: center;
+                display: none;
             }
 
 .ds_xephangbox {
@@ -479,7 +498,17 @@ qlqd_img {
                 position: relative;
                 margin: 10px 3px;
                 box-shadow: 0 0 1px rgb(0 0 0 / 74%), 0 1px 3px rgb(0 0 0 / 78%);
+                padding: 10px 20px;
+                background-color: #000000bf;
+                color: white;
+                font-weight: bold;
+                border-radius: 0px !important;
             }
+
+                .ds_xephangbox ul li a:hover {
+                    color: white;
+                    background-color: #e2182b;
+                }
 
 .aactive {
     background-color: #dc3545 !important;
@@ -492,24 +521,52 @@ qlqd_img {
     position: absolute;
     left: 10px;
     top: 10px;
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 2px;
+    font-size: 12px;
+    padding: 1px 15px;
 }
 
-.giaonhan_listuser {margin: 0px;padding: 0px;}
+.giaonhan_listuser {
+    margin: 0px;
+    padding: 0px;
+}
 
     .giaonhan_listuser li {
-    display: inline-block;
+        display: inline-block;
     }
 
         .giaonhan_listuser li a {
-        display: block;
-        background-color: #878787;
-        color: white!important;
-        margin: 10px 0px;
-        padding: 5px 15px;
-        font-size: 12px;
-        border-left: 2px solid #6a6a6a;
-        box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 28%);
+            display: block;
+            background-color: #646464;
+            color: white !important;
+            margin: 10px 0px;
+            padding: 5px 15px;
+            font-size: 12px;
+            border-left: 2px solid #6a6a6a;
+            box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 28%);
         }
-        .aactive{
-              background-color: red!important;
-        }
+
+.aactive {
+    background-color: #dc3545 !important;
+    border: 1px solid;
+}
+
+.btn_gn {
+}
+
+.btn_lichsusapxep {
+    background-color: #3c3c3c;
+    color: white;
+    padding: 3px 11px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    display: inline-block;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.btn_lichsusapxep:hover{
+     color: white!important;
+     background-color: #e2182b;
+}

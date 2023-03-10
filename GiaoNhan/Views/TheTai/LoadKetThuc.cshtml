@@ -15,7 +15,7 @@
             <td><strong style="color:#435a39" class="kethucphieu">@item.MaPhieu</strong></td>
             @if (item.Status == 0)
             {
-                <td >
+                <td>
                    @{ 
                        DAL_TheTai dalThetai = new DAL_TheTai();
 
@@ -44,23 +44,29 @@
 }
 
 <script>
-    function updateStatus(id,maphieu,username) {
-        var param = {
-            "TheTaiChiTietID": id
-        }
-        $.ajax({
-            url: '/TheTai/updateStatus',
-            type: 'POST',
-            dataType: 'html',
-            data: param,
-            success: function (data, status, xhr) {
-			saveId(username,maphieu);
-                window.location.reload();
-            },
-            error: function (xhr, status, error) {
-                alert(status);
-            }
-        });
+    function updateStatus(id, maphieu, username) {
+
+        $("#exampleModalLabel").html("Kết thúc phiếu");
+        $("#exampleModal").modal("toggle");
+        type = 1;
+        slId = id;
+        //return;
+        //var param = {
+        //    "TheTaiChiTietID": id
+        //}
+        //$.ajax({
+        //    url: '/TheTai/updateStatus',
+        //    type: 'POST',
+        //    dataType: 'html',
+        //    data: param,
+        //    success: function (data, status, xhr) {
+		//	saveId(username,maphieu);
+        //        window.location.reload();
+        //    },
+        //    error: function (xhr, status, error) {
+        //        alert(status);
+        //    }
+        //});
     }
   function saveId(user,id) 
 		{            
@@ -73,6 +79,7 @@
 		}
     function cancle(id) {
         slId = id;
+        type = 2;
         $("#exampleModal").modal("toggle");
     }
 </script>

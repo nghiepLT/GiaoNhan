@@ -94,7 +94,7 @@ namespace GiaoNhan.Controllers
                         content += "</table>";
                        // sendEmail("minhtn@nguyenkimvn.vn", title, content);
                     }
-                    user.TaoEmailKiemDinh();
+                 //   user.TaoEmailKiemDinh();
                 }
             }
             return PartialView();
