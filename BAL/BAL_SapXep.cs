@@ -12,7 +12,7 @@ namespace BAL
     public class BAL_SapXep
     {
         DAL_SapXep dalSapxep = new DAL_SapXep();
-        public IEnumerable<tbUSer> GetListDSGiaoNhan()
+        public IEnumerable<VM_UserSapXep> GetListDSGiaoNhan()
         {
             return dalSapxep.GetListDSGiaoNhan();
         }
@@ -51,6 +51,18 @@ namespace BAL
         public IEnumerable<tbSapXepDetail> GetListSapXepDetail()
         {
             return dalSapxep.GetListSapXepDetail();
+        }
+        public bool KiemTraTheHoatDong(string Mathe)
+        {
+            return dalSapxep.KiemTraTheHoatDong(Mathe);
+        }
+        public bool SwapCode(string FirstCode, string TwoCode)
+        {
+            return dalSapxep.SwapCode(FirstCode, TwoCode);
+        }
+        public string GetLastPosition()
+        {
+            return dalSapxep.GetLastPosition();
         }
     }
 }

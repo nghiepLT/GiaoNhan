@@ -570,3 +570,10 @@ qlqd_img {
      color: white!important;
      background-color: #e2182b;
 }
+.clickActive{
+    border:2px solid black;
+}
+.disable_sapxep {
+    background-color: #b3b3b3!important;
+    pointer-events: none;
+}

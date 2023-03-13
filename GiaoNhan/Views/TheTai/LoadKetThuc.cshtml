@@ -6,11 +6,11 @@
         <tr>
             @if (item.DateCreate.Date >= DateTime.Now.Date)
             {
-                <td><span>@item.DateCreate.ToString("dd/MM/yyyy")</span></td>
+                <td width="15%"><span>@item.DateCreate.ToString("dd/MM/yyyy hh:mm:ss")</span></td>
             }
             else
             {
-                <td><strong style="color:red">@item.DateCreate.ToString("dd/MM/yyyy")</strong></td>
+                <td width="15%"><strong style="color:red">@item.DateCreate.ToString("dd/MM/yyyy hh:mm:ss")</strong></td>
             }
             <td><strong style="color:#435a39" class="kethucphieu">@item.MaPhieu</strong></td>
             @if (item.Status == 0)
@@ -45,8 +45,7 @@
 
 <script>
     function updateStatus(id, maphieu, username) {
-
-        $("#exampleModalLabel").html("Kết thúc phiếu");
+        $("#expleHuyphieu").html("Kết thúc phiếu");
         $("#exampleModal").modal("toggle");
         type = 1;
         slId = id;
@@ -68,16 +67,17 @@
         //    }
         //});
     }
-  function saveId(user,id) 
-		{            
+  function saveId(user,id)
+		{
 			var ua = navigator.userAgent.toLowerCase();
-			
+
 			var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
-			if(isAndroid) {			
+			if(isAndroid) {
 			Android.nextScreen(user,id);
-			} 
+			}
 		}
-    function cancle(id) {
+  function cancle(id) {
+        $("#expleHuyphieu").html("Hủy phiếu");
         slId = id;
         type = 2;
         $("#exampleModal").modal("toggle");

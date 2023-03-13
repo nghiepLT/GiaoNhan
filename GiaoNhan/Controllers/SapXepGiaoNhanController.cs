@@ -16,7 +16,7 @@ namespace GiaoNhan.Controllers
             ViewBag.ListGiaonhan = balSapxep.GetListDSGiaoNhan().ToList();
             var getData = balSapxep.GetLastSapXepconfig();
             if (getData != null)
-            ViewBag.Data = balSapxep.GetLastSapXepconfig().Position;
+                ViewBag.Data = balSapxep.GetLastPosition();
             ViewBag.ListHistory = balSapxep.GetListSapXepDetail();
 
             return View();
@@ -29,6 +29,16 @@ namespace GiaoNhan.Controllers
             tbspconfig.Position = array;
             tbspconfig.NgayCapNhat = DateTime.Now;
             return balSapxep.SapXepInsert(tbspconfig);
+        }
+
+        public bool KiemTraTheHoatDong(string MaThe)
+        {
+            return balSapxep.KiemTraTheHoatDong(MaThe);
+        }
+
+       public bool SwapCode(string FirstCode,string TwoCode)
+        {
+            return balSapxep.SwapCode(FirstCode, TwoCode);
         }
     }
 }
