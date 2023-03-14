@@ -211,7 +211,7 @@ namespace DAL
             return false ;
         }
 
-        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type)
+        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, int? SoKMPhatSinh)
         {
             try
             {
@@ -226,6 +226,8 @@ namespace DAL
                 } 
                 ttct.Description = Description;
                 ttct.DateEnd = DateTime.Now;
+                ttct.TienPhatSinh = TienPhatSinh.Value;
+                ttct.SoKMPhatSinh = SoKMPhatSinh.Value;
                 dbContext.SaveChanges();
                 return true;
             }
@@ -254,7 +256,7 @@ namespace DAL
         {
             try
             {
-                tbTheTai gettbthetai = dbContext.tbTheTais.Where(m => m.MaThe == Code).FirstOrDefault();
+                tbTheTai gettbthetai = dbContext.tbTheTais.ToList().Where(m => m.MaThe == Code).LastOrDefault();
                 var tbthetai = dbContext.tbTheTais.Find(gettbthetai.ThetaiID);
 
                 tbSapXepDetail dt = dbContext.tbSapXepDetails.ToList().Where(m => m.NgayCapNhat.Value.Date == DateTime.Now.Date).FirstOrDefault();
@@ -291,12 +293,18 @@ namespace DAL
 
         public bool KiemTraGiaoHetPhieu(string Code)
         {
-            tbTheTai tbuser = dbContext.tbTheTais.Where(m => m.MaThe == Code).FirstOrDefault();
+            tbTheTai tbuser = dbContext.tbTheTais.ToList().Where(m => m.MaThe == Code).LastOrDefault();
             if (tbuser != null)
             {
+                if (tbuser.Luotve != null)
+                    return true;
                 var check = dbContext.tbTheTaiChiTiets.Where(m => m.ThetaiID == tbuser.ThetaiID).Any(m => m.DateEnd == null);
                 if (check)
                     return true;
+            }
+            else
+            {
+                return true;
             }
             return false;
         }

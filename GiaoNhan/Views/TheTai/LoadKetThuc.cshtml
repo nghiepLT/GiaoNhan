@@ -17,11 +17,10 @@
             {
                 <td>
                    @{ 
-                       DAL_TheTai dalThetai = new DAL_TheTai();
-
+                       DAL_TheTai dalThetai = new DAL_TheTai(); 
                    }
 
-                    <button class="btn btn-sm btn-primary"  style="margin-right:5px;cursor:pointer;color:#ffffff"  onclick="updateStatus('@item.TheTaiChiTietID','@item.MaPhieu','@dalThetai.GetUserthetaichitiet(item.TheTaiChiTietID)')"   /> <span class="text-white text-primary trangthaigiao">Kết thúc</span>
+                    <button class="btn btn-sm btn-primary"  style="margin-right:5px;cursor:pointer;color:#ffffff"  onclick="updateStatus('@item.TheTaiChiTietID','@item.MaPhieu','@dalThetai.GetUserthetaichitiet(item.TheTaiChiTietID)')" /> <span class="text-white text-primary trangthaigiao">Kết thúc</span>
                     <button class="btn btn-sm btn-danger" style="margin-top:5px;margin-right:5px;cursor:pointer;color:#ffffff" onclick="cancle('@item.TheTaiChiTietID')" /> <span class="text-white text-danger trangthaigiao">Hủy</span>
                  </td>
             }
@@ -36,8 +35,20 @@
             <td>
                 @item.DateEnd
             </td>
-            <td>
-               <strong class="text-danger">@item.Description</strong>
+            <td style="width:20%">
+                @if (item.TienPhatSinh!=null && item.TienPhatSinh!=0)
+                {
+                    <div><span>Tiền phát sinh: </span> @item.TienPhatSinh.ToString("#,##0")</div>
+                }
+                @if (item.SoKMPhatSinh!=null && item.SoKMPhatSinh!=0)
+                {
+                    <div><span>Số KM phát sinh: </span> @item.SoKMPhatSinh.ToString("#,##0")</div>
+                }
+                @if (item.Description != "")
+                {
+                    <span>Ghi chú: </span> <strong class="text-danger">@item.Description</strong>
+                }
+               
             </td>
         </tr>
     }
@@ -45,6 +56,8 @@
 
 <script>
     function updateStatus(id, maphieu, username) {
+        $("#TienPhatSinh").show();
+        $("#SoKMPhatSinh").show();
         $("#expleHuyphieu").html("Kết thúc phiếu");
         $("#exampleModal").modal("toggle");
         type = 1;
@@ -77,9 +90,11 @@
 			}
 		}
   function cancle(id) {
-        $("#expleHuyphieu").html("Hủy phiếu");
-        slId = id;
-        type = 2;
-        $("#exampleModal").modal("toggle");
-    }
+      $("#TienPhatSinh").hide();
+      $("#SoKMPhatSinh").hide();
+      $("#expleHuyphieu").html("Hủy phiếu");
+      slId = id;
+      type = 2;
+      $("#exampleModal").modal("toggle");
+  }
 </script>

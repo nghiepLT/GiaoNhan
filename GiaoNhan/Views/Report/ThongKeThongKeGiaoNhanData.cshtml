@@ -23,6 +23,9 @@
             <th>
                 Tổng thời gian
             </th>
+            <th>
+                Tiền phát sinh
+            </th>
         </tr>
     </thead>
     <tbody id="tbody">
@@ -93,6 +96,12 @@
                         <strong>
                             <i class="fas fa-clock"></i>  @item.TongThoigian
                         </strong>
+                    </td>
+                    <td>
+                        @if(item.TienPhatSinh!=0)
+                        {
+                             @item.TienPhatSinh.ToString("#,##0")
+                        }
                     </td>
                 </tr>
             }

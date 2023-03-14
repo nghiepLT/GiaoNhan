@@ -105,6 +105,7 @@ namespace GiaoNhan.Controllers
         // 6 Phiếu đã kết thúc
         // 7 Không có trong danh sách sắp xếp
         // 8 Chưa tới lượt quét
+        // 9 Chưa kết thúc lượt về 
         public int Insert(string data,string MaTheSL)
         {
             if (Request.Cookies["trakinglogin"] != null)
@@ -136,6 +137,8 @@ namespace GiaoNhan.Controllers
                         var checkInList = lstUser.Where(m => m.Code == tbtheTai.MaThe).FirstOrDefault();
                         if (checkInList == null)
                             return 7;
+                        if (checkInList.Status == 1)
+                            return 9;
                         //Kiểm tra lượt trước đó
                         var indexof = lstUser.ToList().IndexOf(checkInList);
                         if (indexof > 0)
@@ -244,9 +247,13 @@ namespace GiaoNhan.Controllers
             return balTheTai.UpdateStatus(TheTaiChiTietID);
         }
 
-        public bool UpdateCancle(int TheTaiChiTietID,string Description,int Type)
+        public bool UpdateCancle(int TheTaiChiTietID,string Description,int Type,int ? TienPhatSinh,int ? SoKMPhatSinh)
         {
-            return balTheTai.UpdateCancle(TheTaiChiTietID, Description, Type);
+            if (TienPhatSinh == null)
+                TienPhatSinh = 0;
+            if (SoKMPhatSinh == null)
+                SoKMPhatSinh = 0;
+            return balTheTai.UpdateCancle(TheTaiChiTietID, Description, Type, TienPhatSinh, SoKMPhatSinh);
         }
     }
 }

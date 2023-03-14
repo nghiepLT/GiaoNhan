@@ -22,5 +22,8 @@ namespace DAL.Models
         public Nullable<System.DateTime> DateEnd { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> DateCreate { get; set; }
+        public string GhiChuKetThuc { get; set; }
+        public Nullable<int> TienPhatSinh { get; set; }
+        public Nullable<int> SoKMPhatSinh { get; set; }
     }
 }

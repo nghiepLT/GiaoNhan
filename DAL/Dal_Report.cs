@@ -109,7 +109,8 @@ namespace DAL
                              lstTheTaiChiTiet = dbContext.tbTheTaiChiTiets.Where(m => m.ThetaiID == tt.ThetaiID).OrderBy(m=>m.DateEnd.Value).ToList(),
                              Luotve= tt.Luotve.HasValue? tt.Luotve.Value:DateTime.MinValue,
                              ToTalTimes = tt.DateEnd!=null? int.Parse(Math.Round(double.Parse((tt.DateEnd.Value.TimeOfDay.TotalSeconds - tt.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString()):0,
-                             TongThoigian = (tt.DateEnd!=null && dbContext.tbTheTaiChiTiets.OrderBy(m=>m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd != null).LastOrDefault()!=null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - dbContext.tbTheTaiChiTiets.OrderBy(m => m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd!=null).LastOrDefault().DateEnd.Value.TimeOfDay.TotalSeconds).ToString())).ToString())*(-1)):""
+                             TongThoigian = (tt.DateEnd!=null && dbContext.tbTheTaiChiTiets.OrderBy(m=>m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd != null).LastOrDefault()!=null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - dbContext.tbTheTaiChiTiets.OrderBy(m => m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd!=null).LastOrDefault().DateEnd.Value.TimeOfDay.TotalSeconds).ToString())).ToString())*(-1)):"",
+                             TienPhatSinh= int.Parse(dbContext.tbTheTaiChiTiets.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.TienPhatSinh).ToString())
                          }
                        );
 

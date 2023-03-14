@@ -20,5 +20,7 @@ namespace DAL.ViewModels
         public DateTime Luotdi { get; set; }
         public DateTime Luotve { get; set; }
         public List<tbTheTaiChiTiet> lstTheTaiChiTiet { get; set; } = new List<tbTheTaiChiTiet>();
+        public int TienPhatSinh { get; set; }
+        public int SoKMPhatSinh { get; set; }
     } 
 }

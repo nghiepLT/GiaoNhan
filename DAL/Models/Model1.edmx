@@ -267,6 +267,9 @@
           <Property Name="DateEnd" Type="datetime" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="DateCreate" Type="datetime" />
+          <Property Name="GhiChuKetThuc" Type="nvarchar" MaxLength="500" />
+          <Property Name="TienPhatSinh" Type="int" />
+          <Property Name="SoKMPhatSinh" Type="int" />
         </EntityType>
         <EntityType Name="tbTracking">
           <Key>
@@ -514,6 +517,9 @@
           <Property Name="DateEnd" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="GhiChuKetThuc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TienPhatSinh" Type="Int32" />
+          <Property Name="SoKMPhatSinh" Type="Int32" />
         </EntityType>
         <EntityType Name="tbTracking">
           <Key>
@@ -817,6 +823,9 @@
           <EntitySetMapping Name="tbTheTaiChiTiets">
             <EntityTypeMapping TypeName="KpiManagerModel.tbTheTaiChiTiet">
               <MappingFragment StoreEntitySet="tbTheTaiChiTiet">
+                <ScalarProperty Name="SoKMPhatSinh" ColumnName="SoKMPhatSinh" />
+                <ScalarProperty Name="TienPhatSinh" ColumnName="TienPhatSinh" />
+                <ScalarProperty Name="GhiChuKetThuc" ColumnName="GhiChuKetThuc" />
                 <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />

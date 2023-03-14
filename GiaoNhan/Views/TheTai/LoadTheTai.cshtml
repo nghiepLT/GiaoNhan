@@ -46,7 +46,12 @@
                         @item.Count
                     </td>
                 }
-                
+                <td>
+                    @if (item.Luotve != DateTime.MinValue)
+                    {
+                        @item.Luotve
+                    }
+                    </td>
 
             </tr>
         }
@@ -85,7 +90,12 @@
                         @item.Count
                     </td>
                 }
-               
+                <td>
+                    @if (item.Luotve != DateTime.MinValue)
+                    {
+                        @item.Luotve
+                    }
+                </td>
             </tr>
         }
         i++;

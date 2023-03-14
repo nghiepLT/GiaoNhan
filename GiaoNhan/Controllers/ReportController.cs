@@ -26,7 +26,6 @@ namespace GiaoNhan.Controllers
             using (HttpClient client = new HttpClient())
             {
                 string result = client.GetStringAsync(url).Result;
-
             } 
             ViewBag.Permission = Permission.GetALl();
             var model = account.GetAll();

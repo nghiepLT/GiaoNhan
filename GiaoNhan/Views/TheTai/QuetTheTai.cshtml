@@ -81,7 +81,9 @@
                                                     Số lượng
                                                 </th>
                                             }
-                                          
+                                          <th>
+                                              Thời gian về
+                                          </th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody"></tbody>
@@ -176,7 +178,10 @@
                     swal("Mã thẻ tài không có trong danh sách sắp xếp!");
                 }
                 if (data == 8) {
-                    swal("Lượt quét trước chưa làm xong hàng!");
+                    swal("Chưa tới lượt!");
+                }
+                if (data == 9) {
+                    swal("Lượt quét trước chưa kết thúc!");
                 }
                 if (data == 3) {
                     swal({
