@@ -151,7 +151,6 @@
         });
     }
     function InsertData() {
-        $("#ip_0").trigger("click");
         if (slThetai == "" && $("#txtScan").val().includes("-L") && lstRadTheTai.length > 0) {
             swal("Vui lòng chọn thẻ tài");
         }
@@ -182,6 +181,12 @@
                 }
                 if (data == 9) {
                     swal("Lượt quét trước chưa kết thúc!");
+                }
+                if (data == 11) {
+                    swal("Lượt chưa kết thúc, không thể quét thêm");
+                }
+                if (data == 10) {
+                    window.location.reload();
                 }
                 if (data == 3) {
                     swal({
@@ -267,7 +272,7 @@
 
     function LoadSapXep() {
         $.ajax({
-            url: '/TheTai/LoadSapXep',
+            url: '/TheTai/LoadSapXepNew',
             type: 'POST',
             dataType: 'html',
             success: function (data, status, xhr) {
@@ -314,6 +319,13 @@
             }
         });
     }
+
+    const myTimeout = setTimeout(myGreeting, 5000);
+    function myGreeting() {
+        LoadSapXep();
+        setTimeout(myGreeting, 5000);
+    }
+
 </script>
 <style>
     .sptai {

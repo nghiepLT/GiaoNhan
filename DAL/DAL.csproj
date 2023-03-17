@@ -157,6 +157,9 @@
     <Compile Include="Models\tbSapXepDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbSapXepTai.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbTheTai.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -64,9 +64,9 @@ namespace BAL
         {
             return dalTheTai.CheckMaHopLe(MaThe);
         }
-        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, int? SoKMPhatSinh)
+        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, int? SoKMPhatSinh,int? NhanTienMat)
         {
-            return dalTheTai.UpdateCancle(TheTaiChiTietID, Description, Type, TienPhatSinh, SoKMPhatSinh);
+            return dalTheTai.UpdateCancle(TheTaiChiTietID, Description, Type, TienPhatSinh, SoKMPhatSinh, NhanTienMat);
         }
         public bool CapnhatLuotDi(int ThetaiID)
         {
@@ -80,5 +80,10 @@ namespace BAL
         {
             return dalTheTai.KiemTraGiaoHetPhieu(Code);
         }
+        public bool KiemTraKetThucLuot(string MaThe)
+        {
+            return dalTheTai.KiemTraKetThucLuot(MaThe);
+        }
+       
     }
 }

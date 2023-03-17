@@ -30,15 +30,35 @@ namespace GiaoNhan.Controllers
             tbspconfig.NgayCapNhat = DateTime.Now;
             return balSapxep.SapXepInsert(tbspconfig);
         }
-
+        public bool SapxepInsertNew(string array)
+        {
+            var getsplt = array.Split(',');
+            tbSapXepTai tbSapXepTai = new tbSapXepTai();
+            tbSapXepTai.PositionEmpty = array;
+            tbSapXepTai.DateCreate = DateTime.Now;
+            return balSapxep.SapXepInsertNew(tbSapXepTai);
+        }
         public bool KiemTraTheHoatDong(string MaThe)
         {
             return balSapxep.KiemTraTheHoatDong(MaThe);
         }
 
-       public bool SwapCode(string FirstCode,string TwoCode)
+        public bool SwapCode(string FirstCode, string TwoCode)
         {
             return balSapxep.SwapCode(FirstCode, TwoCode);
+        }
+
+        public ActionResult Sapxeptai()
+        {
+            ViewBag.ListGiaonhan = balSapxep.GetListDSGiaoNhan().ToList();
+            var getData = balSapxep.GetLastSapXepTai();
+            if (getData != null)
+            {
+                ViewBag.PositionEmpty = getData.PositionEmpty;
+                ViewBag.PositionDone = getData.PositionDone;
+            }
+            ViewBag.ListHistory = balSapxep.GetListSapXepDetail(); 
+            return View();
         }
     }
 }

@@ -40,9 +40,9 @@ namespace BAL
         {
             return dalSapxep.GetSapXepDetail();
         }
-        public bool CapNhatSapXepDetail(int ThetaiID, int Status)
+        public bool CapNhatSapXepDetail(int UserID, int Status)
         {
-            return dalSapxep.CapNhatSapXepDetail(ThetaiID, Status);
+            return dalSapxep.CapNhatSapXepDetail(UserID, Status);
         }
         public tbUSer GetUserIdByCode(string Code)
         {
@@ -63,6 +63,14 @@ namespace BAL
         public string GetLastPosition()
         {
             return dalSapxep.GetLastPosition();
+        }
+        public bool SapXepInsertNew(tbSapXepTai tbSapXepTai)
+        {
+            return dalSapxep.SapXepInsertNew(tbSapXepTai);
+        }
+        public tbSapXepTai GetLastSapXepTai()
+        {
+            return dalSapxep.GetLastSapXepTai();
         }
     }
 }

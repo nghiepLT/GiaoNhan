@@ -7,6 +7,7 @@ using DAL.Models;
 using DAL.ViewModels;
 using Newtonsoft.Json;
 using System.Net;
+using System.IO;
 
 namespace DAL
 {
@@ -34,8 +35,7 @@ namespace DAL
             catch (Exception ex)
             {
                 return false;
-            }
-
+            } 
         }
         public bool UpdateDataDetail(tbTheTaiChiTiet tbThetaichitiet)
         {
@@ -211,7 +211,7 @@ namespace DAL
             return false ;
         }
 
-        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, int? SoKMPhatSinh)
+        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, int? SoKMPhatSinh,int ? NhanTienMat )
         {
             try
             {
@@ -228,7 +228,37 @@ namespace DAL
                 ttct.DateEnd = DateTime.Now;
                 ttct.TienPhatSinh = TienPhatSinh.Value;
                 ttct.SoKMPhatSinh = SoKMPhatSinh.Value;
+                ttct.NhanTienMat = NhanTienMat.Value;
                 dbContext.SaveChanges();
+                //
+                string querySoPhieu = "";
+                string querySoTien = "";
+                string querySoKM = "";
+                string queryNotePhieu = "";
+                string queryTienMat = "";
+                querySoPhieu = "sopx=" + ttct.MaPhieu;
+                if (ttct.TienPhatSinh != 0)
+                    querySoTien = "&sotien=" + ttct.TienPhatSinh;
+                if (ttct.SoKMPhatSinh != 0)
+                    querySoKM = "&sokm=" + ttct.SoKMPhatSinh;
+                if (ttct.Description != "")
+                    queryNotePhieu = "&notephieu=" + ttct.Description;
+                if (ttct.NhanTienMat != 0)
+                    queryTienMat = "&tienmat=" + 1;
+                if (ttct.TienPhatSinh!=0 || ttct.SoKMPhatSinh!=0 || ttct.Description != "" || ttct.NhanTienMat!=0)
+                {
+                     var url = "http://192.168.117.214:8008/jsphieuve.asp?" + querySoPhieu+querySoTien+querySoKM+queryNotePhieu+queryTienMat;
+                   // var url = "http://192.168.117.117/jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
+
+                    // WebRequest request = HttpWebRequest.Create(url);
+                    HttpWebRequest webRequest =
+    WebRequest.Create(url) as HttpWebRequest;
+
+                    webRequest.Credentials = CredentialCache.DefaultCredentials;
+
+                    HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
+                }
+              
                 return true;
             }
             catch(Exception ex)
@@ -257,30 +287,27 @@ namespace DAL
             try
             {
                 tbTheTai gettbthetai = dbContext.tbTheTais.ToList().Where(m => m.MaThe == Code).LastOrDefault();
-                var tbthetai = dbContext.tbTheTais.Find(gettbthetai.ThetaiID);
-
-                tbSapXepDetail dt = dbContext.tbSapXepDetails.ToList().Where(m => m.NgayCapNhat.Value.Date == DateTime.Now.Date).FirstOrDefault();
-                var position = dt.Position;
-                var getSplit = position.Split(',');
-                string newposition = "";
-                var tuser = dbContext.tbUSers.Where(m => m.Code == tbthetai.MaThe).FirstOrDefault();
+                var tbthetai = dbContext.tbTheTais.Find(gettbthetai.ThetaiID); 
+                tbthetai.Luotve = DateTime.Now;
+                tbUSer tbuser = dbContext.tbUSers.Where(m => m.Code == Code).FirstOrDefault();
+                //Cap nhật position
+                tbSapXepTai sapxeptai = dbContext.tbSapXepTais.FirstOrDefault();
+                var getSplit = sapxeptai.PositionDone.Split(',');
+                string newPostionDone = "";
                 foreach (var item in getSplit)
                 {
-                    if (item.Contains(tuser.UserID.ToString()))
+                    if (item != tbuser.UserID.ToString())
                     {
-                        var newstr = "";
-                        newstr = item.Split('_')[0] + "_" + 0;
-                        newposition += newstr + ",";
+                        newPostionDone += item + ",";
                     }
-                    else
-                    {
-                        newposition += item + ",";
-                    }
-
                 }
-                newposition = newposition.Substring(0, newposition.Length - 1);
-                dt.Position = newposition;
-                tbthetai.Luotve = DateTime.Now;
+                if (newPostionDone != "")
+                    newPostionDone = newPostionDone.Substring(0, newPostionDone.Length - 1);
+                sapxeptai.PositionDone = newPostionDone;
+                if (sapxeptai.PositionEmpty != "")
+                    sapxeptai.PositionEmpty += "," + tbuser.UserID.ToString();
+                else
+                    sapxeptai.PositionEmpty +=tbuser.UserID.ToString();
                 dbContext.SaveChanges();
                 return true;
             }
@@ -306,6 +333,16 @@ namespace DAL
             {
                 return true;
             }
+            return false;
+        }
+
+        public bool KiemTraKetThucLuot(string MaThe)
+        {
+            tbTheTaiChiTiet ttct = dbContext.tbTheTaiChiTiets.ToList().Where(m => m.MaThe == MaThe).LastOrDefault();
+            if (ttct == null)
+                return false;
+            if (ttct.DateEnd == null)
+                return true;
             return false;
         }
     }

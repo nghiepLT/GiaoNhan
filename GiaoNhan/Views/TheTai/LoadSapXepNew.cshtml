@@ -1,0 +1,54 @@
+﻿@if (ViewBag.ListUSer != null)
+{
+    <div class="text-black text-bold text-capitalize"> 
+     <i class="fas fa-truck-loading"></i>   Danh sách tài chờ xếp hàng
+    </div>
+    <ul class="giaonhan_listuser">
+        @foreach (var item in ViewBag.ListUSer)
+        {
+            <li>
+                @if (item.Status == 1)
+                {
+                    <a class="aactive">
+                        @item.Code
+                    </a>
+                }
+                else
+                {
+                    <a>
+                        @item.Code
+                    </a>
+                }
+            </li>
+        }
+    </ul>
+
+}
+
+<hr />
+@if (ViewBag.ListUserDone != null)
+{
+    <div class="text-danger text-bold text-capitalize">
+        <i class="fas fa-truck"></i>  Danh sách tài đang  đi
+    </div>
+    <ul class="giaonhan_listuser">
+        @foreach (var item in ViewBag.ListUserDone)
+        {
+            <li>
+                @if (item.Status == 1)
+                {
+                    <a class="aactive gndone">
+                        @item.Code
+                    </a>
+                }
+                else
+                {
+                    <a class="gndone">
+                        @item.Code
+                    </a>
+                }
+            </li>
+        }
+    </ul>
+}
+<hr />

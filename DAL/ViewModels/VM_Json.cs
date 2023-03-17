@@ -13,5 +13,6 @@ namespace DAL.ViewModels
         public string NgayPX { get; set; }
         public string NgayXuatHD { get; set; }
         public string MaNVHD { get; set; }
+        public float  SOKM { get; set; }
     }
 }

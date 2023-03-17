@@ -25,5 +25,7 @@ namespace DAL.Models
         public string GhiChuKetThuc { get; set; }
         public Nullable<int> TienPhatSinh { get; set; }
         public Nullable<int> SoKMPhatSinh { get; set; }
+        public Nullable<int> NhanTienMat { get; set; }
+        public Nullable<double> SOKM { get; set; }
     }
 }

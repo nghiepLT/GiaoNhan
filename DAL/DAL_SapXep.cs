@@ -42,11 +42,36 @@ namespace DAL
                          {
                              Code=u.Code,
                              UserID=u.UserID,
-                             Status=GetStatusByUserId(u.UserID)
+                             Status=GetStatusByUserId(u.UserID),
+                             EmployeeName=u.EmployeeName
                          }
 
                        ).ToList();
             return model.Where(m => !string.IsNullOrEmpty(m.Code) && m.Code.Contains("GN"));
+        }
+
+        public bool SapXepInsertNew(tbSapXepTai tbSapXepTai)
+        {
+            try
+            {
+                KpiManagerEntities db = new KpiManagerEntities();
+                if (db.tbSapXepTais.Count() == 0)
+                {
+                    db.tbSapXepTais.Add(tbSapXepTai);
+                }
+                else
+                {
+                    var edit = db.tbSapXepTais.FirstOrDefault();
+                    edit.DateCreate = DateTime.Now;
+                    edit.PositionEmpty = tbSapXepTai.PositionEmpty;
+                }
+                db.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
 
         public bool SapXepInsert(tbSapXepConfig tbconfig)
@@ -65,16 +90,36 @@ namespace DAL
                     edit.NgayCapNhat = DateTime.Now;
                     edit.Position = tbconfig.Position;
                     //Cập nhật con
-                    tbSapXepDetail sxdt = db.tbSapXepDetails.ToList().Where(m => m.NgayCapNhat.Value.Date == DateTime.Now.Date).FirstOrDefault();
+                    tbSapXepDetail sxdt = db.tbSapXepDetails.ToList().Where(m => m.NgayCapNhat.Value.Date == DateTime.Now.Date).LastOrDefault();
                     var getsplit = edit.Position.Split(',');
                     string newPosition = "";
                     foreach (var item in getsplit)
                     {
                         var index = getsplit.ToList().IndexOf(item);
+                        int giatri = 0;
+                        //Kiem tra
+                        var lst2 = sxdt.Position.Split(',').ToList(); 
+                        foreach (var item2 in lst2)
+                        {
+                            giatri = 0;
+                            if (item2.Contains(item))
+                            {
+                                var getsplt2 = item2.Split('_');
+                                if (getsplt2[1] == "1")
+                                {
+                                    giatri = 1;
+                                    break;
+                                }
+                                else
+                                {
+                                    giatri = 0;
+                                }
+                            }
+                        }
                         if (index < getsplit.Length - 1)
-                            newPosition += item + "_" + "0" + ",";
+                            newPosition += item + "_" + giatri + ",";
                         else
-                            newPosition += item + "_" + "0";
+                            newPosition += item + "_" + giatri;
                     }
                     if (sxdt == null)
                     {
@@ -104,7 +149,11 @@ namespace DAL
             KpiManagerEntities db = new KpiManagerEntities();
             return db.tbSapXepConfigs.ToList().LastOrDefault();
         }
-
+        public tbSapXepTai GetLastSapXepTai()
+        {
+            KpiManagerEntities db = new KpiManagerEntities();
+            return db.tbSapXepTais.FirstOrDefault();
+        }
         public string GetLastPosition()
         {
             KpiManagerEntities db = new KpiManagerEntities();
@@ -131,23 +180,26 @@ namespace DAL
         }
         public IEnumerable<VM_SapXepUser> GetListUSer(string position)
         {
-            KpiManagerEntities db = new KpiManagerEntities();
-            var getSplt = position.Split(',');
             List<VM_SapXepUser> lstUser = new List<VM_SapXepUser>();
-            foreach(var item in getSplt)
+            if (position != null)
             {
-                var getsplt2 = item.Split('_');
+                KpiManagerEntities db = new KpiManagerEntities();
+                var getSplt = position.Split(',');
 
-                tbUSer tbuser = db.tbUSers.ToList().Where(m => m.UserID.ToString() == getsplt2[0]).FirstOrDefault();
-                VM_SapXepUser VM_SapXepUser = new VM_SapXepUser();
-                VM_SapXepUser.UserID = tbuser.UserID;
-                VM_SapXepUser.Code = tbuser.Code;
-                //Kiểm tra the tài 
-                if (getsplt2[1] == "0")
-                    VM_SapXepUser.Status = 0;
-                else
-                    VM_SapXepUser.Status = 1;
-                lstUser.Add(VM_SapXepUser);
+                foreach (var item in getSplt)
+                {
+
+                    tbUSer tbuser = db.tbUSers.ToList().Where(m => m.UserID.ToString() == item).FirstOrDefault();
+                    VM_SapXepUser VM_SapXepUser = new VM_SapXepUser();
+                    if (tbuser != null)
+                    {
+                        VM_SapXepUser.UserID = tbuser.UserID;
+                        VM_SapXepUser.Code = tbuser.Code;
+
+                        lstUser.Add(VM_SapXepUser);
+                    }
+
+                }
             }
             return lstUser;
         }
@@ -195,35 +247,35 @@ namespace DAL
             KpiManagerEntities db = new KpiManagerEntities();
             tbSapXepDetail dt = db.tbSapXepDetails.ToList().Where(m => m.NgayCapNhat.Value.Date == DateTime.Now.Date).FirstOrDefault();
             return dt;
-        }
-
-        public bool CapNhatSapXepDetail(int ThetaiID,int Status)
+        } 
+        public bool CapNhatSapXepDetail(int UserID, int Status)
         {
             try
             {
                 KpiManagerEntities db = new KpiManagerEntities();
-                var dt = db.tbSapXepDetails.ToList().Where(m => m.NgayCapNhat.Value.Date == DateTime.Now.Date).FirstOrDefault();
-                var position = dt.Position;
-                var getSplit = position.Split(',');
-                string newposition = "";
+                tbSapXepTai sapxeptai = db.tbSapXepTais.FirstOrDefault();
+                var getSplit = sapxeptai.PositionEmpty.Split(',');
+                string newPosition = "";
                 foreach(var item in getSplit)
                 {
-                    if (item.Contains(ThetaiID.ToString()))
+                    if (item != UserID.ToString())
                     {
-                        var newstr = "";
-                        newstr = item.Split('_')[0]+"_"+ Status.ToString();
-                        newposition += newstr + ",";
+                        newPosition += item + ",";
                     }
-                    else
-                    {
-                        newposition += item+",";
-                    }
-                  
                 }
-                newposition = newposition.Substring(0,newposition.Length - 1);
-                dt.Position = newposition;
+                
+                if (newPosition.Contains(','))
+                    newPosition = newPosition.Substring(0, newPosition.Length - 1);
+                sapxeptai.PositionEmpty = newPosition;
+                if (sapxeptai.PositionDone == null)
+                {
+                    sapxeptai.PositionDone += UserID.ToString();
+                }
+                else
+                {
+                    sapxeptai.PositionDone +=","+ UserID.ToString();
+                }
                 db.SaveChanges();
-
                 return true;
             }
             catch(Exception ex)
@@ -290,10 +342,10 @@ namespace DAL
         public bool SwapCode(string FirstCode,string TwoCode)
         {
             KpiManagerEntities db = new KpiManagerEntities();
-            tbSapXepConfig tbsapdt = db.tbSapXepConfigs.FirstOrDefault();
+            var tbsapdt = db.tbSapXepTais.FirstOrDefault();
             if (tbsapdt == null)
                 return false;
-            string position = tbsapdt.Position;
+            string position = tbsapdt.PositionEmpty;
             var getSplit = position.Split(',');
             int firstIndex = 0;
             string firstValue = "";
@@ -325,46 +377,9 @@ namespace DAL
                 else
                     newposition += item;
             }
-              tbsapdt.Position = newposition;
+              tbsapdt.PositionEmpty = newposition;
 
             //Sap xep con
-             firstIndex = 0;
-             firstValue = "";
-             twoIndex = 0;
-             twoValue = "";
-            tbSapXepDetail tbsapdt2 = db.tbSapXepDetails.ToList().Where(m => m.NgayCapNhat.Value.Date == DateTime.Now.Date).FirstOrDefault();
-            if (tbsapdt2 != null)
-            {
-                 position = tbsapdt2.Position;
-                 getSplit = position.Split(',');
-                foreach (var item in getSplit)
-                {
-                    if (item.Contains(FirstCode))
-                    {
-                        firstIndex = getSplit.ToList().IndexOf(item);
-                        firstValue = item;
-                    }
-                    if (item.Contains(TwoCode))
-                    {
-                        twoIndex = getSplit.ToList().IndexOf(item);
-                        twoValue = item;
-                    }
-                   
-                }
-                getSplit[firstIndex] = twoValue;
-                getSplit[twoIndex] = firstValue;
-                newposition = "";
-                foreach (var item in getSplit)
-                {
-                    var indexof = getSplit.ToList().IndexOf(item);
-                    if (indexof < getSplit.Length - 1)
-                        newposition += item + ",";
-                    else
-                        newposition += item;
-                }
-                tbsapdt2.Position = newposition;
-            }
-            
             db.SaveChanges();
             return true;
         }

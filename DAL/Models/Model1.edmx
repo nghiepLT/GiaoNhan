@@ -239,6 +239,15 @@
           <Property Name="Position" Type="nvarchar" MaxLength="500" />
           <Property Name="NgayCapNhat" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbSapXepTai">
+          <Key>
+            <PropertyRef Name="SapXepTaiId" />
+          </Key>
+          <Property Name="SapXepTaiId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PositionEmpty" Type="nvarchar(max)" />
+          <Property Name="PositionDone" Type="nvarchar(max)" />
+          <Property Name="DateCreate" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbTheTai">
           <Key>
             <PropertyRef Name="ThetaiID" />
@@ -270,6 +279,8 @@
           <Property Name="GhiChuKetThuc" Type="nvarchar" MaxLength="500" />
           <Property Name="TienPhatSinh" Type="int" />
           <Property Name="SoKMPhatSinh" Type="int" />
+          <Property Name="NhanTienMat" Type="int" />
+          <Property Name="SOKM" Type="float" />
         </EntityType>
         <EntityType Name="tbTracking">
           <Key>
@@ -327,6 +338,7 @@
           <EntitySet Name="tbRoleMenu" EntityType="Self.tbRoleMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbSapXepConfig" EntityType="Self.tbSapXepConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbSapXepDetail" EntityType="Self.tbSapXepDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbSapXepTai" EntityType="Self.tbSapXepTai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTheTai" EntityType="Self.tbTheTai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTheTaiChiTiet" EntityType="Self.tbTheTaiChiTiet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTracking" EntityType="Self.tbTracking" Schema="dbo" store:Type="Tables" />
@@ -488,6 +500,7 @@
           <EntitySet Name="tbReceivedMessages" EntityType="KpiManagerModel.tbReceivedMessage" />
           <EntitySet Name="tbSapXepConfigs" EntityType="KpiManagerModel.tbSapXepConfig" />
           <EntitySet Name="tbSapXepDetails" EntityType="KpiManagerModel.tbSapXepDetail" />
+          <EntitySet Name="tbSapXepTais" EntityType="KpiManagerModel.tbSapXepTai" />
         </EntityContainer>
         <EntityType Name="tbTheTai">
           <Key>
@@ -520,6 +533,8 @@
           <Property Name="GhiChuKetThuc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="TienPhatSinh" Type="Int32" />
           <Property Name="SoKMPhatSinh" Type="Int32" />
+          <Property Name="NhanTienMat" Type="Int32" />
+          <Property Name="SOKM" Type="Double" />
         </EntityType>
         <EntityType Name="tbTracking">
           <Key>
@@ -662,6 +677,15 @@
           <Property Name="SapXepDetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Position" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="NgayCapNhat" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbSapXepTai">
+          <Key>
+            <PropertyRef Name="SapXepTaiId" />
+          </Key>
+          <Property Name="SapXepTaiId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PositionEmpty" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PositionDone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -823,6 +847,8 @@
           <EntitySetMapping Name="tbTheTaiChiTiets">
             <EntityTypeMapping TypeName="KpiManagerModel.tbTheTaiChiTiet">
               <MappingFragment StoreEntitySet="tbTheTaiChiTiet">
+                <ScalarProperty Name="SOKM" ColumnName="SOKM" />
+                <ScalarProperty Name="NhanTienMat" ColumnName="NhanTienMat" />
                 <ScalarProperty Name="SoKMPhatSinh" ColumnName="SoKMPhatSinh" />
                 <ScalarProperty Name="TienPhatSinh" ColumnName="TienPhatSinh" />
                 <ScalarProperty Name="GhiChuKetThuc" ColumnName="GhiChuKetThuc" />
@@ -991,6 +1017,16 @@
                 <ScalarProperty Name="NgayCapNhat" ColumnName="NgayCapNhat" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="SapXepDetail" ColumnName="SapXepDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbSapXepTais">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbSapXepTai">
+              <MappingFragment StoreEntitySet="tbSapXepTai">
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="PositionDone" ColumnName="PositionDone" />
+                <ScalarProperty Name="PositionEmpty" ColumnName="PositionEmpty" />
+                <ScalarProperty Name="SapXepTaiId" ColumnName="SapXepTaiId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

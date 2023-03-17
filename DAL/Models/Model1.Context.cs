@@ -54,5 +54,6 @@ namespace DAL.Models
         public virtual DbSet<tbReceivedMessage> tbReceivedMessages { get; set; }
         public virtual DbSet<tbSapXepConfig> tbSapXepConfigs { get; set; }
         public virtual DbSet<tbSapXepDetail> tbSapXepDetails { get; set; }
+        public virtual DbSet<tbSapXepTai> tbSapXepTais { get; set; }
     }
 }

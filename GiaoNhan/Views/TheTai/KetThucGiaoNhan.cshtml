@@ -47,8 +47,11 @@
                                     <thead>
                                         <tr>
                                             <th width="10%">Ngày tạo</th>
-                                            <th style="width:40%">
+                                            <th style="width:20%">
                                                 Mã phiếu
+                                            </th>
+                                            <th>
+                                                Số KM
                                             </th>
                                             <th width="20%">
                                                 Trạng thái
@@ -86,17 +89,21 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <input class="form-control currency" style="width:100%;min-width: 100%;" placeholder="Tiền phát sinh" id="TienPhatSinh" />
+                    <input class="form-control currency" type="number" style="width:100%;min-width: 100%;" placeholder="Tiền phát sinh" id="TienPhatSinh" />
                 </div>
                 <div class="form-group">
-                    <input class="form-control currency" style="width:100%;min-width: 100%;" placeholder="Km phát sinh" id="SoKMPhatSinh" />
+                    <input class="form-control currency" type="number" style="width:100%;min-width: 100%;" placeholder="Km phát sinh" id="SoKMPhatSinh" />
                 </div>
                 <div class="form-group">
                 <textarea rows="3" style="width:100%;min-width:100%" class="form-control" placeholder="Ghi chú..." id="txtReason"></textarea>
                 </div>
+                <div class="form-group">
+                    <input id="NhanTienMat" type="checkbox"  style="    transform: scale(1.3);
+    margin-right: 5px;"/> <span>Gửi tiền mặt</span>
+                </div>
                 <div class="modal-footer">
                     <button onclick="UpdateCancle()" type="button" class="btn btn-primary">Cập nhật</button>
-                </div>
+                </div>  
             </div>
         </div>
     </div>
@@ -133,12 +140,17 @@
     var type = 0;
     function UpdateCancle() {
       
+        var statusNhanTienMat = 0;
+        if ($("#NhanTienMat").prop("checked") == true) {
+            statusNhanTienMat = 1;
+        }
         var param = {
             "TheTaiChiTietID": slId,
             "Description": $("#txtReason").val(),
             "Type": type,
             "TienPhatSinh": $("#TienPhatSinh").val(),
-            "SoKMPhatSinh": $("#SoKMPhatSinh").val()
+            "SoKMPhatSinh": $("#SoKMPhatSinh").val(),
+            "NhanTienMat": statusNhanTienMat
         }
         $.ajax({
             url: '/TheTai/UpdateCancle',
