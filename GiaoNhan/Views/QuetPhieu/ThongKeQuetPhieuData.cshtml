@@ -1,0 +1,30 @@
+﻿<div class="form-group table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Mã Phiếu
+                </th>
+                <th>
+                    Thời Gian Quét Phiếu
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+           @if (Model != null)
+           {
+               foreach (var item in Model)
+               {
+                <tr>
+                    <td>
+                        <strong style="color:#357a18">@item.TrackingCode</strong>
+                    </td>
+                    <td>
+                        <span style="color:red">@item.TrackingDate.ToString("hh:mm:ss")</span>
+                    </td>
+                </tr>
+               }
+           }
+        </tbody>
+    </table>
+</div>

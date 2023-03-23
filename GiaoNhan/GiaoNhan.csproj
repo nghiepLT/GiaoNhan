@@ -174,6 +174,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\QuetPhieuController.cs" />
     <Compile Include="Controllers\ReceivedController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -2347,6 +2348,10 @@
     <Content Include="Views\TheTai\LoadSapXep.cshtml" />
     <Content Include="Views\SapXepGiaoNhan\Sapxeptai.cshtml" />
     <Content Include="Views\TheTai\LoadSapXepNew.cshtml" />
+    <Content Include="Views\QuetPhieu\Index.cshtml" />
+    <Content Include="Views\QuetPhieu\LoadTracking.cshtml" />
+    <Content Include="Views\QuetPhieu\ThongKeQuetPhieu.cshtml" />
+    <Content Include="Views\QuetPhieu\ThongKeQuetPhieuData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

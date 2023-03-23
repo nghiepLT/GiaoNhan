@@ -35,6 +35,7 @@
         <EntityTypeShape EntityType="KpiManagerModel.tbSapXepConfig" Width="1.5" PointX="7.375" PointY="13.75" />
         <EntityTypeShape EntityType="KpiManagerModel.tbSapXepDetail" Width="1.5" PointX="13.375" PointY="10.75" />
         <EntityTypeShape EntityType="KpiManagerModel.tbSapXepTai" Width="1.5" PointX="13.375" PointY="13.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbCLTracking" Width="1.5" PointX="3.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

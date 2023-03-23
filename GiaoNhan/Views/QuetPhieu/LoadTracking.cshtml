@@ -1,0 +1,14 @@
+﻿@if (Model != null)
+{
+    foreach(var item in Model)
+    {
+        <tr>
+            <td>
+                <strong style="color:#357a18">@item.TrackingCode</strong>
+            </td>
+            <td>
+               <span style="color:red">@item.TrackingDate.ToString("hh:mm:ss")</span>
+            </td>
+        </tr>
+    }
+}

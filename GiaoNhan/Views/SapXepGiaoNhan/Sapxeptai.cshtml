@@ -223,10 +223,10 @@
                     alert(status);
                 }
             });
-            if (isDelete == false) {
-                swal("Đang xử lý không thể xóa!");
-                return false;
-            }
+            //if (isDelete == false) {
+            //    swal("Đang xử lý không thể xóa!");
+            //    return false;
+            //}
             var dataid = $(dis).attr("data-id");
             $("#" + dataid).show();
             $("[data-drag=" + dataid + "]").html('');

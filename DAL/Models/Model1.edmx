@@ -91,6 +91,15 @@
           <Property Name="DinhMucBaoDuong" Type="int" />
           <Property Name="Ghichubaoduong" Type="int" />
         </EntityType>
+        <EntityType Name="tbCLTracking">
+          <Key>
+            <PropertyRef Name="CLTrackingId" />
+          </Key>
+          <Property Name="CLTrackingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrackingCode" Type="nvarchar" MaxLength="200" />
+          <Property Name="TrackingDate" Type="datetime" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
         <EntityType Name="tbConfig">
           <Key>
             <PropertyRef Name="ConfigID" />
@@ -322,6 +331,7 @@
           <EntitySet Name="bdService" EntityType="Self.bdService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bdTaixe" EntityType="Self.bdTaixe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bdTypeCar" EntityType="Self.bdTypeCar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbCLTracking" EntityType="Self.tbCLTracking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbConfig" EntityType="Self.tbConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbDepartment" EntityType="Self.tbDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbDriver" EntityType="Self.tbDriver" Schema="dbo" store:Type="Tables" />
@@ -501,6 +511,7 @@
           <EntitySet Name="tbSapXepConfigs" EntityType="KpiManagerModel.tbSapXepConfig" />
           <EntitySet Name="tbSapXepDetails" EntityType="KpiManagerModel.tbSapXepDetail" />
           <EntitySet Name="tbSapXepTais" EntityType="KpiManagerModel.tbSapXepTai" />
+          <EntitySet Name="tbCLTrackings" EntityType="KpiManagerModel.tbCLTracking" />
         </EntityContainer>
         <EntityType Name="tbTheTai">
           <Key>
@@ -686,6 +697,15 @@
           <Property Name="PositionEmpty" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PositionDone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateCreate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbCLTracking">
+          <Key>
+            <PropertyRef Name="CLTrackingId" />
+          </Key>
+          <Property Name="CLTrackingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrackingCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TrackingDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1027,6 +1047,16 @@
                 <ScalarProperty Name="PositionDone" ColumnName="PositionDone" />
                 <ScalarProperty Name="PositionEmpty" ColumnName="PositionEmpty" />
                 <ScalarProperty Name="SapXepTaiId" ColumnName="SapXepTaiId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbCLTrackings">
+            <EntityTypeMapping TypeName="KpiManagerModel.tbCLTracking">
+              <MappingFragment StoreEntitySet="tbCLTracking">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TrackingDate" ColumnName="TrackingDate" />
+                <ScalarProperty Name="TrackingCode" ColumnName="TrackingCode" />
+                <ScalarProperty Name="CLTrackingId" ColumnName="CLTrackingId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
