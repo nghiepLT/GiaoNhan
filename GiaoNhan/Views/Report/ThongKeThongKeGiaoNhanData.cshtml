@@ -1,12 +1,114 @@
-﻿<table class="table">
+﻿<div class="tkta_title">
+    Thống kê tổng quát
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Mã Thẻ
+            </th>
+            <th>
+                Tổng số lượt
+            </th>
+            <th>
+                Tổng số lượng phiếu
+            </th>
+            <th>
+                Tổng Thời gian làm hàng 
+            </th>
+            <th>
+                Số lần làm hàng trễ
+            </th>
+            <th>
+               Tổng Thời gian đi
+            </th>
+            <th>
+                Tổng tiền phát sinh
+            </th>
+            <th>
+                Tổng số KM Phát sinh (km)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.lstThongKeGiaoNhanTong != null)
+        {
+            <tr>
+                <td class="tdtong">
+                    Tổng
+                </td>
+                <td class="tdtong">
+                    @ViewBag.SumTongSoLuot
+                </td>
+                <td class="tdtong">
+                    @ViewBag.SumTongSoPhieu
+                </td>
+                <td class="tdtong">
+                    @Tool.Helper.ReturnTime(int.Parse(ViewBag.SumThoiGianLamHang))
+                </td>
+                <td class="tdtong">
+                    @ViewBag.SumSoLanLamHangTre
+                </td>
+                <td class="tdtong">
+                    @Tool.Helper.ReturnTime(ViewBag.SumThoiGianDiTrungBinh)
+                </td>
+                <td class="tdtong">
+                    @ViewBag.SumTongTienPhatSinh.ToString("#,##0")
+                </td>
+                <td class="tdtong">
+                    @ViewBag.SumTongKMPhatSinh.ToString("#,##0")
+                </td>
+            </tr>
+            foreach (var item in ViewBag.lstThongKeGiaoNhanTong)
+            {
+                <tr>
+                    <td>
+                        @item.MaThe
+                    </td>
+                    <td>
+                        @item.TongSoLuot
+                    </td>
+                    <td>@item.TongSoPhieu </td>
+                    <td>
+                        @Tool.Helper.ReturnTime(int.Parse(item.ThoiGianLamHangTrungBinh))
+                        <hr />
+                        <div>
+                           <strong><span>TB : </span> @Tool.Helper.ReturnTime(int.Parse(item.ThoiGianLamHangTrungBinhtb))</strong>
+                        </div>
+                    </td>
+                    <td>
+                        @item.SoLanLamHangTre
+                    </td>
+                    <td>
+                        @Tool.Helper.ReturnTime(int.Parse(item.ThoiGianDiTrungBinh))
+
+                        <hr />
+                        <div>
+                            <strong><span>TB : </span> @Tool.Helper.ReturnTime(int.Parse(item.ThoiGianDiTrungBinhtb))</strong>
+                        </div>
+                    </td>
+                    <td>
+                        @item.TongTienPhatSinh.ToString("#,##0")
+                    </td>
+                    <td>
+                        @item.TongKMPhatSinh.ToString("#,##0")
+                    </td> 
+                </tr>
+            }
+         
+        }
+    </tbody>
+</table>
+<hr />
+<div class="tkta_title">
+    Thống kê chi tiết
+</div>
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>
                 Ngày
             </th>
-            <th>
-                Thẻ tài
-            </th> 
             <th>
                 Tổng số lượng
             </th>
@@ -16,7 +118,7 @@
             <th>Thời gian kết thúc làm hàng</th>
             <th>
                 Danh sách phiếu <span id="tongsophieu">( @ViewBag.sum )<span> Phiếu</span></span>
-            </th> 
+            </th>
             <th>
                 Thời gian về
             </th>
@@ -25,6 +127,9 @@
             </th>
             <th>
                 Tiền phát sinh
+            </th>
+            <th>
+                Số Km phát sinh (km)
             </th>
         </tr>
     </thead>
@@ -35,15 +140,19 @@
             {
                 <tr>
                     <td>
-                        @item.DateStart.ToString("dd/MM/yyyy")
+                       <div >@item.DateStart.ToString("dd/MM/yyyy")</div>
+                        <hr style="margin-top:0.5em;margin-bottom:0.5em" />
+                        <div>
+                          <i class="fa fa-id-card"></i> <strong class="text-dark">@item.MaThe</strong>
+                        </div>
                     </td>
-                    <td>
-                        @item.MaThe
-                    </td>
+                    @*<td>
+                        <strong class="text-dark">@item.MaThe</strong>
+                    </td>*@
 
                     <td>
                         @item.Count
-                    </td>
+                    </td>   
                     <td>
                         @item.DateStart.ToString("HH:mm:ss")
                     </td>
@@ -52,7 +161,24 @@
                         {
                             @item.DateEnd.ToString("HH:mm:ss")
                             <span>
-                                | <strong>@Tool.Helper.Tinhtongthoigian(item.DateEnd, item.DateStart)</strong>
+                                | <strong>
+                                @{
+                                    var data = Tool.Helper.Tinhtongthoigian(item.DateEnd, item.DateStart);
+                                    var getsplit = data.Split(' ');
+                                    if (getsplit[0] != "")
+                                    {
+                                        if (int.Parse(getsplit[0]) >= 15 && getsplit[1]== "phút")
+                                        {
+                                            <strong style="color:red">@data</strong>
+                                        }
+                                        else
+                                        {
+                                            <span>@data</span>
+                                        }
+                                    }
+
+                                }
+                                </strong>
                             </span>
                         }
                     </td>
@@ -61,6 +187,7 @@
                         {
                             foreach (var it in item.lstTheTaiChiTiet)
                             {
+
                                 if (it.DateEnd != null)
                                 {
                                     <div>
@@ -71,9 +198,10 @@
                                                 <strong class="text-danger">Đã hủy </strong> <span> Lý do : </span> <strong>@it.Description</strong>
                                             </div>
                                         }
-                                        <div style="margin-bottom:5px;border-bottom:1px solid #eee">
+                                        <div style="margin-bottom:5px;border-bottom:1px solid #eee;padding-bottom:5px;">
                                             Tổng thời gian : <strong>@Tool.Helper.Tinhtongthoigian(it.DateEnd, item.DateEnd)</strong>
                                         </div>
+
                                     </div>
                                 }
                                 else
@@ -82,12 +210,30 @@
                                         <strong class="txtPhieu">@it.MaPhieu</strong>
                                     </div>
                                 }
+                                if (it.TienPhatSinh != 0 && it.TienPhatSinh!=null)
+                                {
+                                    <div style="margin-bottom:5px;border-bottom:1px solid #eee;padding-bottom:5px;">
+
+                                        <span> Tiền phát sinh:</span>
+                                        <strong>@it.TienPhatSinh.ToString("#,##0")</strong>
+
+
+                                    </div>
+                                }
+                                if (it.SoKMPhatSinh != 0 && it.SoKMPhatSinh != null)
+                                {
+                                    <div style="margin-bottom:5px;border-bottom:1px solid #eee;padding-bottom:5px;">
+
+                                        <span> Số KM phát sinh:</span>
+                                        <strong>@it.SoKMPhatSinh.ToString("#,##0")</strong>
+
+                                    </div>  }
                             }
                         }
                     </td>
-                  
+
                     <td>
-                        @if (item.Luotve != null && item.Luotve!=DateTime.MinValue)
+                        @if (item.Luotve != null && item.Luotve != DateTime.MinValue)
                         {
                             @item.Luotve
                         }
@@ -98,9 +244,15 @@
                         </strong>
                     </td>
                     <td>
-                        @if(item.TienPhatSinh!=0)
+                        @if (item.TienPhatSinh != 0)
                         {
-                             @item.TienPhatSinh.ToString("#,##0")
+                            @item.TienPhatSinh.ToString("#,##0")
+                        }
+                    </td>
+                    <td>
+                        @if (item.SoKMPhatSinh != 0)
+                        {
+                            @item.SoKMPhatSinh.ToString("#,##0")
                         }
                     </td>
                 </tr>
@@ -109,3 +261,12 @@
 
     </tbody>
 </table>
+
+<style>
+    th:first-child {
+  position: sticky;
+  top: 0;
+  background: white;
+}
+
+</style>

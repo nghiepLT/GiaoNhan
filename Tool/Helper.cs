@@ -64,20 +64,20 @@ namespace Tool
             //Tính theo giờ
             if (Time >= 3600)
             {
-                var sogio = Time / 3600;
-                var tongsophut = Time - (sogio * 3600);
-                var sophut = tongsophut / 60;
-                var sogiaydu = tongsophut - sophut * 60;
-                strTime = sogio + " Giờ " + sophut + " phút " + sogiaydu + " giây ";
+                int sogio = int.Parse(Time.ToString()) / 3600;
+                var tongsophut = Time % 3600;
+                var sophut = int.Parse(tongsophut.ToString())  / 60;
+                var sogiay = int.Parse(tongsophut.ToString()) % 60;
+                strTime = sogio + " Giờ " + sophut + " phút " + sogiay + " giây ";
             }
             else
             {
                 //Tính theo phút
                 if (Time >= 60)
                 {
-                    var sophut = Time / 60;
-                    var giaydu = Time - (sophut * 60);
-                    strTime = sophut + " phút " + giaydu + " giây ";
+                    int sophut = int.Parse(Time.ToString()) / 60; 
+                    var sogiay = Time % 60; ;
+                    strTime = sophut + " phút " + sogiay + " giây ";
                 }
                 //Tính theo giây
                 else
@@ -99,6 +99,16 @@ namespace Tool
             }
             return "";
         }
-       
+
+        public static double TinhtongthoigianDouble(DateTime dt1, DateTime dat2)
+        {
+            double time = 0;
+            if (dt1.Date != DateTime.MinValue && dat2.Date != DateTime.MinValue)
+            {
+                var total = dt1 - dat2;
+                 time = Math.Round(total.TotalSeconds);
+            }
+            return time;
+        }
     }
 }

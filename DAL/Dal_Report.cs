@@ -94,25 +94,29 @@ namespace DAL
         }
         public IEnumerable<VM_TheTaiReport> ReportGiaoNhan(DateTime fromdate, DateTime toddate,string MaThe)
         {
+            var test = dbContext.tbTheTaiChiTiets.Where(m => m.TienPhatSinh != null && (MaThe == "0" || m.MaThe == MaThe)).ToList();
             var model = (from tt in dbContext.tbTheTais.ToList()
                          where tt.DateStart.Value.Date >= fromdate.Date && tt.DateStart.Value.Date <= toddate.Date
-                         && (MaThe == "0" || (MaThe != "0" && MaThe == tt.MaThe) )
+                         && (MaThe == "0" || (MaThe != "0" && MaThe == tt.MaThe))
                          select new VM_TheTaiReport()
                          {
-                             Count = tt.Count!=null? tt.Count:0,
+                             Count = tt.Count != null ? tt.Count : 0,
                              DateStart = tt.DateStart.Value,
-                             DateEnd = tt.DateEnd!=null? tt.DateEnd.Value:DateTime.MinValue,
+                             DateEnd = tt.DateEnd != null ? tt.DateEnd.Value : DateTime.MinValue,
                              MaPhieu = tt.MaPhieu,
                              MaThe = tt.MaThe,
                              ThetaiID = tt.ThetaiID,
-                             UserId = tt.UserId, 
-                             lstTheTaiChiTiet = dbContext.tbTheTaiChiTiets.Where(m => m.ThetaiID == tt.ThetaiID).OrderBy(m=>m.DateEnd.Value).ToList(),
-                             Luotve= tt.Luotve.HasValue? tt.Luotve.Value:DateTime.MinValue,
-                             ToTalTimes = tt.DateEnd!=null? int.Parse(Math.Round(double.Parse((tt.DateEnd.Value.TimeOfDay.TotalSeconds - tt.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString()):0,
-                             TongThoigian = (tt.DateEnd!=null && dbContext.tbTheTaiChiTiets.OrderBy(m=>m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd != null).LastOrDefault()!=null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - dbContext.tbTheTaiChiTiets.OrderBy(m => m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd!=null).LastOrDefault().DateEnd.Value.TimeOfDay.TotalSeconds).ToString())).ToString())*(-1)):"",
-                             TienPhatSinh= int.Parse(dbContext.tbTheTaiChiTiets.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.TienPhatSinh).ToString())
+                             UserId = tt.UserId,
+                             lstTheTaiChiTiet = dbContext.tbTheTaiChiTiets.Where(m => m.ThetaiID == tt.ThetaiID).OrderBy(m => m.DateEnd.Value).ToList(),
+                             Luotve = tt.Luotve.HasValue ? tt.Luotve.Value : DateTime.MinValue,
+                             ToTalTimes = tt.DateEnd != null ? int.Parse(Math.Round(double.Parse((tt.DateEnd.Value.TimeOfDay.TotalSeconds - tt.DateStart.Value.TimeOfDay.TotalSeconds).ToString())).ToString()) : 0,
+                             //TongThoigian = (tt.DateEnd != null && dbContext.tbTheTaiChiTiets.OrderBy(m => m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd != null).LastOrDefault() != null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - dbContext.tbTheTaiChiTiets.OrderBy(m => m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd != null).LastOrDefault().DateEnd.Value.TimeOfDay.TotalSeconds).ToString())).ToString()) * (-1)) : "",
+                             TongThoigian = (tt.Luotve != null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - tt.Luotve.Value.TimeOfDay.TotalSeconds).ToString())).ToString()) * (-1)) : "",
+                             TienPhatSinh = int.Parse(test.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.TienPhatSinh.Value).ToString()),
+                             SoKMPhatSinh = int.Parse(test.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.SoKMPhatSinh.Value).ToString()),
+
                          }
-                       );
+                      );
 
             return model;
         }

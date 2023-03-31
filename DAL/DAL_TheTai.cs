@@ -247,8 +247,8 @@ namespace DAL
                     queryTienMat = "&tienmat=" + 1;
                 if (ttct.TienPhatSinh!=0 || ttct.SoKMPhatSinh!=0 || ttct.Description != "" || ttct.NhanTienMat!=0)
                 {
-                     var url = "http://192.168.117.214:8008/jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
-                    // var url = "http://192.168.117.117/jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
+                    // var url = "http://192.168.117.214:8008/jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
+                     var url = "http://192.168.117.117/jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
 
                     // WebRequest request = HttpWebRequest.Create(url);
                     HttpWebRequest webRequest =

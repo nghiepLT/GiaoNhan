@@ -46,10 +46,11 @@
                                     <div class="col-sm-2">
                                         <div id="slTheTai">
                                             <label for="User name">Chọn tài</label>
-                                            <select  class="form-control" style="max-width:100%" onchange="chonthetai()" id="slChonTheTai">
+                                            <select  class="form-control" style="max-width:100%"  id="slChonTheTai">
                                                 <option selected="selected" value="0">Chọn thẻ tài</option>
                                                 @if (Model != null)
                                                 {
+
                                                     foreach (var item in Model)
                                                     {
                                                         if (ViewBag.UserID != "")
@@ -94,8 +95,8 @@
 <script>
     $(document).ready(function () {
         if ('@ViewBag.UserID' != "GNTK") {
-            $("#slChonTheTai").val('@ViewBag.UserID').change();
-            $("#slChonTheTai").attr('disabled', 'disabled').change();
+            //$("#slChonTheTai").val('@ViewBag.UserID').change();
+           // $("#slChonTheTai").attr('disabled', 'disabled').change();
         }
     });
     function changePermission() {
@@ -127,7 +128,7 @@
         var currentTime = new Date();
         var start = dates[0];
         var end = dates[1];
-
+        $(".boxloading").show();
         var param = {
             "fromDate": start,
             "toDate": end,
@@ -141,6 +142,7 @@
             dataType: 'html',
             success: function (data, status, xhr) {
                 $("#contents").html(data);
+                $(".boxloading").hide();
             },
             error: function (xhr, status, error) {
                 alert(status);

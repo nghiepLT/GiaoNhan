@@ -22,7 +22,14 @@ namespace GiaoNhan.Controllers
             {
                 HttpCookie cookie = new HttpCookie("trakinglogin");
                 cookie.Value = userName;
-                cookie.Expires = DateTime.Now.AddDays(1);
+                if(userName== "linhnt")
+                {
+                    cookie.Expires = DateTime.Now.AddDays(1000);
+                }
+                else
+                {
+                    cookie.Expires = DateTime.Now.AddDays(1);
+                }
                 Response.Cookies.Add(cookie);
                 return true;
             }

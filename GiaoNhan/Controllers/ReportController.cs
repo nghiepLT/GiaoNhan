@@ -163,18 +163,96 @@ namespace GiaoNhan.Controllers
                 ViewBag.userName = Request.Cookies["trakinglogin"].Value;
                 tbUSer user = account.GetAccountID(ViewBag.userName); 
                 ViewBag.UserID = user.Code;
+
                 var model = account.GetAll().Where(m => m.Code != null && m.Code.Contains("GN") && m.UserID != 1019); 
                 return View(model);
             }
             return View();
         }
+        public class ThongKeGiaoNhanTong
+        {
+            public string MaThe { get; set; }
+            public int TongSoLuot { get; set; }
+            public int TongSoPhieu { get; set; } 
+            public string ThoiGianLamHangTrungBinh { get; set; }
+            public string ThoiGianLamHangTrungBinhtb { get; set; }
+            public string ThoiGianDiTrungBinh { get; set; }
+            public string ThoiGianDiTrungBinhtb { get; set; }
+            public double TongTienPhatSinh { get; set; }
+            public int TongKMPhatSinh { get; set; }
+            public int SoLanLamHangTre { get; set; }
+        }
         public ActionResult ThongKeThongKeGiaoNhanData(string fromDate, string toDate,string MaThe)
         {
             DateTime _fromDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime _toDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            var model = balReport.ReportGiaoNhan(_fromDate, _toDate, MaThe);
-            ViewBag.sum = model.Sum(m => m.lstTheTaiChiTiet.Count());
+            var model = balReport.ReportGiaoNhan(_fromDate, _toDate, MaThe).ToList(); 
+            var test = model.GroupBy(m => m.MaThe);
+            List<ThongKeGiaoNhanTong> lstThongKeGiaoNhanTong = new List<ThongKeGiaoNhanTong>();
+            //sum 
+            int SumTongSoLuot = 0;
+            int SumTongSoPhieu = 0;
+            int SumThoiGianLamHang = 0;
+            int SumSoLanLamHangTre = 0;
+            double SumThoiGianDiTrungBinh = 0;
+            double SumTongTienPhatSinh = 0;
+            int SumTongKMPhatSinh = 0;
+            foreach (var item in test)
+            {
+                ThongKeGiaoNhanTong ThongKeGiaoNhanTong = new ThongKeGiaoNhanTong();
+                ThongKeGiaoNhanTong.MaThe = item.Key;
+                ThongKeGiaoNhanTong.TongSoLuot = item.Count();
+                SumTongSoLuot += item.Count();
+                ThongKeGiaoNhanTong.TongSoPhieu = model.Where(m => m.MaThe == item.Key).Sum(m => m.lstTheTaiChiTiet.Count());
+                SumTongSoPhieu += ThongKeGiaoNhanTong.TongSoPhieu;
+                ThongKeGiaoNhanTong.ThoiGianLamHangTrungBinh = (model.Where(m => m.MaThe == item.Key).Sum(m => TongThoiGianLamHang(m.DateStart.Value, m.DateEnd.Value))).ToString();
+                SumThoiGianLamHang += (model.Where(m => m.MaThe == item.Key).Sum(m => TongThoiGianLamHang(m.DateStart.Value, m.DateEnd.Value)));
+               
+                ThongKeGiaoNhanTong.ThoiGianLamHangTrungBinhtb = (model.Where(m => m.MaThe == item.Key).Sum(m => TongThoiGianLamHang(m.DateStart.Value, m.DateEnd.Value)) / model.Where(m => m.MaThe == item.Key).Count()).ToString();
+
+                ThongKeGiaoNhanTong.SoLanLamHangTre = (model.Where(m => m.MaThe == item.Key).Count(m => TongThoiGianLamHang(m.DateStart.Value, m.DateEnd.Value)> 900));
+                SumSoLanLamHangTre += ThongKeGiaoNhanTong.SoLanLamHangTre;
+                var getdata = model.Where(m => m.MaThe == item.Key).ToList();
+                double totaltime = 0;
+                double tienphatsinh = 0;
+                int sokmphatsinh = 0;
+                foreach(var it in getdata)
+                {
+                    totaltime += Tool.Helper.TinhtongthoigianDouble(it.Luotve, it.DateStart.Value);
+                    tienphatsinh += double.Parse(it.lstTheTaiChiTiet.Sum(m => m.TienPhatSinh).ToString());
+                    sokmphatsinh += it.lstTheTaiChiTiet.Sum(m => m.SoKMPhatSinh).Value;
+                }
+                ThongKeGiaoNhanTong.ThoiGianDiTrungBinh = totaltime.ToString();
+                ThongKeGiaoNhanTong.ThoiGianDiTrungBinhtb = Math.Round(totaltime / ThongKeGiaoNhanTong.TongSoLuot).ToString();
+                SumThoiGianDiTrungBinh += totaltime;
+                ThongKeGiaoNhanTong.TongTienPhatSinh = tienphatsinh;
+                SumTongTienPhatSinh += tienphatsinh;
+                ThongKeGiaoNhanTong.TongKMPhatSinh = sokmphatsinh;
+                SumTongKMPhatSinh += sokmphatsinh;
+                lstThongKeGiaoNhanTong.Add(ThongKeGiaoNhanTong);
+            }
+            //Sum tổng
+            ViewBag.SumTongSoLuot = SumTongSoLuot;
+            ViewBag.SumTongSoPhieu = SumTongSoPhieu;
+            ViewBag.SumThoiGianLamHang = SumThoiGianLamHang.ToString();
+            ViewBag.SumSoLanLamHangTre = SumSoLanLamHangTre;
+            ViewBag.SumThoiGianDiTrungBinh = SumThoiGianDiTrungBinh;
+            ViewBag.SumTongTienPhatSinh = SumTongTienPhatSinh;
+            ViewBag.SumTongKMPhatSinh = SumTongKMPhatSinh;
+
+            ViewBag.lstThongKeGiaoNhanTong = lstThongKeGiaoNhanTong;
+            ViewBag.sum = model.Sum(m => m.lstTheTaiChiTiet.Count()); 
             return PartialView(model);
+        }
+        public int TongThoiGianLamHang(DateTime dt1, DateTime dt2)
+        {
+            if (dt1.Date != DateTime.MinValue && dt2.Date != DateTime.MinValue)
+            {
+                var total = dt2- dt1;
+                var time = Math.Round(total.TotalSeconds);
+                return int.Parse(time.ToString());
+            }
+            return 0;
         }
 
         public class ThongKeTong
