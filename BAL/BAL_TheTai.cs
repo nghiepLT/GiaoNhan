@@ -64,9 +64,9 @@ namespace BAL
         {
             return dalTheTai.CheckMaHopLe(MaThe);
         }
-        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, int? SoKMPhatSinh,int? NhanTienMat)
+        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, decimal? SoKMPhatSinh,int? NhanTienMat, string TenChanhXe, string SoDT, string SoBill, string Images)
         {
-            return dalTheTai.UpdateCancle(TheTaiChiTietID, Description, Type, TienPhatSinh, SoKMPhatSinh, NhanTienMat);
+            return dalTheTai.UpdateCancle(TheTaiChiTietID, Description, Type, TienPhatSinh, SoKMPhatSinh, NhanTienMat,  TenChanhXe,  SoDT,  SoBill,  Images);
         }
         public bool CapnhatLuotDi(int ThetaiID)
         {

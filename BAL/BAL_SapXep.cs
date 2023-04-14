@@ -72,5 +72,9 @@ namespace BAL
         {
             return dalSapxep.GetLastSapXepTai();
         }
+        public void RestartThe(string Mathe)
+        {
+            dalSapxep.RestartThe(Mathe);
+        }
     }
 }

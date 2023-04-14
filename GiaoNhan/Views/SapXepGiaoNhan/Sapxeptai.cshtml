@@ -303,8 +303,10 @@
                     htmldanggiaonhan_box += "<li>"
                     var getAttr = $("[data-stt=" + i + "]");
                     var fbt = $("[id=gn_" + getSplit[i] + "]");
-                    fbt.hide(); 
+                    fbt.hide();
+                    htmldanggiaonhan_box += "<a onclick=\"restart('"+fbt.attr("data-value")+"')\">";
                     htmldanggiaonhan_box += fbt.attr("data-value");
+                    htmldanggiaonhan_box += "</a>";
                     htmldanggiaonhan_box += "</li>";
                 }
                 htmldanggiaonhan_box += "</ul>";
@@ -315,6 +317,22 @@
 
         function showlichsu() {
             $("#exampleModal").modal("toggle");
+        }
+        function restart(mathe) {
+            var param = {
+                "mathe": mathe
+            }
+            $.ajax({
+                url: '/SapXepGiaoNhan/RestartThe',
+                dataType: 'html',
+                data: param,
+                success: function (data, status, xhr) {
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            });
         }
     </script>
 </section>

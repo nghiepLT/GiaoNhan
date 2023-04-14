@@ -24,8 +24,12 @@ namespace DAL.Models
         public Nullable<System.DateTime> DateCreate { get; set; }
         public string GhiChuKetThuc { get; set; }
         public Nullable<int> TienPhatSinh { get; set; }
-        public Nullable<int> SoKMPhatSinh { get; set; }
+        public Nullable<decimal> SoKMPhatSinh { get; set; }
         public Nullable<int> NhanTienMat { get; set; }
-        public Nullable<double> SOKM { get; set; }
+        public Nullable<decimal> SoKM { get; set; }
+        public string TenChanhXe { get; set; }
+        public string SoDT { get; set; }
+        public string SoBill { get; set; }
+        public string Images { get; set; }
     }
 }

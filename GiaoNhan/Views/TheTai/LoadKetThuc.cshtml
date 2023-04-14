@@ -13,9 +13,7 @@
                 <td width="15%"><strong style="color:red">@item.DateCreate.ToString("dd/MM/yyyy hh:mm:ss")</strong></td>
             }
             <td><strong style="color:#435a39" class="kethucphieu">@item.MaPhieu</strong></td>
-            <td>
-                @item.SOKM
-            </td>
+          
             @if (item.Status == 0)
             {
                 <td>
@@ -27,6 +25,9 @@
                     <button class="btn btn-sm btn-danger" style="margin-top:5px;margin-right:5px;cursor:pointer;color:#ffffff" onclick="cancle('@item.TheTaiChiTietID')" /> <span class="text-white text-danger trangthaigiao">Hủy</span>
                  </td>
             }
+            <td>
+                @item.SoKM
+            </td>
             @if (item.Status == 1)
             {
                 <td><button class="btn btn-sm btn-primary"  style="margin-right:5px;cursor:pointer;color:#ffffff" disabled  checked/> <span  class="text-danger text-white trangthaigiao">Đã giao</span> </td>
@@ -41,11 +42,11 @@
             <td style="width:20%">
                 @if (item.TienPhatSinh!=null && item.TienPhatSinh!=0)
                 {
-                    <div><span>Tiền phát sinh: </span> @item.TienPhatSinh.ToString("#,##0")</div>
+                    <div><span>Tiền phát sinh: </span> @item.TienPhatSinh</div>
                 }
                 @if (item.SoKMPhatSinh!=null && item.SoKMPhatSinh!=0)
                 {
-                    <div><span>Số KM phát sinh: </span> @item.SoKMPhatSinh.ToString("#,##0")</div>
+                    <div><span>Số KM phát sinh: </span> @item.SoKMPhatSinh</div>
                 }
                 @if (item.Description != "")
                 {

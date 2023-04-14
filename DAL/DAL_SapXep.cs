@@ -267,7 +267,7 @@ namespace DAL
                 if (newPosition.Contains(','))
                     newPosition = newPosition.Substring(0, newPosition.Length - 1);
                 sapxeptai.PositionEmpty = newPosition;
-                if (sapxeptai.PositionDone == null)
+                if (sapxeptai.PositionDone == null || sapxeptai.PositionDone=="")
                 {
                     sapxeptai.PositionDone += UserID.ToString();
                 }
@@ -382,6 +382,42 @@ namespace DAL
             //Sap xep con
             db.SaveChanges();
             return true;
+        }
+
+        public void RestartThe(string Mathe)
+        {
+            KpiManagerEntities db = new KpiManagerEntities();
+            tbSapXepTai sapxeptai = db.tbSapXepTais.FirstOrDefault();
+            tbUSer tuser = db.tbUSers.Where(m => m.Code == Mathe).FirstOrDefault();
+            var getListPositionDone = sapxeptai.PositionDone.Split(',');
+            string newPositionDone = "";
+            foreach(var item in getListPositionDone)
+            {
+                var index = getListPositionDone.ToList().IndexOf(item);
+              
+                if (item != tuser.UserID.ToString() && item!="")
+                {
+                    if (index < getListPositionDone.Count()-1)
+                    {
+                        newPositionDone += item + ',';
+                    }
+                    else
+                    {
+                        newPositionDone += item;
+                    }
+                }
+            }
+
+            sapxeptai.PositionDone = newPositionDone;
+            if (sapxeptai.PositionEmpty == "")
+            {
+                sapxeptai.PositionEmpty = tuser.UserID.ToString();
+            }
+            else
+            {
+                sapxeptai.PositionEmpty +=','+ tuser.UserID.ToString();
+            }
+            db.SaveChanges();
         }
     }
 }

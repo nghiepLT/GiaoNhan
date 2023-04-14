@@ -163,7 +163,7 @@ namespace DAL
         }
         public bool CheckDetailThetai(string MaPhieu)
         {
-            return dbContext.tbTheTaiChiTiets.Any(m => m.MaPhieu == MaPhieu && m.Status==1);
+            return dbContext.tbTheTaiChiTiets.Any(m => m.MaPhieu == MaPhieu);
         }
         public VM_Json GetJsonData(string spx)
         {
@@ -211,10 +211,11 @@ namespace DAL
             return false ;
         }
 
-        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, int? SoKMPhatSinh,int ? NhanTienMat )
+        public bool UpdateCancle(int TheTaiChiTietID, string Description,int Type, int? TienPhatSinh, decimal? SoKMPhatSinh,int ? NhanTienMat, string TenChanhXe, string SoDT, string SoBill, string Images)
         {
             try
             {
+                string CONFIGURL = dbContext.tbConfigs.FirstOrDefault().ApiUrl;
                 tbTheTaiChiTiet ttct = dbContext.tbTheTaiChiTiets.Find(TheTaiChiTietID);
                 if (Type == 1)
                 {
@@ -229,6 +230,11 @@ namespace DAL
                 ttct.TienPhatSinh = TienPhatSinh.Value;
                 ttct.SoKMPhatSinh = SoKMPhatSinh.Value;
                 ttct.NhanTienMat = NhanTienMat.Value;
+                //
+                ttct.TenChanhXe = TenChanhXe;
+                ttct.SoDT = SoDT;
+                ttct.SoBill = SoBill;
+                ttct.Images = Images;
                 dbContext.SaveChanges();
                 //
                 string querySoPhieu = "";
@@ -245,19 +251,17 @@ namespace DAL
                     queryNotePhieu = "&notephieu=" + ttct.Description;
                 if (ttct.NhanTienMat != 0)
                     queryTienMat = "&tienmat=" + 1;
-                if (ttct.TienPhatSinh!=0 || ttct.SoKMPhatSinh!=0 || ttct.Description != "" || ttct.NhanTienMat!=0)
-                {
-                    // var url = "http://192.168.117.214:8008/jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
-                     var url = "http://192.168.117.117/jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
+    //            if (ttct.TienPhatSinh!=0 || ttct.SoKMPhatSinh!=0 || ttct.Description != "" || ttct.NhanTienMat!=0)
+    //            {
+    //                 var url = CONFIGURL+ "jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
+                   
+    //                HttpWebRequest webRequest =
+    //WebRequest.Create(url) as HttpWebRequest;
 
-                    // WebRequest request = HttpWebRequest.Create(url);
-                    HttpWebRequest webRequest =
-    WebRequest.Create(url) as HttpWebRequest;
+    //                webRequest.Credentials = CredentialCache.DefaultCredentials;
 
-                    webRequest.Credentials = CredentialCache.DefaultCredentials;
-
-                    HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
-                }
+    //                HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
+    //            }
               
                 return true;
             }

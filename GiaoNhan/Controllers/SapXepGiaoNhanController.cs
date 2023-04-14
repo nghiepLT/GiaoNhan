@@ -60,5 +60,10 @@ namespace GiaoNhan.Controllers
             ViewBag.ListHistory = balSapxep.GetListSapXepDetail(); 
             return View();
         }
+
+        public void RestartThe(string mathe)
+        {
+            balSapxep.RestartThe(mathe);
+        }
     }
 }

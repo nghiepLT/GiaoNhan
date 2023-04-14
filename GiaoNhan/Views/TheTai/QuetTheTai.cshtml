@@ -157,12 +157,19 @@
 
         var param = {
             "MaThe": $("#txtScan").val()
-        } 
+        }
+        var newslthetai = "";
+        $(".radControl").each(function () {
+            if ($(this).prop("checked") == true) {
+                newslthetai = $(this).attr("data-value");
+            }
+        })
+
         $.ajax({
             url: '/TheTai/Insert',
             type: 'POST',
             dataType: 'html',
-            data: { "data": JSON.stringify(param), "MaTheSL": slThetai },
+            data: { "data": JSON.stringify(param), "MaTheSL": newslthetai },
             success: function (data, status, xhr) {
                 if (data == 2) {
                     swal("Chưa quét phiếu xuất!");
@@ -199,13 +206,14 @@
                 LoadSapXep();
                 if (data == 1) {
                     var chk = lstRadTheTai.includes($("#txtScan").val());
+                   
                     if (chk == false) {
-                        if ($("#txtScan").val().includes("GN")) {
+                        if ($("#txtScan").val().toLowerCase().includes("gn")) {
                             lstRadTheTai.push($("#txtScan").val());
                         }
                         loadcontrol();
                         if (firtsload == true) {
-                            slThetai = lstRadTheTai[0];
+                           // slThetai = lstRadTheTai[0];
                             firtsload = false;
                         //  removesptai("sptai_"+slThetai);
                         }
@@ -244,6 +252,8 @@
     {
     $("#"+abc).remove();
     }
+
+    var currentselect = 0;
     function loadcontrol() {
 
         $("#lstRad").empty();
@@ -252,13 +262,16 @@
         }
         var j = 0;
         for (i = 0; i < lstRadTheTai.length; i++) {
-    //if(){}
-            var hmtl = "<div class='sptai' id='sptai_"+lstRadTheTai[i]+"'><a onclick='choseTheTai(this)' style='cursor:pointer'></span> <input id=\"ip_"+i+"\" type=\"radio\"  name=\"radControl\"/>" + "<i style='margin-left:5px;margin-right:3px;'  class='fas fa-id-card'></i><span>" + lstRadTheTai[i] + "</span></a></div>";
+            j++;
+        var getlenght = $(".sptai").length;
+        var hmtl = "<div class='sptai' id='sptai_" + lstRadTheTai[i] + "'><a onclick='choseTheTai(this)' style='cursor:pointer'></span> <input data-value=\""+ lstRadTheTai[i] +"\" id=\"ip_" + i + "\" type=\"radio\" class=\"radControl\"  name=\"radControl\"/>" + "<i style='margin-left:5px;margin-right:3px;'  class='fas fa-id-card'></i><span>" + lstRadTheTai[i] + "</span></a></div>";
             $("#lstRad").append(hmtl);
         }
-        $("#ip_" + idsl).prop("checked",true);
-
-
+        currentselect = j-1;
+        var getlenght = $(".sptai").length;
+        $("#ip_" + currentselect).prop("checked", true);
+        var parent = $("#ip_" + currentselect).parent();
+         parent.click();
     }
     var slThetai = "";
     var idsl = 0;
@@ -267,7 +280,8 @@
         child.prop("checked", true);
         var childspan = $(dis).find("span");
         slThetai = childspan.html();
-        idsl = $(dis).find("input").attr("id").replace("ip_","");
+        idsl = $(dis).find("input").attr("id").replace("ip_", "");
+        currentselect = idsl;
     }
 
     function LoadSapXep() {

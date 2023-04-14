@@ -4,38 +4,38 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="eb67107d66324f6c9570c38137cb8623" Name="Diagram1">
-        <EntityTypeShape EntityType="KpiManagerModel.tbConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbDepartment" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbDriver" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbEmployee" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbMenu" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbNCC" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbPermission" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbPermission_Menu" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbProduct" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbReceived" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbReceivedDetail" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbUSer" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbTheTai" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbTheTaiChiTiet" Width="1.5" PointX="9.375" PointY="4.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbTracking" Width="1.5" PointX="7.375" PointY="7.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbRole" Width="1.5" PointX="9.375" PointY="7.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbRoleMenu" Width="1.5" PointX="3.375" PointY="10.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdCar" Width="1.5" PointX="9.375" PointY="10.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdEmailSend" Width="1.5" PointX="11.375" PointY="0.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdTaixe" Width="1.5" PointX="5.375" PointY="11.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdTypeCar" Width="1.5" PointX="11.375" PointY="7.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdService" Width="1.5" PointX="11.375" PointY="10.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdDotbaoduong" Width="1.5" PointX="13.375" PointY="0.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdHanhtrinhbaotri" Width="1.5" PointX="11.375" PointY="3.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdDichVudangkiembaoduong" Width="1.5" PointX="0.75" PointY="13.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.bdSendMail" Width="1.5" PointX="13.375" PointY="4.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbReceivedMessage" Width="1.5" PointX="13.375" PointY="7.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbSapXepConfig" Width="1.5" PointX="7.375" PointY="13.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbSapXepDetail" Width="1.5" PointX="13.375" PointY="10.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbSapXepTai" Width="1.5" PointX="13.375" PointY="13.75" />
-        <EntityTypeShape EntityType="KpiManagerModel.tbCLTracking" Width="1.5" PointX="3.375" PointY="14.75" />
+      <Diagram DiagramId="eb67107d66324f6c9570c38137cb8623" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="KpiManagerModel.bdCar" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdDichVudangkiembaoduong" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdDotbaoduong" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdEmailSend" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdHanhtrinhbaotri" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdSendMail" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdService" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdTaixe" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.bdTypeCar" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbCLTracking" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbConfig" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbDepartment" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbDriver" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbEmployee" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbMenu" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbNCC" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbPermission" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbPermission_Menu" Width="1.5" PointX="2.75" PointY="10.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbProduct" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbReceived" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbReceivedDetail" Width="1.5" PointX="4.75" PointY="11.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbReceivedMessage" Width="1.5" PointX="10.75" PointY="11.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbRole" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbRoleMenu" Width="1.5" PointX="12.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbSapXepConfig" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbSapXepDetail" Width="1.5" PointX="6.75" PointY="12.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbSapXepTai" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbTheTai" Width="1.5" PointX="12.75" PointY="12.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbTracking" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbUSer" Width="1.5" PointX="2.75" PointY="14.75" />
+        <EntityTypeShape EntityType="KpiManagerModel.tbTheTaiChiTiet" Width="1.5" PointX="9.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

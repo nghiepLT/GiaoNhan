@@ -190,6 +190,9 @@
       <DependentUpon>ImportExcel.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Uploadimages.ashx.cs">
+      <DependentUpon>Uploadimages.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -2352,10 +2355,12 @@
     <Content Include="Views\QuetPhieu\LoadTracking.cshtml" />
     <Content Include="Views\QuetPhieu\ThongKeQuetPhieu.cshtml" />
     <Content Include="Views\QuetPhieu\ThongKeQuetPhieuData.cshtml" />
+    <Content Include="Uploadimages.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Images\GiaoNhan\" />
     <Folder Include="Models\" />
     <Folder Include="NewFolder1\" />
     <Folder Include="Views\Delivery\" />

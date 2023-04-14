@@ -179,7 +179,7 @@ namespace GiaoNhan.Controllers
             public string ThoiGianDiTrungBinh { get; set; }
             public string ThoiGianDiTrungBinhtb { get; set; }
             public double TongTienPhatSinh { get; set; }
-            public int TongKMPhatSinh { get; set; }
+            public float TongKMPhatSinh { get; set; }
             public int SoLanLamHangTre { get; set; }
         }
         public ActionResult ThongKeThongKeGiaoNhanData(string fromDate, string toDate,string MaThe)
@@ -196,7 +196,7 @@ namespace GiaoNhan.Controllers
             int SumSoLanLamHangTre = 0;
             double SumThoiGianDiTrungBinh = 0;
             double SumTongTienPhatSinh = 0;
-            int SumTongKMPhatSinh = 0;
+            float SumTongKMPhatSinh = 0;
             foreach (var item in test)
             {
                 ThongKeGiaoNhanTong ThongKeGiaoNhanTong = new ThongKeGiaoNhanTong();
@@ -215,12 +215,12 @@ namespace GiaoNhan.Controllers
                 var getdata = model.Where(m => m.MaThe == item.Key).ToList();
                 double totaltime = 0;
                 double tienphatsinh = 0;
-                int sokmphatsinh = 0;
+                float sokmphatsinh = 0;
                 foreach(var it in getdata)
                 {
                     totaltime += Tool.Helper.TinhtongthoigianDouble(it.Luotve, it.DateStart.Value);
                     tienphatsinh += double.Parse(it.lstTheTaiChiTiet.Sum(m => m.TienPhatSinh).ToString());
-                    sokmphatsinh += it.lstTheTaiChiTiet.Sum(m => m.SoKMPhatSinh).Value;
+                    sokmphatsinh += float.Parse(it.lstTheTaiChiTiet.Sum(m => m.SoKMPhatSinh).Value.ToString());
                 }
                 ThongKeGiaoNhanTong.ThoiGianDiTrungBinh = totaltime.ToString();
                 ThongKeGiaoNhanTong.ThoiGianDiTrungBinhtb = Math.Round(totaltime / ThongKeGiaoNhanTong.TongSoLuot).ToString();

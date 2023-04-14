@@ -113,7 +113,7 @@ namespace DAL
                              //TongThoigian = (tt.DateEnd != null && dbContext.tbTheTaiChiTiets.OrderBy(m => m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd != null).LastOrDefault() != null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - dbContext.tbTheTaiChiTiets.OrderBy(m => m.DateEnd.Value).ToList().Where(m => m.ThetaiID == tt.ThetaiID && m.DateEnd != null).LastOrDefault().DateEnd.Value.TimeOfDay.TotalSeconds).ToString())).ToString()) * (-1)) : "",
                              TongThoigian = (tt.Luotve != null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - tt.Luotve.Value.TimeOfDay.TotalSeconds).ToString())).ToString()) * (-1)) : "",
                              TienPhatSinh = int.Parse(test.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.TienPhatSinh.Value).ToString()),
-                             SoKMPhatSinh = int.Parse(test.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.SoKMPhatSinh.Value).ToString()),
+                             SoKMPhatSinh = decimal.Parse(test.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.SoKMPhatSinh.Value).ToString()),
 
                          }
                       );

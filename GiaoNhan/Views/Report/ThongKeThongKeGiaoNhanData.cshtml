@@ -56,7 +56,11 @@
                     @ViewBag.SumTongTienPhatSinh.ToString("#,##0")
                 </td>
                 <td class="tdtong">
-                    @ViewBag.SumTongKMPhatSinh.ToString("#,##0")
+                    @if (ViewBag.SumTongKMPhatSinh > 0)
+                    {
+                        @ViewBag.SumTongKMPhatSinh.ToString("#,##0") <span>Km</span>
+                    }
+                    
                 </td>
             </tr>
             foreach (var item in ViewBag.lstThongKeGiaoNhanTong)
@@ -91,7 +95,11 @@
                         @item.TongTienPhatSinh.ToString("#,##0")
                     </td>
                     <td>
-                        @item.TongKMPhatSinh.ToString("#,##0")
+                        @if (item.TongKMPhatSinh > 0)
+                        {
+                            @item.TongKMPhatSinh.ToString("#,##0") <span>Km</span>
+                        }
+                        
                     </td> 
                 </tr>
             }
@@ -252,7 +260,7 @@
                     <td>
                         @if (item.SoKMPhatSinh != 0)
                         {
-                            @item.SoKMPhatSinh.ToString("#,##0")
+                            @item.SoKMPhatSinh.ToString("#,##0") <span>Km</span>
                         }
                     </td>
                 </tr>

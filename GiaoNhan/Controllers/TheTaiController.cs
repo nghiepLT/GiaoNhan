@@ -201,6 +201,31 @@ namespace GiaoNhan.Controllers
                             return 2;
                             ckhTracking.DateEnd = DateTime.Now;
                         ckhTracking.KPI = tracking.GetKPI(ckhTracking.DateStart, ckhTracking.DateEnd, ckhTracking.Count, type);
+                        ///jsphieudi.asp?sopx=X230408001-L&nv=GN999
+   //                     try
+   //                     {
+   //                         var getsplit = ckhTracking.MaPhieu.Split(',');
+   //                         foreach (var it in getsplit)
+   //                         {
+   //                             if (it != "")
+   //                             {
+   //                                 var url = "";
+   //                                 var config = balConfig.Getconfig().ApiUrl;
+   //                                 var spl2 = it.Split('|');
+   //                                 url = config + "jsphieudi.asp?sopx="+ spl2[0] + "&nv="+ ckhTracking.MaThe;
+   //                                 HttpWebRequest webRequest =
+   //WebRequest.Create(url) as HttpWebRequest;
+
+   //                                 webRequest.Credentials = CredentialCache.DefaultCredentials;
+
+   //                                 HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
+   //                             }
+   //                         }
+   //                     }
+   //                     catch(Exception ex)
+   //                     {
+
+   //                     }
                         balTheTai.UpdateData(ckhTracking);
 
                         //Cập nhật Sắp xếp Detail
@@ -230,8 +255,8 @@ namespace GiaoNhan.Controllers
                         ttct.Status = 0;
                         ttct.DateCreate = DateTime.Now;
                         ttct.MaThe = lastThetai.MaThe;
-                        ttct.SOKM = getJson.SOKM;
-                        ttct.SOKM = Math.Round(ttct.SOKM.Value,2);
+                        ttct.SoKM = getJson.SOKM;
+                        ttct.SoKM = Math.Round(ttct.SoKM.Value,2);
                         balTheTai.UpdateDataDetail(ttct);
                         return 1;
                     }
@@ -266,13 +291,13 @@ namespace GiaoNhan.Controllers
             return balTheTai.UpdateStatus(TheTaiChiTietID);
         }
 
-        public bool UpdateCancle(int TheTaiChiTietID,string Description,int Type,int ? TienPhatSinh,int ? SoKMPhatSinh,int ? NhanTienMat)
+        public bool UpdateCancle(int TheTaiChiTietID,string Description,int Type,int ? TienPhatSinh,decimal ? SoKMPhatSinh,int ? NhanTienMat,string TenChanhXe,string SoDT,string SoBill,string Images)
         {
             if (TienPhatSinh == null)
                 TienPhatSinh = 0;
             if (SoKMPhatSinh == null)
                 SoKMPhatSinh = 0;
-            return balTheTai.UpdateCancle(TheTaiChiTietID, Description, Type, TienPhatSinh, SoKMPhatSinh, NhanTienMat);
+            return balTheTai.UpdateCancle(TheTaiChiTietID, Description, Type, TienPhatSinh, SoKMPhatSinh, NhanTienMat,  TenChanhXe,  SoDT,  SoBill,  Images);
         }
     }
 }
