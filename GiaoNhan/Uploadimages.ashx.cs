@@ -34,7 +34,7 @@ namespace GiaoNhan
                     if (!string.IsNullOrEmpty(fileName))
                     {
                         fileExtension = Path.GetExtension(fileName);
-                        str_image = DateTime.Now.ToString("yyyyMMddhhmmssff") + "_" + fileName;
+                        str_image = DateTime.Now.ToString("yyyyMMddhhmmssff") + fileExtension;
                         string pathToSave_100 = HttpContext.Current.Server.MapPath("~/Images/GiaoNhan/") + str_image;
                         file.SaveAs(pathToSave_100);
                     }

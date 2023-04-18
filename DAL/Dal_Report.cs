@@ -92,6 +92,13 @@ namespace DAL
             }
             return lstCclone.OrderByDescending(m => m.STT);
         }
+        public int KiemTraTreGio(DateTime dt1,DateTime dt2)
+        {
+            var total = dt2 - dt1;
+            if (total.TotalHours > 2)
+                return 1;
+            return 0;
+        }
         public IEnumerable<VM_TheTaiReport> ReportGiaoNhan(DateTime fromdate, DateTime toddate,string MaThe)
         {
             var test = dbContext.tbTheTaiChiTiets.Where(m => m.TienPhatSinh != null && (MaThe == "0" || m.MaThe == MaThe)).ToList();
@@ -114,6 +121,7 @@ namespace DAL
                              TongThoigian = (tt.Luotve != null) ? Tool.Helper.ReturnTime(int.Parse(Math.Round(double.Parse((tt.DateStart.Value.TimeOfDay.TotalSeconds - tt.Luotve.Value.TimeOfDay.TotalSeconds).ToString())).ToString()) * (-1)) : "",
                              TienPhatSinh = int.Parse(test.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.TienPhatSinh.Value).ToString()),
                              SoKMPhatSinh = decimal.Parse(test.Where(m => m.ThetaiID == tt.ThetaiID).Sum(m => m.SoKMPhatSinh.Value).ToString()),
+                             TreGio = KiemTraTreGio(tt.DateEnd.Value, tt.Luotve.Value)
 
                          }
                       );

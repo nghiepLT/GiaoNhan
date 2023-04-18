@@ -247,9 +247,19 @@
                         }
                     </td>
                     <td>
-                        <strong>
-                            <i class="fas fa-clock"></i>  @item.TongThoigian
-                        </strong>
+                        @if (item.TreGio == 1)
+                        {
+                            <strong class="text-danger">
+                                <i class="fas fa-clock"></i>  @item.TongThoigian
+                            </strong>
+                        }
+                        else
+                        {
+                            <strong>
+                                <i class="fas fa-clock"></i>  @item.TongThoigian
+                            </strong>
+                        }
+                       
                     </td>
                     <td>
                         @if (item.TienPhatSinh != 0)

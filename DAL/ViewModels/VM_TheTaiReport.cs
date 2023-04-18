@@ -22,5 +22,6 @@ namespace DAL.ViewModels
         public List<tbTheTaiChiTiet> lstTheTaiChiTiet { get; set; } = new List<tbTheTaiChiTiet>();
         public int TienPhatSinh { get; set; }
         public decimal SoKMPhatSinh { get; set; }
+        public int TreGio { get; set; }
     } 
 }

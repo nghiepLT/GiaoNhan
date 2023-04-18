@@ -163,7 +163,7 @@ namespace DAL
         }
         public bool CheckDetailThetai(string MaPhieu)
         {
-            return dbContext.tbTheTaiChiTiets.Any(m => m.MaPhieu == MaPhieu);
+            return dbContext.tbTheTaiChiTiets.Any(m => m.MaPhieu == MaPhieu && m.Status!=-1);
         }
         public VM_Json GetJsonData(string spx)
         {
@@ -242,6 +242,10 @@ namespace DAL
                 string querySoKM = "";
                 string queryNotePhieu = "";
                 string queryTienMat = "";
+                string queryTenChanhXe = "";
+                string querySoDT = "";
+                string querySoBill = "";
+                string queryImages = "";
                 querySoPhieu = "sopx=" + ttct.MaPhieu;
                 if (ttct.TienPhatSinh != 0)
                     querySoTien = "&sotien=" + ttct.TienPhatSinh;
@@ -251,18 +255,35 @@ namespace DAL
                     queryNotePhieu = "&notephieu=" + ttct.Description;
                 if (ttct.NhanTienMat != 0)
                     queryTienMat = "&tienmat=" + 1;
-    //            if (ttct.TienPhatSinh!=0 || ttct.SoKMPhatSinh!=0 || ttct.Description != "" || ttct.NhanTienMat!=0)
-    //            {
-    //                 var url = CONFIGURL+ "jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim();
-                   
-    //                HttpWebRequest webRequest =
-    //WebRequest.Create(url) as HttpWebRequest;
+                //
+                if (!string.IsNullOrEmpty(ttct.TenChanhXe))
+                {
+                    queryTenChanhXe = "&Tenchanhxe=" + ttct.TenChanhXe;
+                }
+                if (!string.IsNullOrEmpty(ttct.SoDT))
+                {
+                    querySoDT = "&Sodtchanhxe=" + ttct.SoDT;
+                }
+                if (!string.IsNullOrEmpty(ttct.SoBill))
+                {
+                    querySoBill = "&Sobill=" + ttct.SoBill;
+                }
+                if (!string.IsNullOrEmpty(ttct.Images))
+                {
+                    queryImages = "&imgchanhxe=" + ttct.Images;
+                }
+                if (ttct.TienPhatSinh != 0 || ttct.SoKMPhatSinh != 0 || ttct.Description != "" || ttct.NhanTienMat != 0 || ttct.TenChanhXe != "" || ttct.SoDT != "" || ttct.SoBill != "" || ttct.Images != "")
+                {
+                    var url = CONFIGURL + "jsphieuve.asp?" + querySoPhieu.Trim() + querySoTien.Trim() + querySoKM.Trim() + queryNotePhieu.Trim() + queryTienMat.Trim() + queryTenChanhXe.Trim() + querySoDT.Trim() + querySoBill.Trim() + queryImages.Trim();
 
-    //                webRequest.Credentials = CredentialCache.DefaultCredentials;
+                    HttpWebRequest webRequest =
+    WebRequest.Create(url) as HttpWebRequest;
 
-    //                HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
-    //            }
-              
+                    webRequest.Credentials = CredentialCache.DefaultCredentials;
+
+                    HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
+                }
+
                 return true;
             }
             catch(Exception ex)

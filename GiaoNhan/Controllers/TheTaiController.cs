@@ -202,30 +202,30 @@ namespace GiaoNhan.Controllers
                             ckhTracking.DateEnd = DateTime.Now;
                         ckhTracking.KPI = tracking.GetKPI(ckhTracking.DateStart, ckhTracking.DateEnd, ckhTracking.Count, type);
                         ///jsphieudi.asp?sopx=X230408001-L&nv=GN999
-   //                     try
-   //                     {
-   //                         var getsplit = ckhTracking.MaPhieu.Split(',');
-   //                         foreach (var it in getsplit)
-   //                         {
-   //                             if (it != "")
-   //                             {
-   //                                 var url = "";
-   //                                 var config = balConfig.Getconfig().ApiUrl;
-   //                                 var spl2 = it.Split('|');
-   //                                 url = config + "jsphieudi.asp?sopx="+ spl2[0] + "&nv="+ ckhTracking.MaThe;
-   //                                 HttpWebRequest webRequest =
-   //WebRequest.Create(url) as HttpWebRequest;
+                        try
+                        {
+                            var getsplit = ckhTracking.MaPhieu.Split(',');
+                            foreach (var it in getsplit)
+                            {
+                                if (it != "")
+                                {
+                                    var url = "";
+                                    var config = balConfig.Getconfig().ApiUrl;
+                                    var spl2 = it.Split('|');
+                                    url = config + "jsphieudi.asp?sopx=" + spl2[0] + "&nv=" + ckhTracking.MaThe;
+                                    HttpWebRequest webRequest =
+   WebRequest.Create(url) as HttpWebRequest;
 
-   //                                 webRequest.Credentials = CredentialCache.DefaultCredentials;
+                                    webRequest.Credentials = CredentialCache.DefaultCredentials;
 
-   //                                 HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
-   //                             }
-   //                         }
-   //                     }
-   //                     catch(Exception ex)
-   //                     {
+                                    HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
 
-   //                     }
+                        }
                         balTheTai.UpdateData(ckhTracking);
 
                         //Cập nhật Sắp xếp Detail
