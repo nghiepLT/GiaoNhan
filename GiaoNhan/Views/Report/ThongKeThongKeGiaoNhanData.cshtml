@@ -199,15 +199,30 @@
                                 if (it.DateEnd != null)
                                 {
                                     <div>
-                                        <strong class="txtPhieu">@it.MaPhieu</strong> <span> <span> Kết thúc: </span> <strong class="text-danger">@it.DateEnd.ToString("dd/MM/yyyy HH:mm:ss")</strong> </span>
-                                        @if (it.Status == -1)
+                                        <strong class="txtPhieu">@it.MaPhieu</strong> <span> <span> Kết thúc: </span> <strong class="text-primary">@it.DateEnd.ToString("dd/MM/yyyy HH:mm:ss")</strong> </span>
+                                      <div>
+                                          @if (it.Images != "" && it.Images != null)
+                                          {
+                                            <img src="~/Images/GiaoNhan/@it.Images" class="img-responsive" style="width:100px;" />
+                                          }
+                                        
+                                      </div>
+                                          @if (it.Status == -1)
                                         {
                                             <div>
                                                 <strong class="text-danger">Đã hủy </strong> <span> Lý do : </span> <strong>@it.Description</strong>
                                             </div>
                                         }
                                         <div style="margin-bottom:5px;border-bottom:1px solid #eee;padding-bottom:5px;">
-                                            Tổng thời gian : <strong>@Tool.Helper.Tinhtongthoigian(it.DateEnd, item.DateEnd)</strong>
+                                            @if (Tool.Helper.KiemTraThoiGianTre(it.DateEnd, item.DateEnd) == 1)
+                                            {
+                                            <span>Tổng thời gian : </span>   <strong class="text-danger">  <strong>@Tool.Helper.Tinhtongthoigian(it.DateEnd, item.DateEnd)</strong></strong>
+                                            }
+                                            else
+                                            {
+                                                <span>Tổng thời gian : <strong>@Tool.Helper.Tinhtongthoigian(it.DateEnd, item.DateEnd)</strong></span>
+                                            }
+                                            
                                         </div>
 
                                     </div>
@@ -247,18 +262,7 @@
                         }
                     </td>
                     <td>
-                        @if (item.TreGio == 1)
-                        {
-                            <strong class="text-danger">
-                                <i class="fas fa-clock"></i>  @item.TongThoigian
-                            </strong>
-                        }
-                        else
-                        {
-                            <strong>
-                                <i class="fas fa-clock"></i>  @item.TongThoigian
-                            </strong>
-                        }
+                        <i class="fas fa-clock"></i>  @item.TongThoigian
                        
                     </td>
                     <td>

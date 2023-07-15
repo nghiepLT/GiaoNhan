@@ -63,10 +63,13 @@
     <strong class="thongkect_title">
         Thống kê chi tiết
     </strong>
+    <a onclick="ExportExcel()" class="btn_excel">
+        Export Excel
+    </a>
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped text-center">
+    <table class="table table-striped text-center" id="tbHistory">
         <thead>
             <tr>
                 <th>Ngày</th>
@@ -189,3 +192,16 @@
         });
     }
 </script>
+<style>
+  .btn_excel {
+    background-color: green;
+    color: white;
+    padding: 5px 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+    color: white!important;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+}
+</style>

@@ -72,6 +72,18 @@
                                         </div>
 
                                     </div>
+                                    <div class="col-sm-2">
+                                        <div id="slTheTai">
+                                            <label for="User name">Trạng thái</label>
+                                            <select class="form-control" style="max-width:100%" id="slStatus">
+                                                <option selected="selected" value="0">Tất cả</option>
+                                                <option  value="1">Làm hàng trễ</option>
+                                                <option  value="2">Giao hàng lâu (Quá 120 phút)</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
                                     <div class="col-sm-3 text-left">
                                         <a style="margin-top:35px;" onclick="reportGiaoNhan()" class="btn btn-sm btn-danger"><i class="fas fa-filter"></i> Lọc</a>
                                         @*<a id="exportToExcel" style="margin-top:35px;" onclick="ExportExcel()"   class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Export Excel</a>*@
@@ -132,7 +144,8 @@
         var param = {
             "fromDate": start,
             "toDate": end,
-            "MaThe": $("#slChonTheTai").val()
+            "MaThe": $("#slChonTheTai").val(),
+            "Status": $("#slStatus").val()
         }
         $.ajax({
             url: '/Report/ThongKeThongKeGiaoNhanData',

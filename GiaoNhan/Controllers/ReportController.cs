@@ -182,11 +182,40 @@ namespace GiaoNhan.Controllers
             public float TongKMPhatSinh { get; set; }
             public int SoLanLamHangTre { get; set; }
         }
-        public ActionResult ThongKeThongKeGiaoNhanData(string fromDate, string toDate,string MaThe)
+        public bool Lamhangtre(DateTime ? dt,DateTime ? dt2)
+        {
+
+            if (dt == null || dt2 == null)
+                return false;
+            var total = dt.Value - dt2.Value;
+            if (total.TotalMinutes > 15)
+                return true;
+            return false;
+        }
+        public bool KiemTraThoiGianTre(VM_TheTaiReport vmtt)
+        {
+            if (vmtt.DateEnd == null)
+                return false;
+            foreach(var it in vmtt.lstTheTaiChiTiet)
+            {
+                if(it.DateEnd.HasValue)
+                {
+                    if (Tool.Helper.KiemTraThoiGianTre(it.DateEnd.Value, vmtt.DateEnd.Value) == 1)
+                        return true;
+                }
+            }
+            return false;
+        }
+        public ActionResult ThongKeThongKeGiaoNhanData(string fromDate, string toDate,string MaThe,int Status)
         {
             DateTime _fromDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime _toDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            var model = balReport.ReportGiaoNhan(_fromDate, _toDate, MaThe).ToList(); 
+
+            var model = balReport.ReportGiaoNhan(_fromDate, _toDate, MaThe).ToList();
+            if (Status == 2)
+            {
+                model = model.Where(m => KiemTraThoiGianTre(m)).ToList();
+            }
             var test = model.GroupBy(m => m.MaThe);
             List<ThongKeGiaoNhanTong> lstThongKeGiaoNhanTong = new List<ThongKeGiaoNhanTong>();
             //sum 
@@ -240,8 +269,15 @@ namespace GiaoNhan.Controllers
             ViewBag.SumTongTienPhatSinh = SumTongTienPhatSinh;
             ViewBag.SumTongKMPhatSinh = SumTongKMPhatSinh;
 
+            if (Status == 1)
+                lstThongKeGiaoNhanTong = lstThongKeGiaoNhanTong.Where(m => m.SoLanLamHangTre != 0).ToList();
             ViewBag.lstThongKeGiaoNhanTong = lstThongKeGiaoNhanTong;
-            ViewBag.sum = model.Sum(m => m.lstTheTaiChiTiet.Count()); 
+
+            ViewBag.sum = model.Sum(m => m.lstTheTaiChiTiet.Count());
+            if (Status == 1)
+            {
+                model = model.Where(m => Lamhangtre(m.DateEnd, m.DateStart)).ToList();
+            }
             return PartialView(model);
         }
         public int TongThoiGianLamHang(DateTime dt1, DateTime dt2)
@@ -322,8 +358,8 @@ namespace GiaoNhan.Controllers
                     ThongKeMoiNgay.TongSoDon += rowXuat.Count();
                     ThongKeMoiNgay.TongSoLuong+= rowXuat.Sum(m => m.CountStep);
                 }
-              
-                lstThongKeMoiNgay.Add(ThongKeMoiNgay);
+                if (ThongKeMoiNgay.NgayTao != DateTime.MinValue)
+                    lstThongKeMoiNgay.Add(ThongKeMoiNgay);
             }
             ViewBag.ListThongKeMoiNgay = lstThongKeMoiNgay;
             //ThongKeTong
